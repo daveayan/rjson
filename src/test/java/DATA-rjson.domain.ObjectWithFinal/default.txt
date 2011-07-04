@@ -1,0 +1,5 @@
+
+{
+    "class": "rjson.domain.ObjectWithFinal", 
+    "nonFinalString": "This is not final"
+}

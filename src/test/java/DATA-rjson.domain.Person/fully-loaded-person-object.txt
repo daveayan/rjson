@@ -1,0 +1,56 @@
+
+{
+    "class": "rjson.domain.Person", 
+    "name": "QWERTY", 
+    "addresses": {        
+        "Home": 
+        {
+            "class": "rjson.domain.Address", 
+            "address": "tuttles creek", 
+            "state": "OH", 
+            "city": "Dublin", 
+            "zip": "43016", 
+            "id": 1
+        }, 
+        "Office": 
+        {
+            "class": "rjson.domain.Address", 
+            "address": "sawmill village dr", 
+            "state": "OH", 
+            "city": "Columbus", 
+            "zip": "43235", 
+            "id": 1
+        }
+    }, 
+    "phones": [        
+        
+        {
+            "class": "rjson.domain.PhoneNumber", 
+            "areaCode": "443", 
+            "number": "3233323", 
+            "id": 1
+        }, 
+        
+        {
+            "class": "rjson.domain.PhoneNumber", 
+            "areaCode": "657", 
+            "number": "9466354", 
+            "id": 1
+        }
+    ], 
+    "accounts": [        
+        
+        {
+            "class": "rjson.domain.Account", 
+            "accountNumber": 123, 
+            "balance": 100.0, 
+            "lastUpdate": , 
+            "someMap": {                
+                "A": "100", 
+                "B": "200"
+            }, 
+            "id": 1
+        }
+    ], 
+    "id": 1
+}

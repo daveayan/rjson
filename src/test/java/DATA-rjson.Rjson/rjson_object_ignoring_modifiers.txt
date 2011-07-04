@@ -1,0 +1,29 @@
+
+{
+    "class": "rjson.Rjson", 
+    "anyObjectTransformer": 
+    {
+        "class": "rjson.transformer.FieldBasedTransformer", 
+    }, 
+    "default_transformers": [        
+        
+        {
+            "class": "rjson.transformer.ToJsonTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.IterableTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.MapTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.ArrayTransformer", 
+        }
+    ], 
+    "custom_transformers": {        
+    }, 
+    "ignoreModifiers": true
+}
