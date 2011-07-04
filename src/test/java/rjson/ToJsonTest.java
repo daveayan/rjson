@@ -140,6 +140,13 @@ public class ToJsonTest {
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 	
+	@Test public void toJsonAComplexObjectRespectingModifiers() throws IOException {
+		Rjson rjson = serializer().andDoNotIgnoreModifiers();
+		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object-respecting-modifiers.txt");
+		String actualJson = rjson.toJson(Person.getFullyLoadedInstance());
+		Assert.assertEquals(expectedJson, actualJson);
+	}
+	
 	@Test public void toJsonAComplexObject() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object.txt");
 		String actualJson = serializer().toJson(Person.getFullyLoadedInstance());

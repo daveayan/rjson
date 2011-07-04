@@ -66,6 +66,11 @@ public class Rjson {
 		this.ignoreModifiers = true;
 		return this;
 	}
+	
+	public Rjson andDoNotIgnoreModifiers() {
+		this.ignoreModifiers = false;
+		return this;
+	}
 
 	public String toJson(Object object) {
 		Printer printer = new StringBufferPrinter();
