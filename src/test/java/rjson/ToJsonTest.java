@@ -83,6 +83,25 @@ public class ToJsonTest {
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 	
+	@Test public void toJsonStringListWithinList() throws IOException {
+		List <List<String>> listOfList = new ArrayList<List<String>> ();
+		
+		List<String> l1 = new ArrayList<String>();
+		l1.add("qwerty");
+		l1.add("asdfgh");
+		
+		List<String> l2 = new ArrayList<String>();
+		l2.add("POIUYT");
+		l2.add("LKJHGF");
+		
+		listOfList.add(l1);
+		listOfList.add(l2);
+		
+		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/list-of-string-list.txt");
+		String actualJson = serializer().toJson(listOfList);
+		Assert.assertEquals(expectedJson, actualJson);
+	}
+	
 	@Test public void toJsonEmptyArray() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/empty-list.txt");
 		String actualJson = serializer().toJson(new String[] {});
@@ -92,6 +111,16 @@ public class ToJsonTest {
 	@Test public void toJsonStringArray() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
 		String actualJson = serializer().toJson(new String[] {"qwerty", "asdfgh"});
+		Assert.assertEquals(expectedJson, actualJson);
+	}
+	
+	@Test public void toJsonArrayOfStringArray() throws IOException {
+		String[] strArray1 = new String[] {"qwerty", "asdfgh"};
+		String[] strArray2 = new String[] {"POIUYT", "LKJHGF"};
+		String[][] arrayOfArray = new String[][] {strArray1, strArray2};
+		
+		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/list-of-string-list.txt");
+		String actualJson = serializer().toJson(arrayOfArray);
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 	
