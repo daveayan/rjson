@@ -2,7 +2,9 @@ package rjson;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +40,10 @@ public class ToJsonTest {
 		Assert.assertEquals("123.45", serializer().toJson(new Float(123.45)));
 	}
 	
+	@Test public void toJsonBigDecimal() throws IOException {
+		Assert.assertEquals("123.4560000000000030695446184836328029632568359375", serializer().toJson(new BigDecimal(123.456)));
+	}
+	
 	@Test public void toJsonPrimitiveBoolean() throws IOException {
 		Assert.assertEquals("true", serializer().toJson(true));
 		Assert.assertEquals("false", serializer().toJson(false));
@@ -56,6 +62,11 @@ public class ToJsonTest {
 		Assert.assertEquals("\"q\\[w\\]e\\{r\\}ty\"", serializer().toJson("q[w]e{r}ty"));
 	}
 	
+	@Test public void toJsonDate() {
+		Date date = new Date(Long.parseLong("1309814968887"));
+		Assert.assertEquals("1309814968887", Rjson.newInstance().toJson(date));
+	}
+	
 	@Test public void toJsonEmptyList() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/empty-list.txt");
 		String actualJson = serializer().toJson(new ArrayList<String>());
@@ -69,6 +80,18 @@ public class ToJsonTest {
 		
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
 		String actualJson = serializer().toJson(l);
+		Assert.assertEquals(expectedJson, actualJson);
+	}
+	
+	@Test public void toJsonEmptyArray() throws IOException {
+		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/empty-list.txt");
+		String actualJson = serializer().toJson(new String[] {});
+		Assert.assertEquals(expectedJson, actualJson);
+	}
+	
+	@Test public void toJsonStringArray() throws IOException {
+		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
+		String actualJson = serializer().toJson(new String[] {"qwerty", "asdfgh"});
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 	
