@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import rjson.domain.SampleTransformer;
 
-public class RjsonInstantiationVerifications {
+public class RjsonInstantiationTest {
 	@Test public void verifyDefaultJsonObject() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance());

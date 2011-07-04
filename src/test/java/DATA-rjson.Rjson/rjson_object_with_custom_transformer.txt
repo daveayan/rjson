@@ -24,9 +24,9 @@
         }
     ], 
     "custom_transformers": {        
-        "rjson.SampleTransformer": 
+        "rjson.domain.SampleTransformer": 
         {
-            "class": "rjson.SampleTransformer", 
+            "class": "rjson.domain.SampleTransformer", 
         }
     }, 
     "ignoreModifiers": false

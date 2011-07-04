@@ -17,7 +17,7 @@ import rjson.domain.Person;
 import rjson.printer.Printer;
 import rjson.transformer.Transformer;
 
-public class ToJsonVerifications {	
+public class ToJsonTest {	
 	@Test public void toJsonNullObject() throws IOException {
 		Assert.assertEquals("\"null\"", serializer().toJson(null));
 	}
