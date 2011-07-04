@@ -146,7 +146,7 @@ public class ToJsonTest {
 				return;
 			}
 		};
-		return Rjson.newInstance().andIgnoreModifiers().and(ignoreDateTransformer);
+		return Rjson.newInstance().with(ignoreDateTransformer).andIgnoreModifiers();
 	}
 	
 	private String fileAsString(String file) throws IOException {
