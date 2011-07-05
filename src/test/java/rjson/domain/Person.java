@@ -29,9 +29,6 @@ public class Person extends BaseDomainObject {
 	private List<Account> accounts = new ArrayList<Account>();
 
 	public static Person getPartialInstance1() {
-		Account a1 = new Account(123, 100);
-		Address add1 = new Address("tuttles creek", "OH", "Dublin", "43016");
-		Address add2 = new Address("sawmill village dr", "OH", "Columbus", "43235");
 		PhoneNumber ph1 = new PhoneNumber("443", "3233323");
 		PhoneNumber ph2 = new PhoneNumber("657", "9466354");
 
@@ -47,7 +44,6 @@ public class Person extends BaseDomainObject {
 
 	public static Person getFullyLoadedInstance() {
 		Account a1 = new Account(123, 100);
-		Account a2 = new Account(456, 200);
 		Address add1 = new Address("tuttles creek", "OH", "Dublin", "43016");
 		Address add2 = new Address("sawmill village dr", "OH", "Columbus", "43235");
 		PhoneNumber ph1 = new PhoneNumber("443", "3233323");

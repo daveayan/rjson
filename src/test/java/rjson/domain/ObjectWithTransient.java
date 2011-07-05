@@ -1,6 +1,6 @@
 package rjson.domain;
 
 public class ObjectWithTransient {
-	private transient String transientString = "This is transient";
-	private String nonTransientString = "This is not transient";
+	@SuppressWarnings("unused") private transient String transientString = "This is transient";
+	@SuppressWarnings("unused") private String nonTransientString = "This is not transient";
 }
