@@ -2,6 +2,7 @@ package rjson;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +18,7 @@ import rjson.domain.ObjectWithFinal;
 import rjson.domain.ObjectWithTransient;
 import rjson.domain.Person;
 import rjson.printer.Printer;
+import rjson.transformer.FieldBasedTransformer;
 import rjson.transformer.Transformer;
 
 public class ToJsonTest {	
@@ -168,6 +170,44 @@ public class ToJsonTest {
 	@Test public void toJsonRespectsFinal() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinal/default.txt");
 		String actualJson = serializer().toJson(new ObjectWithFinal());
+		Assert.assertEquals(expectedJson, actualJson);
+	}
+	
+	@Test public void toJsonPersonObjectNotIncludingAddress() throws IOException {
+		Transformer excludeAddressTransformer = new FieldBasedTransformer() {
+			@Override
+			public boolean canHandle(Object object) {
+				if(object instanceof java.util.Map<?, ?>)
+					return true;
+				return false;
+			}
+			public boolean include(Field field) {
+				if(field.getName().equals("addresses"))
+					return false;
+				return true;
+			}
+		};
+		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
+		String actualJson = serializer().with(excludeAddressTransformer).toJson(Person.getFullyLoadedInstance());
+		Assert.assertEquals(expectedJson, actualJson);
+	}
+	
+	@Test public void toJsonPersonObjectExcludingAddress() throws IOException {
+		Transformer excludeAddressTransformer = new FieldBasedTransformer() {
+			@Override
+			public boolean canHandle(Object object) {
+				if(object instanceof java.util.Map<?, ?>)
+					return true;
+				return false;
+			}
+			public boolean exclude(Field field) {
+				if(field.getName().equals("addresses"))
+					return true;
+				return false;
+			}
+		};
+		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
+		String actualJson = serializer().with(excludeAddressTransformer).toJson(Person.getFullyLoadedInstance());
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 	

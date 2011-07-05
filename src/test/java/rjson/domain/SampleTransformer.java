@@ -2,12 +2,13 @@ package rjson.domain;
 
 import rjson.Rjson;
 import rjson.printer.Printer;
-import rjson.transformer.Transformer;
+import rjson.transformer.AbstractTransformer;
 
-public class SampleTransformer implements Transformer {
+public class SampleTransformer extends AbstractTransformer {
 	public boolean canHandle(Object object) {
 		return false;
 	}
 	public void transform(Object object, Printer printer, Rjson rjson) {	
+		printData(null, printer);
 	}
 }
