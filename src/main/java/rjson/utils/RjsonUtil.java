@@ -15,7 +15,12 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package rjson;
+package rjson.utils;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -27,5 +32,17 @@ public class RjsonUtil {
 		newString = StringUtils.replace(newString, "{", "\\{");
 		newString = StringUtils.replace(newString, "}", "\\}");
 		return newString;
+	}
+	
+	public static List<Field> getAllFieldsIn(Object object) {
+		List<Field> classes = new ArrayList<Field>();
+		classes.addAll(Arrays.asList(object.getClass().getDeclaredFields()));
+		Class<?> superclass = object.getClass().getSuperclass();
+		while (superclass != null) {
+			classes.addAll(Arrays.asList(superclass.getDeclaredFields()));
+			superclass = superclass.getSuperclass();
+		}
+
+		return classes;
 	}
 }

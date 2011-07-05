@@ -18,8 +18,8 @@
 package rjson.transformer;
 
 import rjson.Rjson;
-import rjson.RjsonUtil;
 import rjson.printer.Printer;
+import rjson.utils.RjsonUtil;
 
 public abstract class AbstractTransformer implements Transformer {
 	public static final String MESSAGE_ERROR = "ERROR - ";

@@ -24,13 +24,13 @@ import java.util.List;
 
 import rjson.Rjson;
 import rjson.printer.Printer;
-import rjson.utils.ReflectionUtils;
+import rjson.utils.RjsonUtil;
 
 public class FieldBasedTransformer extends ReflectionBasedTransformer {
 
 	@Override
 	public void reflectionBasedTransform(Object object, Printer printer, Rjson rjson) {
-		List<Field> fields = ReflectionUtils.getAllFieldsIn(object);
+		List<Field> fields = RjsonUtil.getAllFieldsIn(object);
 		boolean pendingHasMoreElements = false;
 		if (fields != null) {
 			Iterator<Field> iter = fields.iterator();
