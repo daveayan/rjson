@@ -22,6 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
+import org.json.JSONTokener;
+
 import rjson.printer.Printer;
 import rjson.printer.StringBufferPrinter;
 import rjson.transformer.AbstractTransformer;
@@ -70,6 +73,29 @@ public class Rjson {
 	public Rjson andDoNotIgnoreModifiers() {
 		this.ignoreModifiers = false;
 		return this;
+	}
+	
+	public Object fromJson(String json) {
+		JSONTokener tokener = new JSONTokener(json);
+		try {
+			return convertToObject(tokener);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Object convertToObject(JSONTokener tokener) throws JSONException {
+		char nextChar = tokener.nextClean();
+		if(nextChar == '"') {
+			String stringValue = tokener.nextTo('"');
+			if(stringValue.trim().equals("null")) {
+				return null;
+			}
+			return stringValue;
+		}
+		return null;
 	}
 
 	public String toJson(Object object) {
