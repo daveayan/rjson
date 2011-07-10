@@ -130,6 +130,10 @@ public class JSONObject {
      * The map where the JSONObject's properties are kept.
      */
     private Map map;
+    
+    public Map getMap() {
+    	return map;
+    }
 
 
     /**

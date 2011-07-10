@@ -42,10 +42,8 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 					continue;
 				if(Modifier.isFinal(field.getModifiers()))
 					continue;
-				if(rjson.ignoreModifiers() || Modifier.isPublic(field.getModifiers())) {
-					if (!Modifier.isPublic(field.getModifiers())) {
-						field.setAccessible(true);
-					}
+				if(rjson.ignoreModifiers() || RjsonUtil.isAccessible(field)) {
+					RjsonUtil.makeAccessible(field);
 					try {
 						Object newObject = field.get(object);
 						if (exclude(field)) {

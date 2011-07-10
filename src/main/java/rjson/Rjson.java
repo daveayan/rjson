@@ -17,12 +17,16 @@
  */
 package rjson;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import rjson.printer.Printer;
@@ -34,6 +38,7 @@ import rjson.transformer.IterableTransformer;
 import rjson.transformer.MapTransformer;
 import rjson.transformer.ToJsonTransformer;
 import rjson.transformer.Transformer;
+import rjson.utils.RjsonUtil;
 
 public class Rjson {
 	private static AbstractTransformer anyObjectTransformer = null;
@@ -69,12 +74,12 @@ public class Rjson {
 		this.ignoreModifiers = true;
 		return this;
 	}
-	
+
 	public Rjson andDoNotIgnoreModifiers() {
 		this.ignoreModifiers = false;
 		return this;
 	}
-	
+
 	public Object fromJson(String json) {
 		JSONTokener tokener = new JSONTokener(json);
 		try {
@@ -86,16 +91,128 @@ public class Rjson {
 		return null;
 	}
 	
-	public Object convertToObject(JSONTokener tokener) throws JSONException {
-		char nextChar = tokener.nextClean();
-		if(nextChar == '"') {
-			String stringValue = tokener.nextTo('"');
-			if(stringValue.trim().equals("null")) {
-				return null;
+	private void setField(Field field, Object objectToBeReturned, Object value) {
+		try {
+			if(field.getType().isPrimitive() && value == null)
+				return;
+			if(field.getType().getName().trim().equals("java.util.Date"))
+				return;
+			if(value.getClass().getName().equals("java.lang.Double")) {
+				if(field.getClass().getName().equals("java.lang.Float") || field.getType().getName().equals("float")) {
+					Double dblValue = (Double) value;
+					field.set(objectToBeReturned, dblValue.floatValue());
+					return;
+				}
 			}
-			return stringValue;
+			field.set(objectToBeReturned, value);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public Object convertToObject(JSONTokener tokener) throws JSONException {
+		char firstChar = tokener.nextClean();
+		if (firstChar == '\"') {
+			return jsonObjectToObjectControl(tokener.nextString('\"'));
+		}
+		if (firstChar == '{') {
+			tokener.back();
+			return jsonObjectToObjectControl(new JSONObject(tokener));
+		}
+		if (firstChar == '[') {
+			tokener.back();
+			return jsonObjectToObjectControl(new JSONArray(tokener));
 		}
 		return null;
+	}
+
+	private Object jsonObjectToObject(JSONObject jo) {
+		try {
+			Object objectToBeReturned = RjsonUtil.objectFor(jo.getString("class"));
+			List<Field> fields = RjsonUtil.getAllFieldsIn(objectToBeReturned);
+			Iterator<Field> iter = fields.iterator();
+			while(iter.hasNext()) {
+				Field field = iter.next();
+				RjsonUtil.makeAccessible(field);
+				Object jsonField = jo.get(field.getName());
+				String jsonFieldContents = jsonField.toString();
+				System.out.println("***===>>>" + field.getType().getName() + " : " + " : " + jsonField.getClass().getName() + " : " + jsonFieldContents + " <<<===***");
+				Object object = jsonObjectToObjectControl(jsonField);
+				setField(field, objectToBeReturned, object);
+			}
+			return objectToBeReturned;
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private Object jsonObjectToObjectControl(Object jf) {
+		if(jf instanceof JSONObject) {
+			if(((JSONObject) jf).has("class"))
+				return jsonObjectToObject((JSONObject) jf);
+			else
+				return jsonObjectToObjectMap((JSONObject) jf);
+		}
+		if(jf instanceof JSONArray) {
+			return jsonObjectToObject((JSONArray) jf);
+		}
+		if(jf instanceof Integer) {
+			return jsonObjectToObject((Integer) jf);
+		}
+		if(jf instanceof Double) {
+			return jsonObjectToObject((Double) jf);
+		}
+		if(jf instanceof String) {
+			return jsonObjectToObject((String) jf);
+		}
+		return null;
+	}
+
+	private Object jsonObjectToObjectMap(JSONObject jo) {
+		System.out.println("jsonObjectToObjectMap JSONObject");
+		Map<Object, Object> newMap = new HashMap<Object, Object>();
+		Iterator<?> iter = jo.getMap().keySet().iterator();
+		while(iter.hasNext()) {
+			Object key = iter.next();
+			newMap.put(key, jsonObjectToObjectControl(jo.getMap().get(key)));
+		}
+		return newMap;
+	}
+	
+	private Object jsonObjectToObject(JSONArray ja) {
+		System.out.println("jsonObjectToObject JSONArray");
+		List<Object> newList = new ArrayList<Object>();
+		for(Object item: ja.getList()) {
+			newList.add(jsonObjectToObjectControl(item));
+		}
+		return newList;
+	}
+	
+	private Object jsonObjectToObject(Integer integer) {
+		System.out.println("jsonObjectToObject Integer");
+		return integer;
+	}
+	
+	private Object jsonObjectToObject(Double dbl) {
+		System.out.println("jsonObjectToObject Double");
+		return dbl;
+	}
+	
+	private Object jsonObjectToObject(String string) {
+		System.out.println("jsonObjectToObject String");
+		if (string != null && string.equals(JSONObject.NULL.toString()))
+			return null;
+		return string;
 	}
 
 	public String toJson(Object object) {
@@ -150,8 +267,10 @@ public class Rjson {
 		default_transformers.add(arrayTransformer);
 	}
 
-	private void registerTransformer(Transformer transformer, boolean replaceIfExists) {
-		if(transformer == null) return;
+	private void registerTransformer(Transformer transformer,
+			boolean replaceIfExists) {
+		if (transformer == null)
+			return;
 		String key = transformer.getClass().getName();
 		if (custom_transformers.containsKey(key)) {
 			if (replaceIfExists) {

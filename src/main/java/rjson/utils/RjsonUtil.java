@@ -18,11 +18,13 @@
 package rjson.utils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONException;
 
 public class RjsonUtil {
 	public static String escapeJsonCharactersIn(String string) {
@@ -44,5 +46,41 @@ public class RjsonUtil {
 		}
 
 		return classes;
+	}
+	
+	public static boolean isAccessible(Field field) {
+		return Modifier.isPublic(field.getModifiers());
+	}
+	
+	public static void makeAccessible(Field field) {
+		if (! isAccessible(field)) {
+			field.setAccessible(true);
+		}
+	}
+	
+	public static Class asClass(String className) {
+		try {
+			return Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Object objectFor(Class clazz) {
+		try {
+			return clazz.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Object objectFor(String className) {
+		return objectFor(asClass(className));
 	}
 }
