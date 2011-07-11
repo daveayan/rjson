@@ -8,7 +8,27 @@
     "default_transformers": [        
         
         {
-            "class": "rjson.transformer.ToJsonTransformer", 
+            "class": "rjson.transformer.LeafBooleanTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.LeafCharacterTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.LeafDateTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.LeafNumberTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.LeafPrimitiveTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.LeafStringTransformer", 
         }, 
         
         {

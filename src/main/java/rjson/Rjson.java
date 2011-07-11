@@ -35,8 +35,13 @@ import rjson.transformer.AbstractTransformer;
 import rjson.transformer.ArrayTransformer;
 import rjson.transformer.FieldBasedTransformer;
 import rjson.transformer.IterableTransformer;
+import rjson.transformer.LeafBooleanTransformer;
+import rjson.transformer.LeafCharacterTransformer;
+import rjson.transformer.LeafDateTransformer;
+import rjson.transformer.LeafNumberTransformer;
+import rjson.transformer.LeafPrimitiveTransformer;
+import rjson.transformer.LeafStringTransformer;
 import rjson.transformer.MapTransformer;
-import rjson.transformer.ToJsonTransformer;
 import rjson.transformer.Transformer;
 import rjson.utils.RjsonUtil;
 
@@ -90,15 +95,15 @@ public class Rjson {
 		}
 		return null;
 	}
-	
+
 	private void setField(Field field, Object objectToBeReturned, Object value) {
 		try {
-			if(field.getType().isPrimitive() && value == null)
+			if (field.getType().isPrimitive() && value == null)
 				return;
-			if(field.getType().getName().trim().equals("java.util.Date"))
+			if (field.getType().getName().trim().equals("java.util.Date"))
 				return;
-			if(value.getClass().getName().equals("java.lang.Double")) {
-				if(field.getClass().getName().equals("java.lang.Float") || field.getType().getName().equals("float")) {
+			if (value.getClass().getName().equals("java.lang.Double")) {
+				if (field.getClass().getName().equals("java.lang.Float") || field.getType().getName().equals("float")) {
 					Double dblValue = (Double) value;
 					field.set(objectToBeReturned, dblValue.floatValue());
 					return;
@@ -135,12 +140,13 @@ public class Rjson {
 			Object objectToBeReturned = RjsonUtil.objectFor(jo.getString("class"));
 			List<Field> fields = RjsonUtil.getAllFieldsIn(objectToBeReturned);
 			Iterator<Field> iter = fields.iterator();
-			while(iter.hasNext()) {
+			while (iter.hasNext()) {
 				Field field = iter.next();
 				RjsonUtil.makeAccessible(field);
 				Object jsonField = jo.get(field.getName());
 				String jsonFieldContents = jsonField.toString();
-				System.out.println("***===>>>" + field.getType().getName() + " : " + " : " + jsonField.getClass().getName() + " : " + jsonFieldContents + " <<<===***");
+				System.out.println("***===>>>" + field.getType().getName() + " : " + " : " + jsonField.getClass().getName() + " : " + jsonFieldContents
+						+ " <<<===***");
 				Object object = jsonObjectToObjectControl(jsonField);
 				setField(field, objectToBeReturned, object);
 			}
@@ -155,24 +161,24 @@ public class Rjson {
 		}
 		return null;
 	}
-	
+
 	private Object jsonObjectToObjectControl(Object jf) {
-		if(jf instanceof JSONObject) {
-			if(((JSONObject) jf).has("class"))
+		if (jf instanceof JSONObject) {
+			if (((JSONObject) jf).has("class"))
 				return jsonObjectToObject((JSONObject) jf);
 			else
 				return jsonObjectToObjectMap((JSONObject) jf);
 		}
-		if(jf instanceof JSONArray) {
+		if (jf instanceof JSONArray) {
 			return jsonObjectToObject((JSONArray) jf);
 		}
-		if(jf instanceof Integer) {
+		if (jf instanceof Integer) {
 			return jsonObjectToObject((Integer) jf);
 		}
-		if(jf instanceof Double) {
+		if (jf instanceof Double) {
 			return jsonObjectToObject((Double) jf);
 		}
-		if(jf instanceof String) {
+		if (jf instanceof String) {
 			return jsonObjectToObject((String) jf);
 		}
 		return null;
@@ -182,32 +188,32 @@ public class Rjson {
 		System.out.println("jsonObjectToObjectMap JSONObject");
 		Map<Object, Object> newMap = new HashMap<Object, Object>();
 		Iterator<?> iter = jo.getMap().keySet().iterator();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			Object key = iter.next();
 			newMap.put(key, jsonObjectToObjectControl(jo.getMap().get(key)));
 		}
 		return newMap;
 	}
-	
+
 	private Object jsonObjectToObject(JSONArray ja) {
 		System.out.println("jsonObjectToObject JSONArray");
 		List<Object> newList = new ArrayList<Object>();
-		for(Object item: ja.getList()) {
+		for (Object item : ja.getList()) {
 			newList.add(jsonObjectToObjectControl(item));
 		}
 		return newList;
 	}
-	
+
 	private Object jsonObjectToObject(Integer integer) {
 		System.out.println("jsonObjectToObject Integer");
 		return integer;
 	}
-	
+
 	private Object jsonObjectToObject(Double dbl) {
 		System.out.println("jsonObjectToObject Double");
 		return dbl;
 	}
-	
+
 	private Object jsonObjectToObject(String string) {
 		System.out.println("jsonObjectToObject String");
 		if (string != null && string.equals(JSONObject.NULL.toString()))
@@ -256,19 +262,19 @@ public class Rjson {
 		if (default_transformers != null)
 			return;
 		default_transformers = new ArrayList<Transformer>();
-		AbstractTransformer toJsonTransformer = new ToJsonTransformer();
-		AbstractTransformer iterableTransformer = new IterableTransformer();
-		AbstractTransformer mapTransformer = new MapTransformer();
-		AbstractTransformer arrayTransformer = new ArrayTransformer();
 
-		default_transformers.add(toJsonTransformer);
-		default_transformers.add(iterableTransformer);
-		default_transformers.add(mapTransformer);
-		default_transformers.add(arrayTransformer);
+		default_transformers.add(new LeafBooleanTransformer());
+		default_transformers.add(new LeafCharacterTransformer());
+		default_transformers.add(new LeafDateTransformer());
+		default_transformers.add(new LeafNumberTransformer());
+		default_transformers.add(new LeafPrimitiveTransformer());
+		default_transformers.add(new LeafStringTransformer());
+		default_transformers.add(new IterableTransformer());
+		default_transformers.add(new MapTransformer());
+		default_transformers.add(new ArrayTransformer());
 	}
 
-	private void registerTransformer(Transformer transformer,
-			boolean replaceIfExists) {
+	private void registerTransformer(Transformer transformer, boolean replaceIfExists) {
 		if (transformer == null)
 			return;
 		String key = transformer.getClass().getName();

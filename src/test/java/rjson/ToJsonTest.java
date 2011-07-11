@@ -166,7 +166,7 @@ public class ToJsonTest {
 		Rjson rjson = serializer().andDoNotIgnoreModifiers();
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object-respecting-modifiers.txt");
 		String actualJson = rjson.toJson(Person.getFullyLoadedInstance());
-		// Assert.assertEquals(expectedJson, actualJson);
+		Assert.assertEquals(expectedJson, actualJson);
 	}
 
 	@Test
