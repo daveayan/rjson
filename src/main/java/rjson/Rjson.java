@@ -42,13 +42,13 @@ import rjson.transformer.LeafNumberTransformer;
 import rjson.transformer.LeafPrimitiveTransformer;
 import rjson.transformer.LeafStringTransformer;
 import rjson.transformer.MapTransformer;
-import rjson.transformer.Transformer;
+import rjson.transformer.ObjectToJsonTransformer;
 import rjson.utils.RjsonUtil;
 
 public class Rjson {
 	private static AbstractTransformer anyObjectTransformer = null;
-	private static List<Transformer> default_transformers = null;
-	private static Map<String, Transformer> custom_transformers = null;
+	private static List<ObjectToJsonTransformer> default_transformers = null;
+	private static Map<String, ObjectToJsonTransformer> custom_transformers = null;
 	private boolean ignoreModifiers = false;
 
 	public static Rjson newInstance() {
@@ -57,21 +57,21 @@ public class Rjson {
 		return rjson;
 	}
 
-	public Rjson with(List<Transformer> transformers) {
+	public Rjson with(List<ObjectToJsonTransformer> transformers) {
 		if (transformers == null)
 			return this;
-		for (Transformer t : transformers) {
+		for (ObjectToJsonTransformer t : transformers) {
 			this.registerTransformer(t, true);
 		}
 		return this;
 	}
 
-	public Rjson with(Transformer transformer) {
+	public Rjson with(ObjectToJsonTransformer transformer) {
 		this.registerTransformer(transformer, true);
 		return this;
 	}
 
-	public Rjson and(Transformer transformer) {
+	public Rjson and(ObjectToJsonTransformer transformer) {
 		return with(transformer);
 	}
 
@@ -162,7 +162,7 @@ public class Rjson {
 		return null;
 	}
 
-	private Object jsonObjectToObjectControl(Object jf) {
+	public Object jsonObjectToObjectControl(Object jf) {
 		if (jf instanceof JSONObject) {
 			if (((JSONObject) jf).has("class"))
 				return jsonObjectToObject((JSONObject) jf);
@@ -229,13 +229,13 @@ public class Rjson {
 
 	public void convertToJson(Object object, Printer printer) {
 		try {
-			for (Transformer transformer : custom_transformers.values()) {
+			for (ObjectToJsonTransformer transformer : custom_transformers.values()) {
 				if (transformer.canHandle(object)) {
 					transformer.transformToJson(object, printer, this);
 					return;
 				}
 			}
-			for (Transformer transformer : default_transformers) {
+			for (ObjectToJsonTransformer transformer : default_transformers) {
 				if (transformer.canHandle(object)) {
 					transformer.transformToJson(object, printer, this);
 					return;
@@ -254,14 +254,14 @@ public class Rjson {
 
 	private void initialize() {
 		setUpdefaultTransformers();
-		custom_transformers = new HashMap<String, Transformer>();
+		custom_transformers = new HashMap<String, ObjectToJsonTransformer>();
 		anyObjectTransformer = new FieldBasedTransformer();
 	}
 
 	private void setUpdefaultTransformers() {
 		if (default_transformers != null)
 			return;
-		default_transformers = new ArrayList<Transformer>();
+		default_transformers = new ArrayList<ObjectToJsonTransformer>();
 
 		default_transformers.add(new LeafBooleanTransformer());
 		default_transformers.add(new LeafCharacterTransformer());
@@ -274,7 +274,7 @@ public class Rjson {
 		default_transformers.add(new ArrayTransformer());
 	}
 
-	private void registerTransformer(Transformer transformer, boolean replaceIfExists) {
+	private void registerTransformer(ObjectToJsonTransformer transformer, boolean replaceIfExists) {
 		if (transformer == null)
 			return;
 		String key = transformer.getClass().getName();

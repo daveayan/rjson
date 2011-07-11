@@ -17,12 +17,26 @@
  */
 package rjson.transformer;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
+import org.json.JSONArray;
 
 import rjson.Rjson;
 import rjson.printer.Printer;
 
-public class IterableTransformer extends AbstractTransformer {
+public class IterableTransformer extends AbstractTransformer implements JsonToObjectTransformer {
+
+	public Object transformJsonToObject(Object object, Rjson rjson) {
+		JSONArray ja = (JSONArray) object;
+		System.out.println("jsonObjectToObject JSONArray");
+		List<Object> newList = new ArrayList<Object>();
+		for (Object item : ja.getList()) {
+			newList.add(rjson.jsonObjectToObjectControl(item));
+		}
+		return newList;
+	}
 
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		printer.print("[");

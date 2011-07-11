@@ -19,7 +19,7 @@ import rjson.domain.ObjectWithTransient;
 import rjson.domain.Person;
 import rjson.printer.Printer;
 import rjson.transformer.FieldBasedTransformer;
-import rjson.transformer.Transformer;
+import rjson.transformer.ObjectToJsonTransformer;
 
 public class ToJsonTest {
 	@Test
@@ -199,7 +199,7 @@ public class ToJsonTest {
 
 	@Test
 	public void toJsonPersonObjectNotIncludingAddress() throws IOException {
-		Transformer excludeAddressTransformer = new FieldBasedTransformer() {
+		ObjectToJsonTransformer excludeAddressTransformer = new FieldBasedTransformer() {
 			@Override
 			public boolean canHandle(Object object) {
 				if (object instanceof java.util.Map<?, ?>)
@@ -220,7 +220,7 @@ public class ToJsonTest {
 
 	@Test
 	public void toJsonPersonObjectExcludingAddress() throws IOException {
-		Transformer excludeAddressTransformer = new FieldBasedTransformer() {
+		ObjectToJsonTransformer excludeAddressTransformer = new FieldBasedTransformer() {
 			@Override
 			public boolean canHandle(Object object) {
 				if (object instanceof java.util.Map<?, ?>)
@@ -240,7 +240,7 @@ public class ToJsonTest {
 	}
 
 	private Rjson serializer() {
-		Transformer ignoreDateTransformer = new Transformer() {
+		ObjectToJsonTransformer ignoreDateTransformer = new ObjectToJsonTransformer() {
 			public boolean canHandle(Object object) {
 				if (object instanceof java.util.Date)
 					return true;
@@ -249,6 +249,10 @@ public class ToJsonTest {
 
 			public void transformToJson(Object object, Printer printer, Rjson rjson) {
 				return;
+			}
+
+			public Object transformJsonToObject(Object object, Rjson rjson) {
+				return null;
 			}
 		};
 		return Rjson.newInstance().with(ignoreDateTransformer).andIgnoreModifiers();

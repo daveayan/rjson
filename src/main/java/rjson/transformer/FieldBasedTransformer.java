@@ -22,11 +22,42 @@ import java.lang.reflect.Modifier;
 import java.util.Iterator;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import rjson.Rjson;
 import rjson.printer.Printer;
 import rjson.utils.RjsonUtil;
 
-public class FieldBasedTransformer extends ReflectionBasedTransformer {
+public class FieldBasedTransformer extends ReflectionBasedTransformer implements JsonToObjectTransformer {
+
+	public Object transformJsonToObject(Object object, Rjson rjson) {
+		JSONObject jo = (JSONObject) object;
+		try {
+			Object objectToBeReturned = RjsonUtil.objectFor(jo.getString("class"));
+			List<Field> fields = RjsonUtil.getAllFieldsIn(objectToBeReturned);
+			Iterator<Field> iter = fields.iterator();
+			while (iter.hasNext()) {
+				Field field = iter.next();
+				RjsonUtil.makeAccessible(field);
+				Object jsonField = jo.get(field.getName());
+				String jsonFieldContents = jsonField.toString();
+				System.out.println("***===>>>" + field.getType().getName() + " : " + " : " + jsonField.getClass().getName() + " : " + jsonFieldContents
+						+ " <<<===***");
+				Object returnedObject = rjson.jsonObjectToObjectControl(jsonField);
+				RjsonUtil.setField(field, objectToBeReturned, returnedObject);
+			}
+			return objectToBeReturned;
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public void reflectionBasedTransform(Object object, Printer printer, Rjson rjson) {
@@ -40,9 +71,9 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 				Field field = iter.next();
 				if (Modifier.isTransient(field.getModifiers()))
 					continue;
-				if(Modifier.isFinal(field.getModifiers()))
+				if (Modifier.isFinal(field.getModifiers()))
 					continue;
-				if(rjson.ignoreModifiers() || RjsonUtil.isAccessible(field)) {
+				if (rjson.ignoreModifiers() || RjsonUtil.isAccessible(field)) {
 					RjsonUtil.makeAccessible(field);
 					try {
 						Object newObject = field.get(object);
@@ -66,7 +97,7 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 					}
 					if (include(field) && iter.hasNext()) {
 						pendingHasMoreElements = true;
-				}
+					}
 				}
 			}
 		}

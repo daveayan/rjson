@@ -8,7 +8,13 @@ public class SampleTransformer extends AbstractTransformer {
 	public boolean canHandle(Object object) {
 		return false;
 	}
-	public void transformToJson(Object object, Printer printer, Rjson rjson) {	
+
+	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		printData(null, printer);
+	}
+
+	public Object transformJsonToObject(Object object, Rjson rjson) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
