@@ -24,7 +24,7 @@ import rjson.Rjson;
 import rjson.printer.Printer;
 
 public class MapTransformer extends AbstractTransformer {
-	public void transform(Object object, Printer printer, Rjson rjson) {
+	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		printer.print("{");
 		printer.increaseIndent();
 		printer.indent();

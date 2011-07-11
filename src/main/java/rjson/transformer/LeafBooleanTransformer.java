@@ -4,7 +4,7 @@ import rjson.Rjson;
 import rjson.printer.Printer;
 
 public class LeafBooleanTransformer extends AbstractTransformer {
-	public void transform(Object object, Printer printer, Rjson rjson) {
+	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		if (object == null) {
 			printData(null, printer);
 			return;

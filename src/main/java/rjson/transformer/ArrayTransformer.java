@@ -25,9 +25,9 @@ import rjson.printer.Printer;
 
 public class ArrayTransformer extends IterableTransformer {
 
-	public void transform(Object object, Printer printer, Rjson rjson) {
+	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		List<?> arrayAsList = Arrays.asList((Object[]) object);
-		super.transform(arrayAsList, printer, rjson);
+		super.transformToJson(arrayAsList, printer, rjson);
 	}
 
 	public boolean canHandle(Object object) {

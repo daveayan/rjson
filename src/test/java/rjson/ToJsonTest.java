@@ -247,7 +247,7 @@ public class ToJsonTest {
 				return false;
 			}
 
-			public void transform(Object object, Printer printer, Rjson rjson) {
+			public void transformToJson(Object object, Printer printer, Rjson rjson) {
 				return;
 			}
 		};

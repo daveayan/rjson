@@ -231,17 +231,17 @@ public class Rjson {
 		try {
 			for (Transformer transformer : custom_transformers.values()) {
 				if (transformer.canHandle(object)) {
-					transformer.transform(object, printer, this);
+					transformer.transformToJson(object, printer, this);
 					return;
 				}
 			}
 			for (Transformer transformer : default_transformers) {
 				if (transformer.canHandle(object)) {
-					transformer.transform(object, printer, this);
+					transformer.transformToJson(object, printer, this);
 					return;
 				}
 			}
-			anyObjectTransformer.transform(object, printer, this);
+			anyObjectTransformer.transformToJson(object, printer, this);
 		} catch (Throwable th) {
 			th.printStackTrace();
 			// System.out.println("ERROR CONVERTING : " +

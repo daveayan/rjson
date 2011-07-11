@@ -21,7 +21,7 @@ import rjson.Rjson;
 import rjson.printer.Printer;
 
 public interface Transformer {
-	public void transform(Object object, Printer printer, Rjson rjson);
+	public void transformToJson(Object object, Printer printer, Rjson rjson);
 
 	public boolean canHandle(Object object);
 }
