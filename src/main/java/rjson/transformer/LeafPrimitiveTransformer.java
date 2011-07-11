@@ -17,13 +17,17 @@ public class LeafPrimitiveTransformer extends AbstractTransformer implements Jso
 		printData(object, printer);
 	}
 
-	public boolean canHandle(Object object) {
+	public boolean canConvertToJson(Object object) {
 		if (object == null) {
 			return true;
 		}
 		if (object.getClass().isPrimitive()) {
 			return true;
 		}
+		return false;
+	}
+
+	public boolean canConvertToObject(Object object) {
 		return false;
 	}
 }

@@ -17,13 +17,17 @@ public class LeafStringTransformer extends AbstractTransformer implements JsonTo
 		printData(object.toString(), printer);
 	}
 
-	public boolean canHandle(Object object) {
+	public boolean canConvertToJson(Object object) {
 		if (object == null) {
 			return true;
 		}
 		if (object instanceof java.lang.String) {
 			return true;
 		}
+		return false;
+	}
+
+	public boolean canConvertToObject(Object object) {
 		return false;
 	}
 }

@@ -201,7 +201,7 @@ public class ToJsonTest {
 	public void toJsonPersonObjectNotIncludingAddress() throws IOException {
 		ObjectToJsonTransformer excludeAddressTransformer = new FieldBasedTransformer() {
 			@Override
-			public boolean canHandle(Object object) {
+			public boolean canConvertToJson(Object object) {
 				if (object instanceof java.util.Map<?, ?>)
 					return true;
 				return false;
@@ -222,7 +222,7 @@ public class ToJsonTest {
 	public void toJsonPersonObjectExcludingAddress() throws IOException {
 		ObjectToJsonTransformer excludeAddressTransformer = new FieldBasedTransformer() {
 			@Override
-			public boolean canHandle(Object object) {
+			public boolean canConvertToJson(Object object) {
 				if (object instanceof java.util.Map<?, ?>)
 					return true;
 				return false;
@@ -241,7 +241,7 @@ public class ToJsonTest {
 
 	private Rjson serializer() {
 		ObjectToJsonTransformer ignoreDateTransformer = new ObjectToJsonTransformer() {
-			public boolean canHandle(Object object) {
+			public boolean canConvertToJson(Object object) {
 				if (object instanceof java.util.Date)
 					return true;
 				return false;

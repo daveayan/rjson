@@ -61,12 +61,16 @@ public class IterableTransformer extends AbstractTransformer implements JsonToOb
 		printer.print("]");
 	}
 
-	public boolean canHandle(Object object) {
+	public boolean canConvertToJson(Object object) {
 		if (object != null) {
 			if (object instanceof java.lang.Iterable<?>) {
 				return true;
 			}
 		}
+		return false;
+	}
+
+	public boolean canConvertToObject(Object object) {
 		return false;
 	}
 }

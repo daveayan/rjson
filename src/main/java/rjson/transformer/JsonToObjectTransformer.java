@@ -5,5 +5,5 @@ import rjson.Rjson;
 public interface JsonToObjectTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson);
 
-	public boolean canHandle(Object object);
+	public boolean canConvertToObject(Object object);
 }

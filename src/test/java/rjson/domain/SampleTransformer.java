@@ -5,7 +5,7 @@ import rjson.printer.Printer;
 import rjson.transformer.AbstractTransformer;
 
 public class SampleTransformer extends AbstractTransformer {
-	public boolean canHandle(Object object) {
+	public boolean canConvertToJson(Object object) {
 		return false;
 	}
 

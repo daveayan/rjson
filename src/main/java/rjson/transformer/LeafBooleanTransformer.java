@@ -17,13 +17,17 @@ public class LeafBooleanTransformer extends AbstractTransformer implements JsonT
 		printData(object, printer);
 	}
 
-	public boolean canHandle(Object object) {
+	public boolean canConvertToJson(Object object) {
 		if (object == null) {
 			return true;
 		}
 		if (object instanceof java.lang.Boolean) {
 			return true;
 		}
+		return false;
+	}
+
+	public boolean canConvertToObject(Object object) {
 		return false;
 	}
 }

@@ -24,7 +24,7 @@ import rjson.utils.RjsonUtil;
 public abstract class AbstractTransformer implements ObjectToJsonTransformer {
 	public static final String MESSAGE_ERROR = "ERROR - ";
 
-	public boolean canHandle(Object object) {
+	public boolean canConvertToJson(Object object) {
 		return false;
 	}
 

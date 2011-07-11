@@ -30,7 +30,7 @@ public class ArrayTransformer extends IterableTransformer {
 		super.transformToJson(arrayAsList, printer, rjson);
 	}
 
-	public boolean canHandle(Object object) {
+	public boolean canConvertToJson(Object object) {
 		if (object != null) {
 			if (object.getClass().isArray()) {
 				return true;

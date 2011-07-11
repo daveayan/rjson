@@ -103,7 +103,11 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer implements
 		}
 	}
 
-	public boolean canHandle(Object object) {
+	public boolean canConvertToJson(Object object) {
+		return true;
+	}
+
+	public boolean canConvertToObject(Object object) {
 		return true;
 	}
 }

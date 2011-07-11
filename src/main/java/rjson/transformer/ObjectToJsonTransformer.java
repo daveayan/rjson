@@ -23,5 +23,5 @@ import rjson.printer.Printer;
 public interface ObjectToJsonTransformer {
 	public void transformToJson(Object object, Printer printer, Rjson rjson);
 
-	public boolean canHandle(Object object);
+	public boolean canConvertToJson(Object object);
 }

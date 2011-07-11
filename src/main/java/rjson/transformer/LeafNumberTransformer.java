@@ -17,13 +17,17 @@ public class LeafNumberTransformer extends AbstractTransformer implements JsonTo
 		printData(object, printer);
 	}
 
-	public boolean canHandle(Object object) {
+	public boolean canConvertToJson(Object object) {
 		if (object == null) {
 			return true;
 		}
 		if (object instanceof java.lang.Number) {
 			return true;
 		}
+		return false;
+	}
+
+	public boolean canConvertToObject(Object object) {
 		return false;
 	}
 }

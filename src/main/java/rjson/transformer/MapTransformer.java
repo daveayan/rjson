@@ -64,10 +64,14 @@ public class MapTransformer extends AbstractTransformer implements JsonToObjectT
 		printer.print("}");
 	}
 
-	public boolean canHandle(Object object) {
+	public boolean canConvertToJson(Object object) {
 		if (object instanceof java.util.Map<?, ?>) {
 			return true;
 		}
+		return false;
+	}
+
+	public boolean canConvertToObject(Object object) {
 		return false;
 	}
 }

@@ -230,13 +230,13 @@ public class Rjson {
 	public void convertToJson(Object object, Printer printer) {
 		try {
 			for (ObjectToJsonTransformer transformer : custom_transformers.values()) {
-				if (transformer.canHandle(object)) {
+				if (transformer.canConvertToJson(object)) {
 					transformer.transformToJson(object, printer, this);
 					return;
 				}
 			}
 			for (ObjectToJsonTransformer transformer : default_transformers) {
-				if (transformer.canHandle(object)) {
+				if (transformer.canConvertToJson(object)) {
 					transformer.transformToJson(object, printer, this);
 					return;
 				}
