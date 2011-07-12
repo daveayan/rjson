@@ -15,7 +15,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package rjson.transformer;
+package rjson.transformer.tojson;
 
 import java.util.Arrays;
 import java.util.List;

@@ -15,13 +15,15 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package rjson.transformer;
+package rjson.transformer.tojson;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import rjson.Rjson;
 import rjson.printer.Printer;
+import rjson.transformer.ObjectToJsonTransformer;
+import rjson.transformer.ToJsonTransformationUtils;
 
 public abstract class ReflectionBasedTransformer implements ObjectToJsonTransformer {
 

@@ -19,20 +19,20 @@ public class ToJsonTransformationUtils {
 		printer.print(MESSAGE_ERROR + "Serializing " + object.getClass().getName() + " is not implemented yet");
 	}
 
-	protected static void printClassName(Object object, Printer printer) {
+	public static void printClassName(Object object, Printer printer) {
 		printer.indent();
 		printer.print("\"class\": ");
 		printData(object.getClass().getName(), printer);
 		hasMoreElements(printer);
 	}
 
-	protected static void printFieldName(String fieldName, Printer printer) {
+	public static void printFieldName(String fieldName, Printer printer) {
 		printer.printNewLine();
 		printer.indent();
 		printer.print("\"" + fieldName + "\": ");
 	}
 
-	protected static void printMapKeyName(String keyName, Printer printer) {
+	public static void printMapKeyName(String keyName, Printer printer) {
 		printer.printNewLine();
 		printer.indent();
 		printer.print("\"" + keyName + "\": ");
@@ -42,11 +42,11 @@ public class ToJsonTransformationUtils {
 		printer.print("\"" + RjsonUtil.escapeJsonCharactersIn(data) + "\"");
 	}
 
-	protected static void printData(Object object, Printer printer) {
+	public static void printData(Object object, Printer printer) {
 		printer.print("" + object + "");
 	}
 
-	protected static void hasMoreElements(Printer printer) {
+	public static void hasMoreElements(Printer printer) {
 		printer.print(", ");
 	}
 	

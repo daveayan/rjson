@@ -1,9 +1,14 @@
-package rjson.transformer;
+package rjson.transformer.tojson;
+
+import java.util.Date;
 
 import rjson.Rjson;
 import rjson.printer.Printer;
+import rjson.transformer.JsonToObjectTransformer;
+import rjson.transformer.ObjectToJsonTransformer;
+import rjson.transformer.ToJsonTransformationUtils;
 
-public class LeafPrimitiveTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
+public class LeafDateTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson) {
 		// TODO Auto-generated method stub
 		return null;
@@ -14,14 +19,14 @@ public class LeafPrimitiveTransformer implements ObjectToJsonTransformer, JsonTo
 			ToJsonTransformationUtils.printData(null, printer);
 			return;
 		}
-		ToJsonTransformationUtils.printData(object, printer);
+		ToJsonTransformationUtils.printData(((Date) object).getTime(), printer);
 	}
 
 	public boolean canConvertToJson(Object object) {
 		if (object == null) {
 			return true;
 		}
-		if (object.getClass().isPrimitive()) {
+		if (object instanceof java.util.Date) {
 			return true;
 		}
 		return false;

@@ -1,9 +1,12 @@
-package rjson.transformer;
+package rjson.transformer.tojson;
 
 import rjson.Rjson;
 import rjson.printer.Printer;
+import rjson.transformer.JsonToObjectTransformer;
+import rjson.transformer.ObjectToJsonTransformer;
+import rjson.transformer.ToJsonTransformationUtils;
 
-public class LeafNumberTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
+public class LeafStringTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson) {
 		// TODO Auto-generated method stub
 		return null;
@@ -14,14 +17,14 @@ public class LeafNumberTransformer implements ObjectToJsonTransformer, JsonToObj
 			ToJsonTransformationUtils.printData(null, printer);
 			return;
 		}
-		ToJsonTransformationUtils.printData(object, printer);
+		ToJsonTransformationUtils.printData(object.toString(), printer);
 	}
 
 	public boolean canConvertToJson(Object object) {
 		if (object == null) {
 			return true;
 		}
-		if (object instanceof java.lang.Number) {
+		if (object instanceof java.lang.String) {
 			return true;
 		}
 		return false;

@@ -15,42 +15,48 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package rjson.transformer;
+package rjson.transformer.tojson;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
-import org.json.JSONArray;
+import org.json.JSONObject;
 
 import rjson.Rjson;
 import rjson.printer.Printer;
+import rjson.transformer.JsonToObjectTransformer;
+import rjson.transformer.ObjectToJsonTransformer;
+import rjson.transformer.ToJsonTransformationUtils;
 
-public class IterableTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
-
+public class MapTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson) {
-		JSONArray ja = (JSONArray) object;
-		System.out.println("jsonObjectToObject JSONArray");
-		List<Object> newList = new ArrayList<Object>();
-		for (Object item : ja.getList()) {
-			newList.add(rjson.jsonObjectToObjectControl(item));
+		JSONObject jo = (JSONObject) object;
+		System.out.println("jsonObjectToObjectMap JSONObject");
+		Map<Object, Object> newMap = new HashMap<Object, Object>();
+		Iterator<?> iter = jo.getMap().keySet().iterator();
+		while (iter.hasNext()) {
+			Object key = iter.next();
+			newMap.put(key, rjson.jsonObjectToObjectControl(jo.getMap().get(key)));
 		}
-		return newList;
+		return newMap;
 	}
 
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
-		printer.print("[");
+		printer.print("{");
 		printer.increaseIndent();
 		printer.indent();
 		if (object == null)
 			return;
-		Iterator<?> iter = ((Iterable<?>) object).iterator();
+
+		Map<?, ?> objectMap = (Map<?, ?>) object;
+		Iterator<?> iter = objectMap.keySet().iterator();
 		while (true) {
 			if (!iter.hasNext())
 				break;
-			Object newObject = iter.next();
-			printer.printNewLine();
-			printer.indent();
+			Object key = iter.next();
+			Object newObject = objectMap.get(key);
+			ToJsonTransformationUtils.printMapKeyName(key.toString(), printer);
 			ToJsonTransformationUtils.delegateHandlingOf(newObject, printer, rjson);
 			if (iter.hasNext())
 				ToJsonTransformationUtils.hasMoreElements(printer);
@@ -58,14 +64,12 @@ public class IterableTransformer implements ObjectToJsonTransformer, JsonToObjec
 		printer.printNewLine();
 		printer.decreaseIndent();
 		printer.indent();
-		printer.print("]");
+		printer.print("}");
 	}
 
 	public boolean canConvertToJson(Object object) {
-		if (object != null) {
-			if (object instanceof java.lang.Iterable<?>) {
-				return true;
-			}
+		if (object instanceof java.util.Map<?, ?>) {
+			return true;
 		}
 		return false;
 	}

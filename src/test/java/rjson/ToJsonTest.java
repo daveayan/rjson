@@ -18,8 +18,8 @@ import rjson.domain.IgnoreDateTransformer;
 import rjson.domain.ObjectWithFinal;
 import rjson.domain.ObjectWithTransient;
 import rjson.domain.Person;
-import rjson.transformer.FieldBasedTransformer;
 import rjson.transformer.ObjectToJsonTransformer;
+import rjson.transformer.tojson.FieldBasedTransformer;
 
 public class ToJsonTest {
 	@Test

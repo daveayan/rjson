@@ -2,11 +2,6 @@
 {
     "class": "rjson.domain.Person", 
     "name": "QWERTY", 
-    "addresses": 
-    {
-        "class": "java.util.HashMap", 
-        "threshold": 12
-    }, 
     "phones": [        
         
         {
@@ -29,11 +24,6 @@
             "class": "rjson.domain.Account", 
             "accountNumber": 123, 
             "balance": 100.0, 
-            "someMap": 
-            {
-                "class": "java.util.HashMap", 
-                "threshold": 12
-            }, 
             "id": 1
         }
     ], 
