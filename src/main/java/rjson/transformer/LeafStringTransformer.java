@@ -3,7 +3,7 @@ package rjson.transformer;
 import rjson.Rjson;
 import rjson.printer.Printer;
 
-public class LeafStringTransformer extends AbstractTransformer implements JsonToObjectTransformer {
+public class LeafStringTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson) {
 		// TODO Auto-generated method stub
 		return null;
@@ -11,10 +11,10 @@ public class LeafStringTransformer extends AbstractTransformer implements JsonTo
 
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		if (object == null) {
-			printData(null, printer);
+			ToJsonTransformationUtils.printData(null, printer);
 			return;
 		}
-		printData(object.toString(), printer);
+		ToJsonTransformationUtils.printData(object.toString(), printer);
 	}
 
 	public boolean canConvertToJson(Object object) {

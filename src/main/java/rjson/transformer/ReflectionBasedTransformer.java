@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
 import rjson.Rjson;
 import rjson.printer.Printer;
 
-public abstract class ReflectionBasedTransformer extends AbstractTransformer {
+public abstract class ReflectionBasedTransformer implements ObjectToJsonTransformer {
 
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		printer.printNewLine();
@@ -34,7 +34,7 @@ public abstract class ReflectionBasedTransformer extends AbstractTransformer {
 		if (object == null)
 			return;
 
-		printClassName(object, printer);
+		ToJsonTransformationUtils.printClassName(object, printer);
 
 		reflectionBasedTransform(object, printer, rjson);
 

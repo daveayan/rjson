@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import rjson.Rjson;
 import rjson.printer.Printer;
 
-public class MapTransformer extends AbstractTransformer implements JsonToObjectTransformer {
+public class MapTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson) {
 		JSONObject jo = (JSONObject) object;
 		System.out.println("jsonObjectToObjectMap JSONObject");
@@ -53,10 +53,10 @@ public class MapTransformer extends AbstractTransformer implements JsonToObjectT
 				break;
 			Object key = iter.next();
 			Object newObject = objectMap.get(key);
-			printMapKeyName(key.toString(), printer);
-			delegateHandlingOf(newObject, printer, rjson);
+			ToJsonTransformationUtils.printMapKeyName(key.toString(), printer);
+			ToJsonTransformationUtils.delegateHandlingOf(newObject, printer, rjson);
 			if (iter.hasNext())
-				hasMoreElements(printer);
+				ToJsonTransformationUtils.hasMoreElements(printer);
 		}
 		printer.printNewLine();
 		printer.decreaseIndent();

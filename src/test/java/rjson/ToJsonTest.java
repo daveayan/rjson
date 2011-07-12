@@ -14,10 +14,10 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import rjson.domain.IgnoreDateTransformer;
 import rjson.domain.ObjectWithFinal;
 import rjson.domain.ObjectWithTransient;
 import rjson.domain.Person;
-import rjson.printer.Printer;
 import rjson.transformer.FieldBasedTransformer;
 import rjson.transformer.ObjectToJsonTransformer;
 
@@ -173,6 +173,7 @@ public class ToJsonTest {
 	public void toJsonAComplexObject() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object.txt");
 		String actualJson = serializer().toJson(Person.getFullyLoadedInstance());
+		System.out.println(actualJson);
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 
@@ -240,22 +241,7 @@ public class ToJsonTest {
 	}
 
 	private Rjson serializer() {
-		ObjectToJsonTransformer ignoreDateTransformer = new ObjectToJsonTransformer() {
-			public boolean canConvertToJson(Object object) {
-				if (object instanceof java.util.Date)
-					return true;
-				return false;
-			}
-
-			public void transformToJson(Object object, Printer printer, Rjson rjson) {
-				return;
-			}
-
-			public Object transformJsonToObject(Object object, Rjson rjson) {
-				return null;
-			}
-		};
-		return Rjson.newInstance().with(ignoreDateTransformer).andIgnoreModifiers();
+		return Rjson.newInstance().with(new IgnoreDateTransformer()).andIgnoreModifiers();
 	}
 
 	private String fileAsString(String file) throws IOException {

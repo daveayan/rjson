@@ -26,7 +26,7 @@ import org.json.JSONArray;
 import rjson.Rjson;
 import rjson.printer.Printer;
 
-public class IterableTransformer extends AbstractTransformer implements JsonToObjectTransformer {
+public class IterableTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
 
 	public Object transformJsonToObject(Object object, Rjson rjson) {
 		JSONArray ja = (JSONArray) object;
@@ -51,9 +51,9 @@ public class IterableTransformer extends AbstractTransformer implements JsonToOb
 			Object newObject = iter.next();
 			printer.printNewLine();
 			printer.indent();
-			delegateHandlingOf(newObject, printer, rjson);
+			ToJsonTransformationUtils.delegateHandlingOf(newObject, printer, rjson);
 			if (iter.hasNext())
-				hasMoreElements(printer);
+				ToJsonTransformationUtils.hasMoreElements(printer);
 		}
 		printer.printNewLine();
 		printer.decreaseIndent();

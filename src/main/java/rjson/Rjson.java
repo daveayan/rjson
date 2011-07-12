@@ -31,7 +31,6 @@ import org.json.JSONTokener;
 
 import rjson.printer.Printer;
 import rjson.printer.StringBufferPrinter;
-import rjson.transformer.AbstractTransformer;
 import rjson.transformer.ArrayTransformer;
 import rjson.transformer.FieldBasedTransformer;
 import rjson.transformer.IterableTransformer;
@@ -46,7 +45,7 @@ import rjson.transformer.ObjectToJsonTransformer;
 import rjson.utils.RjsonUtil;
 
 public class Rjson {
-	private static AbstractTransformer anyObjectTransformer = null;
+	private static ObjectToJsonTransformer anyObjectTransformer = null;
 	private static List<ObjectToJsonTransformer> default_transformers = null;
 	private static Map<String, ObjectToJsonTransformer> custom_transformers = null;
 	private boolean ignoreModifiers = false;

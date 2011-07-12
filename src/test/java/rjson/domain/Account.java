@@ -24,7 +24,7 @@ import java.util.Map;
 public class Account extends BaseDomainObject {
 	private int accountNumber;
 	private float balance;
-	private Date lastUpdate;
+	public Date lastUpdate = new Date();
 	Map<String, String> someMap = new HashMap<String, String>();
 
 	public Map<String, String> getSomeMap() {

@@ -82,11 +82,11 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer implements
 						}
 						if (include(field)) {
 							if (pendingHasMoreElements) {
-								hasMoreElements(printer);
+								ToJsonTransformationUtils.hasMoreElements(printer);
 								pendingHasMoreElements = false;
 							}
-							printFieldName(field.getName(), printer);
-							delegateHandlingOf(newObject, printer, rjson);
+							ToJsonTransformationUtils.printFieldName(field.getName(), printer);
+							ToJsonTransformationUtils.delegateHandlingOf(newObject, printer, rjson);
 						}
 					} catch (IllegalArgumentException e) {
 						// TODO Auto-generated catch block

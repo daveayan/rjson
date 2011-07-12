@@ -5,7 +5,7 @@ import java.util.Date;
 import rjson.Rjson;
 import rjson.printer.Printer;
 
-public class LeafDateTransformer extends AbstractTransformer implements JsonToObjectTransformer {
+public class LeafDateTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson) {
 		// TODO Auto-generated method stub
 		return null;
@@ -13,10 +13,10 @@ public class LeafDateTransformer extends AbstractTransformer implements JsonToOb
 
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		if (object == null) {
-			printData(null, printer);
+			ToJsonTransformationUtils.printData(null, printer);
 			return;
 		}
-		printData(((Date) object).getTime(), printer);
+		ToJsonTransformationUtils.printData(((Date) object).getTime(), printer);
 	}
 
 	public boolean canConvertToJson(Object object) {
