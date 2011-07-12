@@ -141,12 +141,14 @@ public class Rjson {
 			while (iter.hasNext()) {
 				Field field = iter.next();
 				RjsonUtil.makeAccessible(field);
-				Object jsonField = jo.get(field.getName());
-				String jsonFieldContents = jsonField.toString();
-				System.out.println("***===>>>" + field.getType().getName() + " : " + " : " + jsonField.getClass().getName() + " : " + jsonFieldContents
-						+ " <<<===***");
-				Object object = jsonObjectToObjectControl(jsonField);
-				setField(field, objectToBeReturned, object);
+				if (jo.has(field.getName())) {
+					Object jsonField = jo.get(field.getName());
+					String jsonFieldContents = jsonField.toString();
+					System.out.println("***===>>>" + field.getType().getName() + " : " + " : " + jsonField.getClass().getName() + " : " + jsonFieldContents
+							+ " <<<===***");
+					Object object = jsonObjectToObjectControl(jsonField);
+					setField(field, objectToBeReturned, object);
+				}
 			}
 			return objectToBeReturned;
 		} catch (SecurityException e) {
