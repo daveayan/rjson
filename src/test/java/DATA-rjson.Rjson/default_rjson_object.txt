@@ -3,44 +3,44 @@
     "class": "rjson.Rjson", 
     "anyObjectTransformer": 
     {
-        "class": "rjson.transformer.FieldBasedTransformer", 
+        "class": "rjson.transformer.tojson.FieldBasedTransformer", 
     }, 
     "default_transformers": [        
         
         {
-            "class": "rjson.transformer.LeafBooleanTransformer", 
+            "class": "rjson.transformer.tojson.LeafBooleanTransformer", 
         }, 
         
         {
-            "class": "rjson.transformer.LeafCharacterTransformer", 
+            "class": "rjson.transformer.tojson.LeafCharacterTransformer", 
         }, 
         
         {
-            "class": "rjson.transformer.LeafDateTransformer", 
+            "class": "rjson.transformer.tojson.LeafDateTransformer", 
         }, 
         
         {
-            "class": "rjson.transformer.LeafNumberTransformer", 
+            "class": "rjson.transformer.tojson.LeafNumberTransformer", 
         }, 
         
         {
-            "class": "rjson.transformer.LeafPrimitiveTransformer", 
+            "class": "rjson.transformer.tojson.LeafPrimitiveTransformer", 
         }, 
         
         {
-            "class": "rjson.transformer.LeafStringTransformer", 
+            "class": "rjson.transformer.tojson.LeafStringTransformer", 
         }, 
         
         {
-            "class": "rjson.transformer.IterableTransformer", 
+            "class": "rjson.transformer.tojson.IterableTransformer", 
         }, 
         
         {
-            "class": "rjson.transformer.MapTransformer", 
+            "class": "rjson.transformer.tojson.MapTransformer", 
         }, 
         
         {
-            "class": "rjson.transformer.ArrayTransformer", 
+            "class": "rjson.transformer.tojson.ArrayTransformer", 
         }
     ], 
     "custom_transformers": {        

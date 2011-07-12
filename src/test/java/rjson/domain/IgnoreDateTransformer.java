@@ -1,17 +1,20 @@
 package rjson.domain;
 
-import rjson.Rjson;
-import rjson.printer.Printer;
-import rjson.transformer.ObjectToJsonTransformer;
-import rjson.transformer.ToJsonTransformationUtils;
+import java.lang.reflect.Field;
 
-public class IgnoreDateTransformer implements ObjectToJsonTransformer {
+import rjson.transformer.tojson.FieldBasedTransformer;
+
+public class IgnoreDateTransformer extends FieldBasedTransformer {
 	public boolean canConvertToJson(Object object) {
-		if (object instanceof java.util.Date)
+		if (object instanceof rjson.domain.Account)
 			return true;
 		return false;
 	}
-	public void transformToJson(Object object, Printer printer, Rjson rjson) {
-		ToJsonTransformationUtils.printData(null, printer);
+	
+	public boolean exclude(Field field) {
+		if(field.getName().equals("lastUpdate")) {
+			return true;
+		}
+		return false;
 	}
 }

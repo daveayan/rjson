@@ -203,7 +203,7 @@ public class ToJsonTest {
 		ObjectToJsonTransformer excludeAddressTransformer = new FieldBasedTransformer() {
 			@Override
 			public boolean canConvertToJson(Object object) {
-				if (object instanceof java.util.Map<?, ?>)
+				if (object instanceof rjson.domain.Person)
 					return true;
 				return false;
 			}
@@ -224,7 +224,7 @@ public class ToJsonTest {
 		ObjectToJsonTransformer excludeAddressTransformer = new FieldBasedTransformer() {
 			@Override
 			public boolean canConvertToJson(Object object) {
-				if (object instanceof java.util.Map<?, ?>)
+				if (object instanceof rjson.domain.Person)
 					return true;
 				return false;
 			}

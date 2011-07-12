@@ -24,6 +24,10 @@
             "class": "rjson.domain.Account", 
             "accountNumber": 123, 
             "balance": 100.0, 
+            "someMap": {                
+                "A": "100", 
+                "B": "200"
+            }, 
             "id": 1
         }
     ], 
