@@ -1,11 +1,7 @@
 
 {
     "class": "rjson.Rjson", 
-    "anyObjectTransformer": 
-    {
-        "class": "rjson.transformer.tojson.FieldBasedTransformer", 
-    }, 
-    "default_transformers": [        
+    "default_object_to_json_transformers": [        
         
         {
             "class": "rjson.transformer.tojson.LeafBooleanTransformer", 
@@ -41,9 +37,13 @@
         
         {
             "class": "rjson.transformer.tojson.ArrayTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.tojson.FieldBasedTransformer", 
         }
     ], 
-    "custom_transformers": {        
+    "custom_object_to_transformers": {        
     }, 
     "ignoreModifiers": true
 }

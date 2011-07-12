@@ -45,9 +45,8 @@ import rjson.transformer.tojson.MapTransformer;
 import rjson.utils.RjsonUtil;
 
 public class Rjson {
-	private static ObjectToJsonTransformer anyObjectTransformer = null;
-	private static List<ObjectToJsonTransformer> default_transformers = null;
-	private static Map<String, ObjectToJsonTransformer> custom_transformers = null;
+	private static List<ObjectToJsonTransformer> default_object_to_json_transformers = null;
+	private static Map<String, ObjectToJsonTransformer> custom_object_to_transformers = null;
 	private boolean ignoreModifiers = false;
 
 	public static Rjson newInstance() {
@@ -228,19 +227,18 @@ public class Rjson {
 
 	public void convertToJson(Object object, Printer printer) {
 		try {
-			for (ObjectToJsonTransformer transformer : custom_transformers.values()) {
+			for (ObjectToJsonTransformer transformer : custom_object_to_transformers.values()) {
 				if (transformer.canConvertToJson(object)) {
 					transformer.transformToJson(object, printer, this);
 					return;
 				}
 			}
-			for (ObjectToJsonTransformer transformer : default_transformers) {
+			for (ObjectToJsonTransformer transformer : default_object_to_json_transformers) {
 				if (transformer.canConvertToJson(object)) {
 					transformer.transformToJson(object, printer, this);
 					return;
 				}
 			}
-			anyObjectTransformer.transformToJson(object, printer, this);
 		} catch (Throwable th) {
 			th.printStackTrace();
 			// System.out.println("ERROR CONVERTING : " +
@@ -253,37 +251,37 @@ public class Rjson {
 
 	private void initialize() {
 		setUpdefaultTransformers();
-		custom_transformers = new HashMap<String, ObjectToJsonTransformer>();
-		anyObjectTransformer = new FieldBasedTransformer();
+		custom_object_to_transformers = new HashMap<String, ObjectToJsonTransformer>();
 	}
 
 	private void setUpdefaultTransformers() {
-		if (default_transformers != null)
+		if (default_object_to_json_transformers != null)
 			return;
-		default_transformers = new ArrayList<ObjectToJsonTransformer>();
+		default_object_to_json_transformers = new ArrayList<ObjectToJsonTransformer>();
 
-		default_transformers.add(new LeafBooleanTransformer());
-		default_transformers.add(new LeafCharacterTransformer());
-		default_transformers.add(new LeafDateTransformer());
-		default_transformers.add(new LeafNumberTransformer());
-		default_transformers.add(new LeafPrimitiveTransformer());
-		default_transformers.add(new LeafStringTransformer());
-		default_transformers.add(new IterableTransformer());
-		default_transformers.add(new MapTransformer());
-		default_transformers.add(new ArrayTransformer());
+		default_object_to_json_transformers.add(new LeafBooleanTransformer());
+		default_object_to_json_transformers.add(new LeafCharacterTransformer());
+		default_object_to_json_transformers.add(new LeafDateTransformer());
+		default_object_to_json_transformers.add(new LeafNumberTransformer());
+		default_object_to_json_transformers.add(new LeafPrimitiveTransformer());
+		default_object_to_json_transformers.add(new LeafStringTransformer());
+		default_object_to_json_transformers.add(new IterableTransformer());
+		default_object_to_json_transformers.add(new MapTransformer());
+		default_object_to_json_transformers.add(new ArrayTransformer());
+		default_object_to_json_transformers.add(new FieldBasedTransformer());
 	}
 
 	private void registerTransformer(ObjectToJsonTransformer transformer, boolean replaceIfExists) {
 		if (transformer == null)
 			return;
 		String key = transformer.getClass().getName();
-		if (custom_transformers.containsKey(key)) {
+		if (custom_object_to_transformers.containsKey(key)) {
 			if (replaceIfExists) {
-				custom_transformers.remove(key);
-				custom_transformers.put(key, transformer);
+				custom_object_to_transformers.remove(key);
+				custom_object_to_transformers.put(key, transformer);
 			}
 		} else {
-			custom_transformers.put(key, transformer);
+			custom_object_to_transformers.put(key, transformer);
 		}
 	}
 
