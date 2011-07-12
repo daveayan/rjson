@@ -25,11 +25,10 @@ import org.json.JSONObject;
 
 import rjson.Rjson;
 import rjson.printer.Printer;
-import rjson.transformer.JsonToObjectTransformer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 
-public class MapTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
+public class MapTransformer implements ObjectToJsonTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson) {
 		JSONObject jo = (JSONObject) object;
 		System.out.println("jsonObjectToObjectMap JSONObject");
@@ -71,10 +70,6 @@ public class MapTransformer implements ObjectToJsonTransformer, JsonToObjectTran
 		if (object instanceof java.util.Map<?, ?>) {
 			return true;
 		}
-		return false;
-	}
-
-	public boolean canConvertToObject(Object object) {
 		return false;
 	}
 }

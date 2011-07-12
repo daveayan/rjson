@@ -2,16 +2,10 @@ package rjson.transformer.tojson;
 
 import rjson.Rjson;
 import rjson.printer.Printer;
-import rjson.transformer.JsonToObjectTransformer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 
-public class LeafBooleanTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
-	public Object transformJsonToObject(Object object, Rjson rjson) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+public class LeafBooleanTransformer implements ObjectToJsonTransformer {
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		if (object == null) {
 			ToJsonTransformationUtils.printData(null, printer);
@@ -27,10 +21,6 @@ public class LeafBooleanTransformer implements ObjectToJsonTransformer, JsonToOb
 		if (object instanceof java.lang.Boolean) {
 			return true;
 		}
-		return false;
-	}
-
-	public boolean canConvertToObject(Object object) {
 		return false;
 	}
 }
