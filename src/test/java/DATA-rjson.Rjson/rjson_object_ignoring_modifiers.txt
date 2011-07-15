@@ -46,6 +46,30 @@
     "custom_object_to_json_transformers": {        
     }, 
     "default_json_to_object_transformers": [        
+        
+        {
+            "class": "rjson.transformer.toobject.JsonIntegerTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.toobject.JsonStringTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.toobject.JsonDoubleTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.toobject.JsonArrayTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.toobject.JsonObjectAsMapTransformer", 
+        }, 
+        
+        {
+            "class": "rjson.transformer.toobject.JsonObjectTransformer", 
+        }
     ], 
     "custom_json_to_object_transformers": {        
     }, 

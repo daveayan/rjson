@@ -21,6 +21,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -71,6 +73,18 @@ public class RjsonUtil {
 		return classes;
 	}
 
+	public static List<Field> getAllFieldsSortedAscendingIn(Object object) {
+		List<Field> allFields = getAllFieldsIn(object);
+
+		Comparator<Field> comparator = new Comparator<Field>() {
+			public int compare(Field f1, Field f2) {
+				return f1.getName().trim().compareToIgnoreCase(f2.getName().trim());
+			}
+		};
+		Collections.sort(allFields, comparator);
+		return allFields;
+	}
+
 	public static boolean isAccessible(Field field) {
 		return Modifier.isPublic(field.getModifiers());
 	}
@@ -81,7 +95,7 @@ public class RjsonUtil {
 		}
 	}
 
-	public static Class asClass(String className) {
+	public static Class<?> asClass(String className) {
 		try {
 			return Class.forName(className);
 		} catch (ClassNotFoundException e) {

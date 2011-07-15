@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,36 +15,35 @@ public class RjsonInstantiationTest {
 	public void verifyDefaultJsonObject() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance());
-		Assert.assertEquals(expectedJson, actualJson);
+		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 
 	@Test
 	public void verifyDefaultJsonObjectIgnoringModifiers() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_ignoring_modifiers.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().andIgnoreModifiers());
-		Assert.assertEquals(expectedJson, actualJson);
+		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 
 	@Test
 	public void verifyDefaultJsonObjectWithCustomTransformer() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_transformer.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleTransformer()));
-		System.out.println(actualJson);
-		Assert.assertEquals(expectedJson, actualJson);
+		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 
 	@Test
 	public void verifyDefaultJsonObjectWithMultipleInstancesOfSameCustomTransformer() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_transformer.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleTransformer()).and(new SampleTransformer()));
-		Assert.assertEquals(expectedJson, actualJson);
+		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 
 	@Test
 	public void verifyDefaultJsonObjectWithCustomTransformerAsNull() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().and(null));
-		Assert.assertEquals(expectedJson, actualJson);
+		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 
 	private Rjson serializer() {
