@@ -20,6 +20,6 @@ public class JsonArrayTransformer implements JsonToObjectTransformer {
 	}
 	
 	public boolean canConvertToObject(Object object) {
-		return false;
+		return object instanceof JSONArray;
 	}
 }

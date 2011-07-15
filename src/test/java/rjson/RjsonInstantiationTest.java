@@ -28,6 +28,7 @@ public class RjsonInstantiationTest {
 	public void verifyDefaultJsonObjectWithCustomTransformer() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_transformer.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleTransformer()));
+		System.out.println(actualJson);
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 

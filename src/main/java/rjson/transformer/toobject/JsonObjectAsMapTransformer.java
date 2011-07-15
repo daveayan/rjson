@@ -24,6 +24,6 @@ public class JsonObjectAsMapTransformer implements JsonToObjectTransformer {
 	
 
 	public boolean canConvertToObject(Object object) {
-		return false;
+		return (object instanceof JSONObject) & ! ((JSONObject) object).has("class");
 	}
 }

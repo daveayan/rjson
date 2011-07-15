@@ -21,12 +21,14 @@ public class JsonObjectTransformer implements JsonToObjectTransformer {
 			while (iter.hasNext()) {
 				Field field = iter.next();
 				RjsonUtil.makeAccessible(field);
-				Object jsonField = jo.get(field.getName());
-				String jsonFieldContents = jsonField.toString();
-				System.out.println("***===>>>" + field.getType().getName() + " : " + " : " + jsonField.getClass().getName() + " : " + jsonFieldContents
-						+ " <<<===***");
-				Object returnedObject = rjson.jsonObjectToObjectControl(jsonField);
-				RjsonUtil.setField(field, objectToBeReturned, returnedObject);
+				if (jo.has(field.getName())) {
+					Object jsonField = jo.get(field.getName());
+					String jsonFieldContents = jsonField.toString();
+					System.out.println("***===>>>" + field.getType().getName() + " : " + " : " + jsonField.getClass().getName() + " : " + jsonFieldContents
+							+ " <<<===***");
+					Object returnObject = rjson.jsonObjectToObjectControl(jsonField);
+					RjsonUtil.setField(field, objectToBeReturned, returnObject);
+				}
 			}
 			return objectToBeReturned;
 		} catch (SecurityException e) {
@@ -41,6 +43,6 @@ public class JsonObjectTransformer implements JsonToObjectTransformer {
 	}
 	
 	public boolean canConvertToObject(Object object) {
-		return true;
+		return (object instanceof JSONObject) & ((JSONObject) object).has("class");
 	}
 }

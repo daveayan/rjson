@@ -43,7 +43,11 @@
             "class": "rjson.transformer.tojson.FieldBasedTransformer", 
         }
     ], 
-    "custom_object_to_transformers": {        
+    "custom_object_to_json_transformers": {        
+    }, 
+    "default_json_to_object_transformers": [        
+    ], 
+    "custom_json_to_object_transformers": {        
     }, 
     "ignoreModifiers": true
 }
