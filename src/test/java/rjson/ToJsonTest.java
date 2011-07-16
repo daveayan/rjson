@@ -173,7 +173,6 @@ public class ToJsonTest {
 	public void toJsonAComplexObject() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object.txt");
 		String actualJson = serializer().toJson(Person.getFullyLoadedInstance());
-		System.out.println(actualJson);
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 
@@ -196,6 +195,15 @@ public class ToJsonTest {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinal/default.txt");
 		String actualJson = serializer().toJson(new ObjectWithFinal());
 		Assert.assertEquals(expectedJson, actualJson);
+	}
+	
+	@Test public void toJsonMultipleTimesWithSameInstanceOfRjson() {
+		Rjson rjson = serializer();
+		String firstConversion = rjson.toJson(Person.getFullyLoadedInstance());
+		String secondConversion = rjson.toJson(Person.getFullyLoadedInstance());
+		String thirdConversion = rjson.toJson(Person.getFullyLoadedInstance());
+		Assert.assertEquals(firstConversion, secondConversion);
+		Assert.assertEquals(secondConversion, thirdConversion);
 	}
 
 	@Test
