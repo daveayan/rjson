@@ -27,6 +27,7 @@ public class Person extends BaseDomainObject {
 	private Map<String, Address> addresses = new HashMap<String, Address>();
 	protected List<PhoneNumber> phones = new ArrayList<PhoneNumber>();
 	private List<Account> accounts = new ArrayList<Account>();
+	private List<Drivable> drives = new ArrayList<Drivable>();
 
 	public static Person getPartialInstance1() {
 		PhoneNumber ph1 = new PhoneNumber("443", "3233323");
@@ -57,7 +58,14 @@ public class Person extends BaseDomainObject {
 		p1.addAddress("Home", add1);
 		p1.addAddress("Office", add2);
 		
+		p1.addDrives(new Car());
+		p1.addDrives(new Scooter());
+		
 		return p1;
+	}
+	
+	private void addDrives(Drivable vehicle) {
+		this.drives.add(vehicle);
 	}
 	
 	private void addAddress(String string, rjson.domain.Address add1) {

@@ -51,5 +51,17 @@
             "id": 1
         }
     ], 
+    "drives": [        
+        
+        {
+            "class": "rjson.domain.Car", 
+            "numberOfWheels": 4
+        }, 
+        
+        {
+            "class": "rjson.domain.Scooter", 
+            "numberOfWheels": 2
+        }
+    ], 
     "id": 1
 }
