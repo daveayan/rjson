@@ -30,7 +30,7 @@ import rjson.utils.RjsonUtil;
 public class FieldBasedTransformer extends ReflectionBasedTransformer {
 	@Override
 	public void reflectionBasedTransform(Object object, Printer printer, Rjson rjson) {
-		List<Field> fields = RjsonUtil.getAllFieldsSortedAscendingIn(object);
+		List<Field> fields = RjsonUtil.getAllFieldsIn(object);
 		boolean pendingHasMoreElements = false;
 		if (fields != null) {
 			Iterator<Field> iter = fields.iterator();
