@@ -11,7 +11,6 @@ import rjson.transformer.JsonToObjectTransformer;
 public class JsonArrayTransformer implements JsonToObjectTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson) {
 		JSONArray ja = (JSONArray) object;
-		System.out.println("jsonObjectToObject JSONArray");
 		List<Object> newList = new ArrayList<Object>();
 		for (Object item : ja.getList()) {
 			newList.add(rjson.jsonObjectToObjectControl(item));

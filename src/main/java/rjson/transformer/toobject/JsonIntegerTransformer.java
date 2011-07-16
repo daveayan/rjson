@@ -5,7 +5,6 @@ import rjson.transformer.JsonToObjectTransformer;
 
 public class JsonIntegerTransformer implements JsonToObjectTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson) {
-		System.out.println("jsonObjectToObject Integer");
 		return object;
 	}
 	public boolean canConvertToObject(Object object) {

@@ -23,9 +23,6 @@ public class JsonObjectTransformer implements JsonToObjectTransformer {
 				RjsonUtil.makeAccessible(field);
 				if (jo.has(field.getName())) {
 					Object jsonField = jo.get(field.getName());
-					String jsonFieldContents = jsonField.toString();
-					System.out.println("***===>>>" + field.getType().getName() + " : " + " : " + jsonField.getClass().getName() + " : " + jsonFieldContents
-							+ " <<<===***");
 					Object returnObject = rjson.jsonObjectToObjectControl(jsonField);
 					RjsonUtil.setField(field, objectToBeReturned, returnObject);
 				}

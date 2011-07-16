@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import rjson.domain.IgnoreDateTransformer;
 import rjson.domain.Person;
 
 public class ToObjectTest {
@@ -57,7 +58,7 @@ public class ToObjectTest {
 	@Test public void toObjectJsonForAEmptyList() throws IOException {
 		List<String> expectedObject = new ArrayList<String>();
 		Object actualObject = deSerializer().fromJson(fileAsString("./src/test/java/DATA-java.util.List/empty-list.txt"));
-		Assert.assertEquals(expectedObject, actualObject);
+		rjson.test.Assert.thatObjectJsonsMatch(expectedObject, actualObject);
 	}
 	
 //	@Test public void toObjectJsonForAListWithinList() throws IOException {
@@ -81,7 +82,7 @@ public class ToObjectTest {
 	@Test public void toObjectJsonForAComplexObject() throws IOException {
 		Person expectedObject = Person.getFullyLoadedInstance();
 		Object actualObject = deSerializer().fromJson(fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object.txt"));
-//		Assert.assertEquals(expectedObject, actualObject);
+		rjson.test.Assert.thatObjectJsonsMatch(expectedObject, actualObject);
 	}
 	
 //	

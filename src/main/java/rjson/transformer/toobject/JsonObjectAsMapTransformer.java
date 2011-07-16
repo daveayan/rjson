@@ -12,7 +12,6 @@ import rjson.transformer.JsonToObjectTransformer;
 public class JsonObjectAsMapTransformer implements JsonToObjectTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson) {
 		JSONObject jo = (JSONObject) object;
-		System.out.println("jsonObjectToObjectMap JSONObject");
 		Map<Object, Object> newMap = new HashMap<Object, Object>();
 		Iterator<?> iter = jo.getMap().keySet().iterator();
 		while (iter.hasNext()) {
