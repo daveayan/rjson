@@ -104,6 +104,10 @@ public class Rjson {
 			tokener.back();
 			return jsonObjectToObjectControl(new JSONArray(tokener));
 		}
+		if(Character.isDigit(firstChar)) {
+			tokener.back();
+			return jsonObjectToObjectControl(tokener.nextValue());
+		}
 		return null;
 	}
 

@@ -60,23 +60,23 @@ public class ToObjectTest {
 		rjson.test.Assert.thatObjectJsonsMatch(expectedObject, actualObject);
 	}
 	
-//	@Test public void toObjectJsonForAListWithinList() throws IOException {
-//		List <List<String>> expectedObject = new ArrayList<List<String>> ();
-//		
-//		List<String> l1 = new ArrayList<String>();
-//		l1.add("qwerty");
-//		l1.add("asdfgh");
-//		
-//		List<String> l2 = new ArrayList<String>();
-//		l2.add("POIUYT");
-//		l2.add("LKJHGF");
-//		
-//		expectedObject.add(l1);
-//		expectedObject.add(l2);
-//		
-//		Object actualObject = deSerializer().fromJson(fileAsString("./src/test/java/DATA-java.util.List/list-of-string-list.txt"));
-//		Assert.assertEquals(expectedObject, actualObject);
-//	}
+	@Test public void toObjectJsonForAListWithinList() throws IOException {
+		List <List<String>> expectedObject = new ArrayList<List<String>> ();
+		
+		List<String> l1 = new ArrayList<String>();
+		l1.add("qwerty");
+		l1.add("asdfgh");
+		
+		List<String> l2 = new ArrayList<String>();
+		l2.add("POIUYT");
+		l2.add("LKJHGF");
+		
+		expectedObject.add(l1);
+		expectedObject.add(l2);
+		
+		Object actualObject = deSerializer().fromJson(fileAsString("./src/test/java/DATA-java.util.List/list-of-string-list.txt"));
+		Assert.assertEquals(expectedObject, actualObject);
+	}
 	
 	@Test public void toObjectJsonForAComplexObject() throws IOException {
 		Person expectedObject = Person.getFullyLoadedInstance();
@@ -84,35 +84,30 @@ public class ToObjectTest {
 		rjson.test.Assert.thatObjectJsonsMatch(expectedObject, actualObject);
 	}
 	
-//	
-//	@Test public void toObjectJsonForAInteger() {
-//		Integer expectedObject = 123;
-//		Integer actualObject = (Integer) deSerializer().fromJson("123");
-//		Assert.assertEquals(expectedObject, actualObject);
-//	}
-//	
-//	@Test public void toObjectJsonForAIntegerWithWhiteSpaces() {
-//		Integer expectedObject = 123;
-//		Integer actualObject = (Integer) deSerializer().fromJson("  123      ");
-//		Assert.assertEquals(expectedObject, actualObject);
-//	}
 	
-//	@Test public void tokenize() throws IOException, JSONException {
-//		JSONTokener tokener = new JSONTokener(fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object.txt"));
-//		JSONObject jsonObject = new JSONObject(tokener);
-//		System.out.println(tokener);
-//		System.out.println(jsonObject);
-//		
-////		tokener = new JSONTokener(fileAsString("./src/test/java/DATA-java.util.Map/string-string-map.txt"));
-////		jsonObject = new JSONObject(tokener);
-////		System.out.println(tokener);
-////		System.out.println(jsonObject);
-//		
-////		tokener = new JSONTokener("\"qwerty\"");
-////		jsonObject = new JSONObject("\"qwerty\"");
-////		System.out.println(tokener);
-////		System.out.println(jsonObject);
-//	}
+	@Test public void toObjectJsonForAInteger() {
+		Integer expectedObject = 123;
+		Integer actualObject = (Integer) deSerializer().fromJson("123");
+		Assert.assertEquals(expectedObject, actualObject);
+	}
+	
+	@Test public void toObjectJsonForAIntegerWithWhiteSpaces() {
+		Integer expectedObject = 123;
+		Integer actualObject = (Integer) deSerializer().fromJson("  123      ");
+		Assert.assertEquals(expectedObject, actualObject);
+	}
+	
+	@Test public void toObjectJsonForADouble() {
+		Double expectedObject = 123.45;
+		Double actualObject = (Double) deSerializer().fromJson("123.45");
+		Assert.assertEquals(expectedObject, actualObject);
+	}
+	
+	@Test public void toObjectJsonForADoubleWithWhiteSpaces() {
+		Double expectedObject = 123.45;
+		Double actualObject = (Double) deSerializer().fromJson("  123.45      ");
+		Assert.assertEquals(expectedObject, actualObject);
+	}
 	
 	private Rjson deSerializer() {
 		return Rjson.newInstance();
