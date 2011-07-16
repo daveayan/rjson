@@ -11,7 +11,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import rjson.domain.IgnoreDateTransformer;
 import rjson.domain.Person;
 
 public class ToObjectTest {
