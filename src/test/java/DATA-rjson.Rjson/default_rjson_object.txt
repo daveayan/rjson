@@ -48,6 +48,10 @@
     "default_json_to_object_transformers": [        
         
         {
+            "class": "rjson.transformer.toobject.JsonBooleanTransformer", 
+        }, 
+        
+        {
             "class": "rjson.transformer.toobject.JsonIntegerTransformer", 
         }, 
         
