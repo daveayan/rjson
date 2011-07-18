@@ -42,6 +42,7 @@ import rjson.transformer.tojson.LeafPrimitiveTransformer;
 import rjson.transformer.tojson.LeafStringTransformer;
 import rjson.transformer.tojson.MapTransformer;
 import rjson.transformer.toobject.JsonArrayTransformer;
+import rjson.transformer.toobject.JsonBooleanTransformer;
 import rjson.transformer.toobject.JsonDoubleTransformer;
 import rjson.transformer.toobject.JsonIntegerTransformer;
 import rjson.transformer.toobject.JsonObjectAsMapTransformer;
@@ -108,7 +109,8 @@ public class Rjson {
 			tokener.back();
 			return jsonObjectToObjectControl(tokener.nextValue());
 		}
-		return null;
+		tokener.back();
+		return jsonObjectToObjectControl(tokener.nextValue());
 	}
 
 	public Object jsonObjectToObjectControl(Object jf) {
@@ -184,6 +186,7 @@ public class Rjson {
 			return;
 		default_json_to_object_transformers = new ArrayList<JsonToObjectTransformer>();
 
+		default_json_to_object_transformers.add(new JsonBooleanTransformer());
 		default_json_to_object_transformers.add(new JsonIntegerTransformer());
 		default_json_to_object_transformers.add(new JsonStringTransformer());
 		default_json_to_object_transformers.add(new JsonDoubleTransformer());

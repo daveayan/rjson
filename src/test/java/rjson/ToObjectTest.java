@@ -115,6 +115,12 @@ public class ToObjectTest {
 		Assert.assertEquals(expectedObject, actualObject);
 	}
 	
+	@Test public void toObjectJsonForABoolean() {
+		Boolean expectedObject = true;
+		Boolean actualObject = (Boolean) deSerializer().fromJson("true");
+		Assert.assertEquals(expectedObject, actualObject);
+	}
+	
 	private Rjson deSerializer() {
 		return Rjson.newInstance();
 	}
