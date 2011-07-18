@@ -84,6 +84,12 @@ public class ToObjectTest {
 		rjson.test.Assert.thatObjectJsonsMatch(expectedObject, actualObject);
 	}
 	
+	@Test public void toObjectJsonForAComplexObjectWithNullValue() throws IOException {
+		Person expectedObject = Person.getFullyLoadedInstanceWithNullAddress();
+		Object actualObject = deSerializer().fromJson(fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-null-address.txt"));
+		rjson.test.Assert.thatObjectJsonsMatch(expectedObject, actualObject);
+	}
+	
 	
 	@Test public void toObjectJsonForAInteger() {
 		Integer expectedObject = 123;

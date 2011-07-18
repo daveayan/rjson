@@ -17,7 +17,9 @@
  */
 package rjson.utils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +37,7 @@ public class RjsonUtil {
 				return;
 			if (field.getType().getName().trim().equals("java.util.Date"))
 				return;
-			if (value.getClass().getName().equals("java.lang.Double")) {
+			if (value != null && value.getClass().getName().equals("java.lang.Double")) {
 				if (field.getClass().getName().equals("java.lang.Float") || field.getType().getName().equals("float")) {
 					Double dblValue = (Double) value;
 					field.set(objectToBeReturned, dblValue.floatValue());
@@ -116,8 +118,35 @@ public class RjsonUtil {
 		}
 		return null;
 	}
+	
+	public static Object objectForClassForcibly(Class<?> clazz) {
+		try {
+			Constructor<?> c = clazz.getDeclaredConstructor();
+			c.setAccessible(true);
+			return c.newInstance();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public static Object objectFor(String className) {
-		return objectFor(asClass(className));
+		return objectForClassForcibly(asClass(className));
 	}
 }

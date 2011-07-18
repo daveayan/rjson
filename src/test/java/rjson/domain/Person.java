@@ -64,6 +64,12 @@ public class Person extends BaseDomainObject {
 		return p1;
 	}
 	
+	public static Person getFullyLoadedInstanceWithNullAddress() {
+		Person p = getFullyLoadedInstance();
+		p.setAddresses(null);
+		return p;
+	}
+	
 	private void addDrives(Drivable vehicle) {
 		this.drives.add(vehicle);
 	}
