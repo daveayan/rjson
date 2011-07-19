@@ -20,7 +20,7 @@ package rjson.transformer;
 import rjson.Rjson;
 import rjson.printer.Printer;
 
-public interface ObjectToJsonTransformer {
+public interface ObjectToJsonTransformer extends Transformer {
 	public void transformToJson(Object object, Printer printer, Rjson rjson);
 
 	public boolean canConvertToJson(Object object);

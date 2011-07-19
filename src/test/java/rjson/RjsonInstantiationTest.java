@@ -8,7 +8,9 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import rjson.domain.SampleTransformer;
+import rjson.domain.SampleBothTransformer;
+import rjson.domain.SampleJsonToObjectTransformer;
+import rjson.domain.SampleObjectToJsonTransformer;
 
 public class RjsonInstantiationTest {
 	@Test
@@ -26,16 +28,37 @@ public class RjsonInstantiationTest {
 	}
 
 	@Test
-	public void verifyDefaultJsonObjectWithCustomTransformer() throws IOException {
-		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_transformer.txt");
-		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleTransformer()));
+	public void verifyDefaultJsonObjectWithCustomObjectToJsonTransformer() throws IOException {
+		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_object_to_json_transformer.txt");
+		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleObjectToJsonTransformer()));
 		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 
 	@Test
-	public void verifyDefaultJsonObjectWithMultipleInstancesOfSameCustomTransformer() throws IOException {
-		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_transformer.txt");
-		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleTransformer()).and(new SampleTransformer()));
+	public void verifyDefaultJsonObjectWithMultipleInstancesOfSameCustomObjectToJsonTransformer() throws IOException {
+		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_object_to_json_transformer.txt");
+		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleObjectToJsonTransformer()).and(new SampleObjectToJsonTransformer()));
+		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
+	}
+	
+	@Test
+	public void verifyDefaultJsonObjectWithCustomJsonToObjectTransformer() throws IOException {
+		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_json_to_object_transformer.txt");
+		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleJsonToObjectTransformer()));
+		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
+	}
+
+	@Test
+	public void verifyDefaultJsonObjectWithMultipleInstancesOfSameCustomJsonToObjectTransformer() throws IOException {
+		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_json_to_object_transformer.txt");
+		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleJsonToObjectTransformer()).and(new SampleJsonToObjectTransformer()));
+		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
+	}
+	
+	@Test
+	public void verifyDefaultJsonObjectATransformerThatHandlesBothTransformers() throws IOException {
+		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_a_single_class_implementing_both_transformers.txt");
+		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleBothTransformer()));
 		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 

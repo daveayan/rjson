@@ -44,9 +44,9 @@
         }
     ], 
     "custom_object_to_json_transformers": {        
-        "rjson.domain.SampleTransformer": 
+        "rjson.domain.SampleObjectToJsonTransformer": 
         {
-            "class": "rjson.domain.SampleTransformer", 
+            "class": "rjson.domain.SampleObjectToJsonTransformer", 
         }
     }, 
     "default_json_to_object_transformers": [        

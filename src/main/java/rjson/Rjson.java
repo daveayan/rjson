@@ -31,6 +31,7 @@ import rjson.printer.Printer;
 import rjson.printer.StringBufferPrinter;
 import rjson.transformer.JsonToObjectTransformer;
 import rjson.transformer.ObjectToJsonTransformer;
+import rjson.transformer.Transformer;
 import rjson.transformer.tojson.ArrayTransformer;
 import rjson.transformer.tojson.FieldBasedTransformer;
 import rjson.transformer.tojson.IterableTransformer;
@@ -62,12 +63,17 @@ public class Rjson {
 		return rjson;
 	}
 
-	public Rjson with(ObjectToJsonTransformer transformer) {
-		this.registerObjectToJsonTransformer(transformer, true);
+	public Rjson with(Transformer transformer) {
+		if(transformer instanceof ObjectToJsonTransformer) {
+			this.registerObjectToJsonTransformer((ObjectToJsonTransformer) transformer, true);
+		} 
+		if(transformer instanceof JsonToObjectTransformer) {
+			this.registerJsonToObjectTransformer((JsonToObjectTransformer) transformer, true);
+		}
 		return this;
 	}
 
-	public Rjson and(ObjectToJsonTransformer transformer) {
+	public Rjson and(Transformer transformer) {
 		return with(transformer);
 	}
 
