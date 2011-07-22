@@ -33,6 +33,7 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import rjson.domain.IgnoreDateTransformer;
@@ -40,17 +41,23 @@ import rjson.domain.ObjectWithFinal;
 import rjson.domain.ObjectWithTransient;
 import rjson.domain.Person;
 import rjson.test.Given;
+import rjson.test.Then;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.tojson.FieldBasedTransformer;
 
 public class ToJsonTest {
+	private Given given;
+	private Then then;
+
+	@Before
+	public void setup() {
+		given = null;
+		then = null;
+	}
+
 	@Test
 	public void givenWhenThenTest() {
-		Given.objectUnderTestIs(serializer()).when("toJson")
-				.isCalledWithParameters(new Object[] { null })
-				.assertThatReturnValueIsSameAs("null")
-				.assertThatObjectUnderTestIsNotModified()
-				.assertThatInputParametersAreNotModified();
+		Given.objectUnderTestIs(serializer()).when("toJson").isCalledWithParameters(new Object[] { "qwerty" }).assertThatReturnValueIsSameAs(null);
 	}
 
 	@Test
@@ -80,9 +87,7 @@ public class ToJsonTest {
 
 	@Test
 	public void toJsonBigDecimal() throws IOException {
-		Assert.assertEquals(
-				"123.4560000000000030695446184836328029632568359375",
-				serializer().toJson(new BigDecimal(123.456)));
+		Assert.assertEquals("123.4560000000000030695446184836328029632568359375", serializer().toJson(new BigDecimal(123.456)));
 	}
 
 	@Test
@@ -104,8 +109,7 @@ public class ToJsonTest {
 
 	@Test
 	public void toJsonStringWithSpecialJsonCharacters() throws IOException {
-		Assert.assertEquals("\"q\\[w\\]e\\{r\\}ty\"", serializer().toJson(
-				"q[w]e{r}ty"));
+		Assert.assertEquals("\"q\\[w\\]e\\{r\\}ty\"", serializer().toJson("q[w]e{r}ty"));
 	}
 
 	@Test
@@ -162,8 +166,7 @@ public class ToJsonTest {
 	@Test
 	public void toJsonStringArray() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
-		String actualJson = serializer().toJson(
-				new String[] { "qwerty", "asdfgh" });
+		String actualJson = serializer().toJson(new String[] { "qwerty", "asdfgh" });
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 
@@ -207,8 +210,7 @@ public class ToJsonTest {
 	@Test
 	public void toJsonAComplexObject() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object.txt");
-		String actualJson = serializer()
-				.toJson(Person.getFullyLoadedInstance());
+		String actualJson = serializer().toJson(Person.getFullyLoadedInstance());
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 
@@ -260,8 +262,7 @@ public class ToJsonTest {
 			}
 		};
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
-		String actualJson = serializer().with(excludeAddressTransformer)
-				.toJson(Person.getFullyLoadedInstance());
+		String actualJson = serializer().with(excludeAddressTransformer).toJson(Person.getFullyLoadedInstance());
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 
@@ -282,14 +283,12 @@ public class ToJsonTest {
 			}
 		};
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
-		String actualJson = serializer().with(excludeAddressTransformer)
-				.toJson(Person.getFullyLoadedInstance());
+		String actualJson = serializer().with(excludeAddressTransformer).toJson(Person.getFullyLoadedInstance());
 		Assert.assertEquals(expectedJson, actualJson);
 	}
 
 	private Rjson serializer() {
-		return Rjson.newInstance().with(new IgnoreDateTransformer())
-				.andIgnoreModifiers();
+		return Rjson.newInstance().with(new IgnoreDateTransformer()).andIgnoreModifiers();
 	}
 
 	private String fileAsString(String file) throws IOException {

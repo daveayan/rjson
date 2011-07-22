@@ -1,7 +1,28 @@
 package rjson.test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import rjson.utils.ReflectionUtils;
+
 public class When {
 	public Then isCalledWithParameters(Object[] parameters) {
+		try {
+			Method method = ReflectionUtils.getMethodFor(given.objectUnderTest(), this.methodUnderTest, parameters);
+			Object returnValue = method.invoke(given.objectUnderTest(), parameters);
+			Then then = Then.thenAssertChanges(this);
+			then.setReturnObject(returnValue);
+			return then;
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Then.thenAssertChanges(this);
 	}
 
@@ -9,7 +30,7 @@ public class When {
 		return Then.thenAssertChanges(this);
 	}
 
-	public Given getGiven() {
+	public Given given() {
 		return given;
 	}
 
