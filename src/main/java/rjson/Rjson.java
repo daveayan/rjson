@@ -57,10 +57,10 @@ import rjson.transformer.toobject.JsonObjectTransformer;
 import rjson.transformer.toobject.JsonStringTransformer;
 
 public class Rjson {
-	private static List<ObjectToJsonTransformer> default_object_to_json_transformers = null;
-	private static Map<String, ObjectToJsonTransformer> custom_object_to_json_transformers = null;
-	private static List<JsonToObjectTransformer> default_json_to_object_transformers = null;
-	private static Map<String, JsonToObjectTransformer> custom_json_to_object_transformers = null;
+	private List<ObjectToJsonTransformer> default_object_to_json_transformers = null;
+	private Map<String, ObjectToJsonTransformer> custom_object_to_json_transformers = null;
+	private List<JsonToObjectTransformer> default_json_to_object_transformers = null;
+	private Map<String, JsonToObjectTransformer> custom_json_to_object_transformers = null;
 	private boolean ignoreModifiers = false;
 
 	public static Rjson newInstance() {
