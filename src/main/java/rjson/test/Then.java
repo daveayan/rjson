@@ -1,5 +1,7 @@
 package rjson.test;
 
+import org.junit.Assert;
+
 import rjson.Rjson;
 
 public class Then {
@@ -16,12 +18,19 @@ public class Then {
 	}
 
 	public Then assertThatInputParametersAreNotModified() {
+		Rjson rjson = Rjson.newInstance().and(new NullifyDateTransformer()).andIgnoreModifiers();
+		for(int i = 0; i < when.inputParams().size(); i ++) {
+			Object object = when.inputParams().get(i);
+			String afterExecutionJson = rjson.toJson(object);
+			assertEquals(afterExecutionJson, when.inputParamJsons().get(i));			
+		}
 		return this;
 	}
 
 	public Then assertThatReturnValueIsSameAs(Object expectedObject) {
 		this.assertThatObjectUnderTestIsNotModified();
 		this.assertThatInputParametersAreNotModified();
+		assertEquals(expectedObject, returnObject);
 		return this;
 	}
 
@@ -29,6 +38,10 @@ public class Then {
 		Then then = new Then();
 		then.when = when;
 		return then;
+	}
+	
+	private void assertEquals(Object expectedObject, Object returnObject) {
+		Assert.assertEquals(expectedObject, returnObject);		
 	}
 
 	private When when;
