@@ -34,6 +34,7 @@ import rjson.domain.SampleJsonToObjectTransformer;
 import rjson.domain.SampleObjectToJsonTransformer;
 
 public class RjsonInstantiationTest {
+	
 	@Test
 	public void verifyDefaultJsonObject() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");

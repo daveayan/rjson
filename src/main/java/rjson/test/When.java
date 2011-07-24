@@ -19,22 +19,21 @@ public class When {
 		}
 		recordParameters(parameters);
 		try {
-			Method method = ReflectionUtils.getMethodFor(given.objectUnderTest(), this.methodUnderTest, parameters);
+			Method method = ReflectionUtils.getMethodFor(given.classUnderTest(), this.methodUnderTest, parameters);
 			Object returnValue = method.invoke(given.objectUnderTest(), parameters);
 			Then then = Then.thenAssertChanges(this);
 			then.setReturnObject(returnValue);
 			return then;
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new AssertionError(e);
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new AssertionError(e);
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new AssertionError(e);
 		}
-		return Then.thenAssertChanges(this);
 	}
 	
 	private void recordParameters(Object[] parameters) {

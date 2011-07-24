@@ -48,13 +48,11 @@ import rjson.transformer.tojson.FieldBasedTransformer;
 public class ToJsonTest {
 	private Given given;
 	private When when;
-	private Then then;
 
 	@Before
 	public void setup() {
 		given = Given.objectUnderTestIs(Rjson.newInstance().with(new IgnoreDateTransformer()).andIgnoreModifiers());
 		when = given.when("toJson");
-		then = null;
 	}
 
 	@Test

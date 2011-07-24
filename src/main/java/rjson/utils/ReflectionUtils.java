@@ -4,7 +4,11 @@ import java.lang.reflect.Method;
 
 public class ReflectionUtils {
 	public static Method getMethodFor(Object targetObject, String methodName, Object[] parameters) {
-		Method[] methods = targetObject.getClass().getMethods();
+		return getMethodFor(targetObject.getClass(), methodName, parameters);
+	}
+	
+	public static Method getMethodFor(Class<?> targetClass, String methodName, Object[] parameters) {
+		Method[] methods = targetClass.getMethods();
 		for (Method method : methods) {
 			if (method.getName().trim().equals(methodName)) {
 				if (canCast(method.getParameterTypes(), parameters)) {

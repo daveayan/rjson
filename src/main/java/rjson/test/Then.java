@@ -27,10 +27,21 @@ public class Then {
 		return this;
 	}
 
-	public Then assertThatReturnValueIsSameAs(Object expectedObject) {
+	public Then assertThatThereAreNoSideEffects() {
 		this.assertThatObjectUnderTestIsNotModified();
 		this.assertThatInputParametersAreNotModified();
+		return this;
+	}
+	
+	public Then assertThatReturnValueIsSameAs(Object expectedObject) {
+		assertThatThereAreNoSideEffects();
 		assertEquals(expectedObject, returnObject);
+		return this;
+	}
+	
+	public Then assertThatReturnJsonIsSameAsJsonFor(Object expectedObject) {
+		assertThatThereAreNoSideEffects();
+		assertJsonEquals(expectedObject, returnObject);
 		return this;
 	}
 
@@ -38,6 +49,11 @@ public class Then {
 		Then then = new Then();
 		then.when = when;
 		return then;
+	}
+	
+	private void assertJsonEquals(Object expectedObject, Object returnObject) {
+		Rjson rjson = Rjson.newInstance().with(new NullifyDateTransformer()).andIgnoreModifiers();
+		assertEquals(rjson.toJson(expectedObject), rjson.toJson(returnObject));		
 	}
 	
 	private void assertEquals(Object expectedObject, Object returnObject) {
