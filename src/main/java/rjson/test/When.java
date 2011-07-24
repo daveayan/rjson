@@ -9,11 +9,14 @@ import rjson.Rjson;
 import rjson.utils.ReflectionUtils;
 
 public class When {
-	public Then methodIsCalledWithParameters(Object... parameters) {
-		return this.isCalledWithParameters(parameters);
+	public Then methodIsCalledWith(Object... parameters) {
+		return this.isCalledWith(parameters);
 	}
 	
-	public Then isCalledWithParameters(Object... parameters) {
+	public Then isCalledWith(Object... parameters) {
+		if(parameters == null) {
+			parameters = new Object[] {null};
+		}
 		recordParameters(parameters);
 		try {
 			Method method = ReflectionUtils.getMethodFor(given.objectUnderTest(), this.methodUnderTest, parameters);

@@ -16,12 +16,14 @@ public class ReflectionUtils {
 	}
 
 	public static boolean canCast(Class<?>[] to, Object[] from) {
+		if(to == null || from == null)
+			return false;
 		if (to.length != from.length)
 			return false;
 		if (to.length == from.length) {
 			int i = 0;
 			for (Class<?> parameterClass : to) {
-				if (!canCast(parameterClass, from[i]))
+				if (from[i] != null && !canCast(parameterClass, from[i]))
 					return false;
 				i++;
 			}

@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,67 +59,67 @@ public class ToJsonTest {
 
 	@Test
 	public void toJsonNullObject() throws IOException {
-		Assert.assertEquals("\"null\"", serializer().toJson(null));
+		when.methodIsCalledWith((Object) null).assertThatReturnValueIsSameAs("\"null\"");
 	}
 
 	@Test
 	public void toJsonPrimitiveInt() throws IOException {
-		when.methodIsCalledWithParameters(123).assertThatReturnValueIsSameAs("123");
+		when.methodIsCalledWith(123).assertThatReturnValueIsSameAs("123");
 	}
 
 	@Test
 	public void toJsonObjectInt() throws IOException {
-		when.methodIsCalledWithParameters(new Integer(123)).assertThatReturnValueIsSameAs("123");
+		when.methodIsCalledWith(new Integer(123)).assertThatReturnValueIsSameAs("123");
 	}
 
 	@Test
 	public void toJsonPrimitiveFloat() throws IOException {
-		when.methodIsCalledWithParameters(123.45).assertThatReturnValueIsSameAs("123.45");
+		when.methodIsCalledWith(123.45).assertThatReturnValueIsSameAs("123.45");
 	}
 
 	@Test
 	public void toJsonObjectFloat() throws IOException {
-		when.methodIsCalledWithParameters(new Float(123.45)).assertThatReturnValueIsSameAs("123.45");
+		when.methodIsCalledWith(new Float(123.45)).assertThatReturnValueIsSameAs("123.45");
 	}
 
 	@Test
 	public void toJsonBigDecimal() throws IOException {
-		when.methodIsCalledWithParameters(new BigDecimal(123.456)).assertThatReturnValueIsSameAs("123.4560000000000030695446184836328029632568359375");
+		when.methodIsCalledWith(new BigDecimal(123.456)).assertThatReturnValueIsSameAs("123.4560000000000030695446184836328029632568359375");
 	}
 
 	@Test
 	public void toJsonPrimitiveBoolean() throws IOException {
-		when.methodIsCalledWithParameters(true).assertThatReturnValueIsSameAs("true");
-		when.methodIsCalledWithParameters(false).assertThatReturnValueIsSameAs("false");
+		when.methodIsCalledWith(true).assertThatReturnValueIsSameAs("true");
+		when.methodIsCalledWith(false).assertThatReturnValueIsSameAs("false");
 	}
 
 	@Test
 	public void toJsonObjectBoolean() throws IOException {
-		when.methodIsCalledWithParameters(new Boolean(true)).assertThatReturnValueIsSameAs("true");
-		when.methodIsCalledWithParameters(new Boolean(false)).assertThatReturnValueIsSameAs("false");
+		when.methodIsCalledWith(new Boolean(true)).assertThatReturnValueIsSameAs("true");
+		when.methodIsCalledWith(new Boolean(false)).assertThatReturnValueIsSameAs("false");
 	}
 
 	@Test
 	public void toJsonString() throws IOException {
-		when.methodIsCalledWithParameters("qwerty").assertThatReturnValueIsSameAs("\"qwerty\"");
+		when.methodIsCalledWith("qwerty").assertThatReturnValueIsSameAs("\"qwerty\"");
 	}
 
 	@Test
 	public void toJsonStringWithSpecialJsonCharacters() throws IOException {
-		when.methodIsCalledWithParameters("q[w]e{r}ty").assertThatReturnValueIsSameAs("\"q\\[w\\]e\\{r\\}ty\"");
+		when.methodIsCalledWith("q[w]e{r}ty").assertThatReturnValueIsSameAs("\"q\\[w\\]e\\{r\\}ty\"");
 	}
 
 	@Test
 	public void toJsonDate() {
 		Date date = new Date(Long.parseLong("1309814968887"));
 		Given given = Given.objectUnderTestIs(Rjson.newInstance());
-		given.when("toJson").isCalledWithParameters(date).assertThatReturnValueIsSameAs("1309814968887");
+		given.when("toJson").isCalledWith(date).assertThatReturnValueIsSameAs("1309814968887");
 	}
 
 	@Test
 	public void toJsonEmptyList() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/empty-list.txt");
-		when.methodIsCalledWithParameters(new ArrayList<String>()).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith(new ArrayList<String>()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
@@ -130,7 +129,7 @@ public class ToJsonTest {
 		list.add("asdfgh");
 
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
-		when.methodIsCalledWithParameters(list).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith(list).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
@@ -149,19 +148,19 @@ public class ToJsonTest {
 		listOfList.add(l2);
 
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/list-of-string-list.txt");
-		when.methodIsCalledWithParameters(listOfList).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith(listOfList).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
 	public void toJsonEmptyArray() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/empty-list.txt");
-		when.methodIsCalledWithParameters(new Object[] { new String[] {} }).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith((Object) new String[] {}).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
 	public void toJsonStringArray() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
-		when.methodIsCalledWithParameters(new Object[] { new String[] { "qwerty", "asdfgh" } }).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith((Object) new String[] { "qwerty", "asdfgh" }).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
@@ -171,13 +170,13 @@ public class ToJsonTest {
 		String[][] arrayOfArray = new String[][] { strArray1, strArray2 };
 
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.List/list-of-string-list.txt");
-		when.methodIsCalledWithParameters(new Object[] { arrayOfArray }).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith((Object) arrayOfArray).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
 	public void toJsonEmptyMap() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.Map/empty-map.txt");
-		when.methodIsCalledWithParameters(new HashMap<String, String>()).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith(new HashMap<String, String>()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
@@ -187,47 +186,47 @@ public class ToJsonTest {
 		map.put("key2", "asdfgh");
 
 		String expectedJson = fileAsString("./src/test/java/DATA-java.util.Map/string-string-map.txt");		
-		when.methodIsCalledWithParameters(map).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith(map).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
 	public void toJsonAComplexObjectRespectingModifiers() throws IOException {
 		given = Given.objectUnderTestIs(serializer().andDoNotIgnoreModifiers());
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object-respecting-modifiers.txt");
-		given.when("toJson").isCalledWithParameters(new Object[] { Person.getFullyLoadedInstance() }).assertThatReturnValueIsSameAs(expectedJson);
+		given.when("toJson").isCalledWith(new Object[] { Person.getFullyLoadedInstance() }).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
 	public void toJsonAComplexObject() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object.txt");
-		when.methodIsCalledWithParameters(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
 	public void toJsonAPartialComplexObject() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/partial-person-object-1.txt");
-		when.methodIsCalledWithParameters(Person.getPartialInstance1()).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith(Person.getPartialInstance1()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
 	public void toJsonRespectsTransient() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithTransient/default.txt");
-		when.methodIsCalledWithParameters(new ObjectWithTransient()).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith(new ObjectWithTransient()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
 	public void toJsonRespectsFinal() throws IOException {
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinal/default.txt");
-		when.methodIsCalledWithParameters(new ObjectWithFinal()).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith(new ObjectWithFinal()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
 	public void toJsonMultipleTimesWithSameInstanceOfRjson() {
 		given = Given.objectUnderTestIs(serializer());
 		when = given.when("toJson");
-		Then firstConversion = when.methodIsCalledWithParameters(Person.getFullyLoadedInstance());
-		Then secondConversion = when.methodIsCalledWithParameters(Person.getFullyLoadedInstance());
-		Then thirdConversion = when.methodIsCalledWithParameters(Person.getFullyLoadedInstance());
+		Then firstConversion = when.methodIsCalledWith(Person.getFullyLoadedInstance());
+		Then secondConversion = when.methodIsCalledWith(Person.getFullyLoadedInstance());
+		Then thirdConversion = when.methodIsCalledWith(Person.getFullyLoadedInstance());
 		
 		firstConversion.assertThatReturnValueIsSameAs(secondConversion.getReturnObject());
 		secondConversion.assertThatReturnValueIsSameAs(thirdConversion.getReturnObject());
@@ -252,7 +251,7 @@ public class ToJsonTest {
 		};
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
 		given = Given.objectUnderTestIs(serializer().with(excludeAddressTransformer));
-		given.when("toJson").isCalledWithParameters(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
+		given.when("toJson").isCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
@@ -273,7 +272,7 @@ public class ToJsonTest {
 		};
 		String expectedJson = fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
 		given = Given.objectUnderTestIs(serializer().with(excludeAddressTransformer));
-		given.when("toJson").isCalledWithParameters(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
+		given.when("toJson").isCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	private Rjson serializer() {
