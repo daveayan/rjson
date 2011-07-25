@@ -5,8 +5,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import mirage.ReflectionUtils;
 import rjson.Rjson;
-import rjson.utils.ReflectionUtils;
 
 public class When {
 	public Then methodIsCalledWith(Object... parameters) {

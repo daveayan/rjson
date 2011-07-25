@@ -8,10 +8,7 @@
  * 
  * 1) The above copyright notice and this permission notice shall be included without any changes or alterations 
  * in all copies or substantial portions of the Software.
- * 2) The copyright notice part of the org.json package and its classes shall be honored.
- * 3) This software shall be used for Good, not Evil.
- * portions of the Software.
-
+ * 2) This software shall be used for Good, not Evil.
  * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING 
  * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
