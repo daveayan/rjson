@@ -28,15 +28,15 @@ import java.lang.reflect.Modifier;
 import java.util.Iterator;
 import java.util.List;
 
+import mirage.ReflectionUtils;
 import rjson.Rjson;
 import rjson.printer.Printer;
 import rjson.transformer.ToJsonTransformationUtils;
-import rjson.utils.RjsonUtil;
 
 public class FieldBasedTransformer extends ReflectionBasedTransformer {
 	@Override
 	public void reflectionBasedTransform(Object object, Printer printer, Rjson rjson) {
-		List<Field> fields = RjsonUtil.getAllFieldsIn(object);
+		List<Field> fields = ReflectionUtils.getAllFieldsIn(object);
 		boolean pendingHasMoreElements = false;
 		if (fields != null) {
 			Iterator<Field> iter = fields.iterator();
@@ -48,8 +48,8 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 					continue;
 				if (Modifier.isFinal(field.getModifiers()))
 					continue;
-				if (rjson.ignoreModifiers() || RjsonUtil.isAccessible(field)) {
-					RjsonUtil.makeAccessible(field);
+				if (rjson.ignoreModifiers() || ReflectionUtils.isAccessible(field)) {
+					ReflectionUtils.makeAccessible(field);
 					try {
 						Object newObject = field.get(object);
 						if (exclude(field)) {

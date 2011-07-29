@@ -70,10 +70,10 @@ public class Rjson {
 	}
 
 	public Rjson with(Transformer transformer) {
-		if(transformer instanceof ObjectToJsonTransformer) {
+		if (transformer instanceof ObjectToJsonTransformer) {
 			this.registerObjectToJsonTransformer((ObjectToJsonTransformer) transformer, true);
-		} 
-		if(transformer instanceof JsonToObjectTransformer) {
+		}
+		if (transformer instanceof JsonToObjectTransformer) {
 			this.registerJsonToObjectTransformer((JsonToObjectTransformer) transformer, true);
 		}
 		return this;
@@ -117,7 +117,7 @@ public class Rjson {
 			tokener.back();
 			return jsonObjectToObjectControl(new JSONArray(tokener));
 		}
-		if(Character.isDigit(firstChar)) {
+		if (Character.isDigit(firstChar)) {
 			tokener.back();
 			return jsonObjectToObjectControl(tokener.nextValue());
 		}

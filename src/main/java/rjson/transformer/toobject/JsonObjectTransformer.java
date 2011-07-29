@@ -25,6 +25,8 @@ import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.List;
 
+import mirage.ReflectionUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,12 +38,12 @@ public class JsonObjectTransformer implements JsonToObjectTransformer {
 	public Object transformJsonToObject(Object object, Rjson rjson) {
 		JSONObject jo = (JSONObject) object;
 		try {
-			Object objectToBeReturned = RjsonUtil.objectFor(jo.getString("class"));
-			List<Field> fields = RjsonUtil.getAllFieldsIn(objectToBeReturned);
+			Object objectToBeReturned = ReflectionUtils.objectFor(jo.getString("class"));
+			List<Field> fields = ReflectionUtils.getAllFieldsIn(objectToBeReturned);
 			Iterator<Field> iter = fields.iterator();
 			while (iter.hasNext()) {
 				Field field = iter.next();
-				RjsonUtil.makeAccessible(field);
+				ReflectionUtils.makeAccessible(field);
 				if (jo.has(field.getName())) {
 					Object jsonField = jo.get(field.getName());
 					Object returnObject = rjson.jsonObjectToObjectControl(jsonField);
@@ -59,7 +61,7 @@ public class JsonObjectTransformer implements JsonToObjectTransformer {
 		}
 		return null;
 	}
-	
+
 	public boolean canConvertToObject(Object object) {
 		return (object instanceof JSONObject) && ((JSONObject) object).has("class");
 	}
