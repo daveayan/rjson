@@ -31,7 +31,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
 import rjson.Rjson;
-import rjson.domain.IgnoreDateTransformer;
 
 public class RjsonUtil {
 
@@ -44,7 +43,7 @@ public class RjsonUtil {
 	}
 
 	public static Rjson completeSerializer() {
-		return Rjson.newInstance().with(new IgnoreDateTransformer()).andIgnoreModifiers();
+		return Rjson.newInstance().with(new NullifyDateTransformer()).andIgnoreModifiers();
 	}
 
 	public static void setField(Field field, Object objectToBeReturned, Object value) {

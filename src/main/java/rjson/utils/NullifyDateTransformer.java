@@ -1,4 +1,4 @@
-package rjson.test;
+package rjson.utils;
 
 import rjson.Rjson;
 import rjson.printer.Printer;

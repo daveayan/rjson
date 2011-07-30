@@ -3,10 +3,11 @@ package rjson.test;
 import org.apache.commons.lang.StringUtils;
 
 import rjson.Rjson;
+import rjson.utils.RjsonUtil;
 
 public class Assert {
 	public static void thatObjectJsonsMatch(Object expected, Object actual) {
-		Rjson rjson = Rjson.newInstance().with(new NullifyDateTransformer()).andIgnoreModifiers();
+		Rjson rjson = RjsonUtil.completeSerializer();
 		thatObjectJsonsMatch(rjson.toJson(expected), rjson.toJson(actual));
 	}
 

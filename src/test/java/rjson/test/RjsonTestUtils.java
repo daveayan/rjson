@@ -6,12 +6,13 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 
 import rjson.Rjson;
+import rjson.utils.RjsonUtil;
 
 public class RjsonTestUtils {
 	public static String folderLocation = "./src/test/java/DATA-testrj.domain.MethodToTest/";
 
 	public static String serialize(Object object) {
-		return Rjson.newInstance().with(new NullifyDateTransformer()).andIgnoreModifiers().toJson(object);
+		return RjsonUtil.completeSerializer().toJson(object);
 	}
 	
 	public static Object deserialize(String filepathandname) throws IOException {

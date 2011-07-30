@@ -30,7 +30,6 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import rjson.domain.IgnoreDateTransformer;
 import rjson.domain.ObjectWithFinal;
 import rjson.domain.ObjectWithTransient;
 import rjson.domain.Person;
@@ -47,7 +46,7 @@ public class ToJsonTest {
 
 	@Before
 	public void setup() {
-		given = Given.objectUnderTestIs(Rjson.newInstance().with(new IgnoreDateTransformer()).andIgnoreModifiers());
+		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer());
 		when = given.when("toJson");
 	}
 

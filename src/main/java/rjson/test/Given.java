@@ -1,6 +1,6 @@
 package rjson.test;
 
-import rjson.Rjson;
+import rjson.utils.RjsonUtil;
 
 public class Given {
 	public static Given classUnderTestIs(Class<?> classUnderTest) {
@@ -13,8 +13,7 @@ public class Given {
 		Given given = new Given();
 		given.objectUnderTest = objectUnderTest;
 		given.classUnderTest = objectUnderTest.getClass();
-		Rjson rjson = Rjson.newInstance().with(new NullifyDateTransformer()).andIgnoreModifiers();
-		given.objectUnderTestJsonBeforeTestExecution = rjson.toJson(objectUnderTest);
+		given.objectUnderTestJsonBeforeTestExecution = RjsonUtil.completeSerializer().toJson(objectUnderTest);
 		return given;
 	}
 

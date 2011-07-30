@@ -3,11 +3,12 @@ package rjson.test;
 import org.junit.Assert;
 
 import rjson.Rjson;
+import rjson.utils.NullifyDateTransformer;
+import rjson.utils.RjsonUtil;
 
 public class Then {
 	public Then assertThatObjectUnderTestIsNotModified() {
-		Rjson rjson = Rjson.newInstance().with(new NullifyDateTransformer()).andIgnoreModifiers();
-		String objectUnderTestJsonAfterTestExecution = rjson.toJson(when.given().objectUnderTest());
+		String objectUnderTestJsonAfterTestExecution = RjsonUtil.completeSerializer().toJson(when.given().objectUnderTest());
 		if (!objectUnderTestJsonAfterTestExecution.equals(when.given().objectUnderTestJsonBeforeTestExecution()))
 			throw new AssertionError();
 		return this;
