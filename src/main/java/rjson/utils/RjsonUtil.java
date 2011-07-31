@@ -27,10 +27,13 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
+import mirage.ReflectionUtils;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
 import rjson.Rjson;
+import transformers.Transformer;
 
 public class RjsonUtil {
 
@@ -59,7 +62,10 @@ public class RjsonUtil {
 					return;
 				}
 			}
-			field.set(objectToBeReturned, value);
+//			field.set(objectToBeReturned, value);
+//			field.set(objectToBeReturned, Cast.convert(value, ReflectionUtils.getInstanceOfClassForcibly(field.getType())));
+			Object transformedValue = Transformer.newInstance().transform(value, field.getType());
+			field.set(objectToBeReturned, transformedValue);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -155,6 +155,12 @@ public class ToJsonTest {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
 		when.methodIsCalledWith((Object) new String[] { "qwerty", "asdfgh" }).assertThatReturnValueIsSameAs(expectedJson);
 	}
+	
+//	@Test
+	public void toJsonByteArray() throws IOException {
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
+		when.methodIsCalledWith("Hello World".getBytes()).assertThatReturnValueIsSameAs(expectedJson);
+	}
 
 	@Test
 	public void toJsonArrayOfStringArray() throws IOException {
@@ -189,7 +195,7 @@ public class ToJsonTest {
 		given.when("toJson").isCalledWith(new Object[] { Person.getFullyLoadedInstance() }).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
-	// @Test
+	@Test
 	public void toJsonAComplexObject() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object.txt");
 		when.methodIsCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
@@ -226,7 +232,7 @@ public class ToJsonTest {
 		firstConversion.assertThatReturnValueIsSameAs(thirdConversion.getReturnObject());
 	}
 
-	// @Test
+	@Test
 	public void toJsonPersonObjectNotIncludingAddress() throws IOException {
 		ObjectToJsonTransformer excludeAddressTransformer = new FieldBasedTransformer() {
 			@Override
@@ -247,7 +253,7 @@ public class ToJsonTest {
 		given.when("toJson").isCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
-	// @Test
+	@Test
 	public void toJsonPersonObjectExcludingAddress() throws IOException {
 		ObjectToJsonTransformer excludeAddressTransformer = new FieldBasedTransformer() {
 			@Override
