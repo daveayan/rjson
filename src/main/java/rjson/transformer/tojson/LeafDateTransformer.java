@@ -25,12 +25,14 @@ package rjson.transformer.tojson;
 
 import java.util.Date;
 
+import mirage.ReflectionUtils;
 import rjson.Rjson;
 import rjson.printer.Printer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
+import transformers.CanTransform;
 
-public class LeafDateTransformer implements ObjectToJsonTransformer {
+public class LeafDateTransformer implements ObjectToJsonTransformer, CanTransform<Date, String> {
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		if (object == null) {
 			ToJsonTransformationUtils.printData(null, printer);
@@ -47,5 +49,17 @@ public class LeafDateTransformer implements ObjectToJsonTransformer {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean canTransform(Date from, Class<?> to) {
+		return from != null & to != null & ReflectionUtils.objectIsOfType(from, Date.class) & ReflectionUtils.objectIsOfType(to, String.class);
+	}
+
+	public String name() {
+		return Date.class.getName() + "-" + String.class.getName();
+	}
+
+	public String transform(Date from) {
+		return ToJsonTransformationUtils.formatData(((Date) from).getTime());
 	}
 }

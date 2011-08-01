@@ -23,12 +23,15 @@
  */
 package rjson.transformer.tojson;
 
+import mirage.ReflectionUtils;
 import rjson.Rjson;
 import rjson.printer.Printer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
+import transformers.CanTransform;
 
-public class LeafPrimitiveTransformer implements ObjectToJsonTransformer {
+@SuppressWarnings("unchecked")
+public class LeafPrimitiveTransformer implements ObjectToJsonTransformer, CanTransform {
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		if (object == null) {
 			ToJsonTransformationUtils.printData(null, printer);
@@ -45,5 +48,17 @@ public class LeafPrimitiveTransformer implements ObjectToJsonTransformer {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean canTransform(Object from, Class to) {
+		return from != null & from.getClass().isPrimitive() & ReflectionUtils.objectIsOfType(to, String.class);
+	}
+
+	public String name() {
+		return "primitive-" + String.class.getName();
+	}
+
+	public Object transform(Object from) {
+		return ToJsonTransformationUtils.formatData(from);
 	}
 }

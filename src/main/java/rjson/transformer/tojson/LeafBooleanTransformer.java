@@ -23,12 +23,14 @@
  */
 package rjson.transformer.tojson;
 
+import mirage.ReflectionUtils;
 import rjson.Rjson;
 import rjson.printer.Printer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
+import transformers.CanTransform;
 
-public class LeafBooleanTransformer implements ObjectToJsonTransformer {
+public class LeafBooleanTransformer implements ObjectToJsonTransformer, CanTransform<Boolean, String> {
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		if (object == null) {
 			ToJsonTransformationUtils.printData(null, printer);
@@ -45,5 +47,17 @@ public class LeafBooleanTransformer implements ObjectToJsonTransformer {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean canTransform(Boolean from, Class<?> to) {
+		return from != null & to != null & ReflectionUtils.objectIsOfType(from, Boolean.class) & ReflectionUtils.objectIsOfType(to, String.class);
+	}
+
+	public String name() {
+		return Boolean.class.getName() + "-" + String.class.getName();
+	}
+
+	public String transform(Boolean from) {
+		return ToJsonTransformationUtils.formatData(from);
 	}
 }

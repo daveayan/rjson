@@ -66,6 +66,14 @@ public class ToJsonTransformationUtils {
 	public static void printData(Object object, Printer printer) {
 		printer.print("" + object + "");
 	}
+	
+	public static String formatData(String data) {
+		return "\"" + RjsonUtil.escapeJsonCharactersIn(data) + "\"";
+	}
+
+	public static String formatData(Object object) {
+		return "" + object + "";
+	}
 
 	public static void hasMoreElements(Printer printer) {
 		printer.print(", ");

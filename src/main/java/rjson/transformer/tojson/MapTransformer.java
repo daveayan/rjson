@@ -26,12 +26,15 @@ package rjson.transformer.tojson;
 import java.util.Iterator;
 import java.util.Map;
 
+import mirage.ReflectionUtils;
+
 import rjson.Rjson;
 import rjson.printer.Printer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
+import transformers.CanTransform;
 
-public class MapTransformer implements ObjectToJsonTransformer {
+public class MapTransformer implements ObjectToJsonTransformer, CanTransform<Map<?, ?>, String> {
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
 		printer.print("{");
 		printer.increaseIndent();
@@ -62,5 +65,17 @@ public class MapTransformer implements ObjectToJsonTransformer {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean canTransform(Map<?, ?> from, Class<?> to) {
+		return from != null & to != null & ReflectionUtils.objectIsOfType(from, Map.class) & ReflectionUtils.objectIsOfType(to, String.class);
+	}
+
+	public String name() {
+		return Map.class.getName() + "-" + String.class.getName();
+	}
+
+	public String transform(Map<?, ?> from) {
+		return null;
 	}
 }
