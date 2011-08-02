@@ -27,8 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
-import mirage.ReflectionUtils;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -64,7 +62,7 @@ public class RjsonUtil {
 			}
 //			field.set(objectToBeReturned, value);
 //			field.set(objectToBeReturned, Cast.convert(value, ReflectionUtils.getInstanceOfClassForcibly(field.getType())));
-			Object transformedValue = Transformer.newInstance().transform(value, field.getType());
+			Object transformedValue = Transformer.newInstance().transform(value, field.getType(), null);
 			field.set(objectToBeReturned, transformedValue);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block

@@ -29,6 +29,7 @@ import rjson.printer.Printer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.CanTransform;
+import transformers.Context;
 
 public class LeafBooleanTransformer implements ObjectToJsonTransformer, CanTransform<Boolean, String> {
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
@@ -57,7 +58,7 @@ public class LeafBooleanTransformer implements ObjectToJsonTransformer, CanTrans
 		return Boolean.class.getName() + "-" + String.class.getName();
 	}
 
-	public String transform(Boolean from) {
+	public String transform(Boolean from, Context context) {
 		return ToJsonTransformationUtils.formatData(from);
 	}
 }

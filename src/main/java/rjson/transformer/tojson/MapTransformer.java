@@ -33,6 +33,7 @@ import rjson.printer.Printer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.CanTransform;
+import transformers.Context;
 
 public class MapTransformer implements ObjectToJsonTransformer, CanTransform<Map<?, ?>, String> {
 	public void transformToJson(Object object, Printer printer, Rjson rjson) {
@@ -75,7 +76,7 @@ public class MapTransformer implements ObjectToJsonTransformer, CanTransform<Map
 		return Map.class.getName() + "-" + String.class.getName();
 	}
 
-	public String transform(Map<?, ?> from) {
+	public String transform(Map<?, ?> from, Context context) {
 		return null;
 	}
 }

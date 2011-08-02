@@ -29,6 +29,7 @@ import rjson.printer.Printer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.CanTransform;
+import transformers.Context;
 
 @SuppressWarnings("unchecked")
 public class LeafPrimitiveTransformer implements ObjectToJsonTransformer, CanTransform {
@@ -58,7 +59,7 @@ public class LeafPrimitiveTransformer implements ObjectToJsonTransformer, CanTra
 		return "primitive-" + String.class.getName();
 	}
 
-	public Object transform(Object from) {
+	public Object transform(Object from, Context context) {
 		return ToJsonTransformationUtils.formatData(from);
 	}
 }
