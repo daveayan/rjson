@@ -77,6 +77,36 @@ public class MapTransformer implements ObjectToJsonTransformer, CanTransform<Map
 	}
 
 	public String transform(Map<?, ?> from, Context context) {
+		printer(context).print("{");
+		printer(context).increaseIndent();
+		printer(context).indent();
+		if (from == null)
+			return null;
+
+		Map<?, ?> objectMap = (Map<?, ?>) from;
+		Iterator<?> iter = objectMap.keySet().iterator();
+		while (true) {
+			if (!iter.hasNext())
+				break;
+			Object key = iter.next();
+			Object newObject = objectMap.get(key);
+			ToJsonTransformationUtils.printMapKeyName(key.toString(), printer(context));
+			ToJsonTransformationUtils.delegateHandlingOf(newObject, printer(context), rjson(context));
+			if (iter.hasNext())
+				ToJsonTransformationUtils.hasMoreElements(printer(context));
+		}
+		printer(context).printNewLine();
+		printer(context).decreaseIndent();
+		printer(context).indent();
+		printer(context).print("}");
 		return null;
+	}
+	
+	private Rjson rjson(Context context) {
+		return (Rjson) context.get("rjson");
+	}
+	
+	private Printer printer(Context context) {
+		return (Printer) context.get("printer");
 	}
 }
