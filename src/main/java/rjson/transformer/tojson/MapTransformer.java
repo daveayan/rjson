@@ -26,60 +26,15 @@ package rjson.transformer.tojson;
 import java.util.Iterator;
 import java.util.Map;
 
-import mirage.ReflectionUtils;
-
-import rjson.Rjson;
-import rjson.printer.Printer;
-import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.CanTransform;
 import transformers.Context;
 
-public class MapTransformer implements ObjectToJsonTransformer, CanTransform<Map<?, ?>, String> {
-	public void transformToJson(Object object, Printer printer, Rjson rjson) {
-		printer.print("{");
-		printer.increaseIndent();
-		printer.indent();
-		if (object == null)
-			return;
-
-		Map<?, ?> objectMap = (Map<?, ?>) object;
-		Iterator<?> iter = objectMap.keySet().iterator();
-		while (true) {
-			if (!iter.hasNext())
-				break;
-			Object key = iter.next();
-			Object newObject = objectMap.get(key);
-			ToJsonTransformationUtils.printMapKeyName(key.toString(), printer);
-			ToJsonTransformationUtils.delegateHandlingOf(newObject, printer, rjson);
-			if (iter.hasNext())
-				ToJsonTransformationUtils.hasMoreElements(printer);
-		}
-		printer.printNewLine();
-		printer.decreaseIndent();
-		printer.indent();
-		printer.print("}");
-	}
-
-	public boolean canConvertToJson(Object object) {
-		if (object instanceof java.util.Map<?, ?>) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean canTransform(Map<?, ?> from, Class<?> to) {
-		return from != null & to != null & ReflectionUtils.objectIsOfType(from, Map.class) & ReflectionUtils.objectIsOfType(to, String.class);
-	}
-
-	public String name() {
-		return Map.class.getName() + "-" + String.class.getName();
-	}
-
-	public String transform(Map<?, ?> from, Context context) {
-		printer(context).print("{");
-		printer(context).increaseIndent();
-		printer(context).indent();
+public class MapTransformer implements CanTransform {
+	public String transform(Object from, Class<?> to, Context context) {
+		ToJsonTransformationUtils.printer(context).print("{");
+		ToJsonTransformationUtils.printer(context).increaseIndent();
+		ToJsonTransformationUtils.printer(context).indent();
 		if (from == null)
 			return null;
 
@@ -90,23 +45,22 @@ public class MapTransformer implements ObjectToJsonTransformer, CanTransform<Map
 				break;
 			Object key = iter.next();
 			Object newObject = objectMap.get(key);
-			ToJsonTransformationUtils.printMapKeyName(key.toString(), printer(context));
-			ToJsonTransformationUtils.delegateHandlingOf(newObject, printer(context), rjson(context));
+			ToJsonTransformationUtils.printMapKeyName(key.toString(), ToJsonTransformationUtils.printer(context));
+			context.transformer().delegateTransformation(newObject, to, context);
 			if (iter.hasNext())
-				ToJsonTransformationUtils.hasMoreElements(printer(context));
+				ToJsonTransformationUtils.hasMoreElements(ToJsonTransformationUtils.printer(context));
 		}
-		printer(context).printNewLine();
-		printer(context).decreaseIndent();
-		printer(context).indent();
-		printer(context).print("}");
+		ToJsonTransformationUtils.printer(context).printNewLine();
+		ToJsonTransformationUtils.printer(context).decreaseIndent();
+		ToJsonTransformationUtils.printer(context).indent();
+		ToJsonTransformationUtils.printer(context).print("}");
 		return null;
 	}
 	
-	private Rjson rjson(Context context) {
-		return (Rjson) context.get("rjson");
-	}
-	
-	private Printer printer(Context context) {
-		return (Printer) context.get("printer");
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		if (from instanceof java.util.Map<?, ?>) {
+			return true;
+		}
+		return false;
 	}
 }

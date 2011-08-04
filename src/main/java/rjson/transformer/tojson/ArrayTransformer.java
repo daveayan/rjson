@@ -24,14 +24,13 @@ package rjson.transformer.tojson;
 import java.util.Arrays;
 import java.util.List;
 
-import rjson.Rjson;
-import rjson.printer.Printer;
+import transformers.Context;
 
 public class ArrayTransformer extends IterableTransformer {
 
-	public void transformToJson(Object object, Printer printer, Rjson rjson) {
+	public void transformToJson(Object object, Class<?> to, Context context) {
 		List<?> arrayAsList = Arrays.asList((Object[]) object);
-		super.transformToJson(arrayAsList, printer, rjson);
+		super.transform(arrayAsList, to, context);
 	}
 
 	public boolean canConvertToJson(Object object) {
@@ -41,5 +40,14 @@ public class ArrayTransformer extends IterableTransformer {
 			}
 		}
 		return false;
+	}
+	
+	public String transform(Object from, Class<?> to, Context context) {
+		transformToJson(from, to, context);
+		return null;
+	}
+	
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		return canConvertToJson(from);
 	}
 }

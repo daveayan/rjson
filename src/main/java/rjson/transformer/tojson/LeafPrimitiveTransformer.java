@@ -23,43 +23,27 @@
  */
 package rjson.transformer.tojson;
 
-import mirage.ReflectionUtils;
-import rjson.Rjson;
-import rjson.printer.Printer;
-import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.CanTransform;
 import transformers.Context;
 
-@SuppressWarnings("unchecked")
-public class LeafPrimitiveTransformer implements ObjectToJsonTransformer, CanTransform {
-	public void transformToJson(Object object, Printer printer, Rjson rjson) {
-		if (object == null) {
-			ToJsonTransformationUtils.printData(null, printer);
-			return;
+public class LeafPrimitiveTransformer implements CanTransform {
+	public String transform(Object from, Class<?> to, Context context) {
+		if (from == null) {
+			ToJsonTransformationUtils.printData(null, ToJsonTransformationUtils.printer(context));
+		} else {
+			ToJsonTransformationUtils.printData(from, ToJsonTransformationUtils.printer(context));
 		}
-		ToJsonTransformationUtils.printData(object, printer);
+		return null;
 	}
-
-	public boolean canConvertToJson(Object object) {
-		if (object == null) {
+	
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		if (from == null) {
 			return true;
 		}
-		if (object.getClass().isPrimitive()) {
+		if (from.getClass().isPrimitive()) {
 			return true;
 		}
 		return false;
-	}
-
-	public boolean canTransform(Object from, Class to) {
-		return from != null & from.getClass().isPrimitive() & ReflectionUtils.objectIsOfType(to, String.class);
-	}
-
-	public String name() {
-		return "primitive-" + String.class.getName();
-	}
-
-	public Object transform(Object from, Context context) {
-		return ToJsonTransformationUtils.formatData(from);
 	}
 }

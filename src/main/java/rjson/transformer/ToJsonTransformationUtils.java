@@ -24,16 +24,32 @@ package rjson.transformer;
 import rjson.Rjson;
 import rjson.printer.Printer;
 import rjson.utils.RjsonUtil;
+import transformers.Context;
 
 public class ToJsonTransformationUtils {
 	public static final String MESSAGE_ERROR = "ERROR - ";
+	
+
+	public static Rjson rjson(Context context) {
+		return (Rjson) context.get("rjson");
+	}
+	public static Printer printer(Context context) {
+		return (Printer) context.get("printer");
+	}
+	public static transformers.Transformer transformer(Context context) {
+		return (transformers.Transformer) context.get("transformer");
+	}
 
 	public static boolean canConvertToJson(Object object) {
 		return false;
 	}
 
+	public static void delegateHandlingOf(Object from, Class<?> targetClass, Context context) {
+		transformer(context).transform(from, targetClass, context);
+	}
+	
 	public static void delegateHandlingOf(Object object, Printer printer, Rjson rjson) {
-		rjson.convertToJson(object, printer);
+//		rjson.convertToJson(object, printer);
 	}
 
 	public static void printErrorNotImplementedYet(Object object, Printer printer) {

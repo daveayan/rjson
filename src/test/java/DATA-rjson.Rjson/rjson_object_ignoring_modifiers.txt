@@ -1,50 +1,6 @@
 
 {
     "class": "rjson.Rjson", 
-    "default_object_to_json_transformers": [        
-        
-        {
-            "class": "rjson.transformer.tojson.LeafBooleanTransformer", 
-        }, 
-        
-        {
-            "class": "rjson.transformer.tojson.LeafCharacterTransformer", 
-        }, 
-        
-        {
-            "class": "rjson.transformer.tojson.LeafDateTransformer", 
-        }, 
-        
-        {
-            "class": "rjson.transformer.tojson.LeafNumberTransformer", 
-        }, 
-        
-        {
-            "class": "rjson.transformer.tojson.LeafPrimitiveTransformer", 
-        }, 
-        
-        {
-            "class": "rjson.transformer.tojson.LeafStringTransformer", 
-        }, 
-        
-        {
-            "class": "rjson.transformer.tojson.IterableTransformer", 
-        }, 
-        
-        {
-            "class": "rjson.transformer.tojson.MapTransformer", 
-        }, 
-        
-        {
-            "class": "rjson.transformer.tojson.ArrayTransformer", 
-        }, 
-        
-        {
-            "class": "rjson.transformer.tojson.FieldBasedTransformer", 
-        }
-    ], 
-    "custom_object_to_json_transformers": {        
-    }, 
     "default_json_to_object_transformers": [        
         
         {
@@ -76,6 +32,58 @@
         }
     ], 
     "custom_json_to_object_transformers": {        
+    }, 
+    "transformer": 
+    {
+        "class": "transformers.Transformer", 
+        "transformers_a": [            
+        ], 
+        "transformers_b": [            
+            
+            {
+                "class": "rjson.transformer.tojson.LeafBooleanTransformer", 
+            }, 
+            
+            {
+                "class": "rjson.transformer.tojson.LeafBooleanTransformer", 
+            }, 
+            
+            {
+                "class": "rjson.transformer.tojson.LeafCharacterTransformer", 
+            }, 
+            
+            {
+                "class": "rjson.transformer.tojson.LeafDateTransformer", 
+            }, 
+            
+            {
+                "class": "rjson.transformer.tojson.LeafNumberTransformer", 
+            }, 
+            
+            {
+                "class": "rjson.transformer.tojson.LeafPrimitiveTransformer", 
+            }, 
+            
+            {
+                "class": "rjson.transformer.tojson.LeafStringTransformer", 
+            }, 
+            
+            {
+                "class": "rjson.transformer.tojson.IterableTransformer", 
+            }, 
+            
+            {
+                "class": "rjson.transformer.tojson.MapTransformer", 
+            }, 
+            
+            {
+                "class": "rjson.transformer.tojson.ArrayTransformer", 
+            }, 
+            
+            {
+                "class": "rjson.transformer.tojson.FieldBasedTransformer", 
+            }
+        ]
     }, 
     "ignoreModifiers": true
 }

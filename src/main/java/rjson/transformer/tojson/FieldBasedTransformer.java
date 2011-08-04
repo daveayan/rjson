@@ -29,13 +29,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import mirage.ReflectionUtils;
-import rjson.Rjson;
-import rjson.printer.Printer;
 import rjson.transformer.ToJsonTransformationUtils;
+import transformers.Context;
 
 public class FieldBasedTransformer extends ReflectionBasedTransformer {
 	@Override
-	public void reflectionBasedTransform(Object object, Printer printer, Rjson rjson) {
+	public void reflectionBasedTransform(Object object, Class<?> to, Context context) {
 		List<Field> fields = ReflectionUtils.getAllFieldsIn(object);
 		boolean pendingHasMoreElements = false;
 		if (fields != null) {
@@ -48,7 +47,7 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 					continue;
 				if (Modifier.isFinal(field.getModifiers()))
 					continue;
-				if (rjson.ignoreModifiers() || ReflectionUtils.isAccessible(field)) {
+				if (ToJsonTransformationUtils.rjson(context).ignoreModifiers() || ReflectionUtils.isAccessible(field)) {
 					ReflectionUtils.makeAccessible(field);
 					try {
 						Object newObject = field.get(object);
@@ -57,11 +56,11 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 						}
 						if (include(field)) {
 							if (pendingHasMoreElements) {
-								ToJsonTransformationUtils.hasMoreElements(printer);
+								ToJsonTransformationUtils.hasMoreElements(ToJsonTransformationUtils.printer(context));
 								pendingHasMoreElements = false;
 							}
-							ToJsonTransformationUtils.printFieldName(field.getName(), printer);
-							ToJsonTransformationUtils.delegateHandlingOf(newObject, printer, rjson);
+							ToJsonTransformationUtils.printFieldName(field.getName(), ToJsonTransformationUtils.printer(context));
+							context.transformer().delegateTransformation(newObject, to, context);
 						}
 					} catch (IllegalArgumentException e) {
 						// TODO Auto-generated catch block
@@ -77,8 +76,8 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 			}
 		}
 	}
-
-	public boolean canConvertToJson(Object object) {
+	
+	public boolean canTransform(Object from, Class<?> to, Context context) {
 		return true;
 	}
 }

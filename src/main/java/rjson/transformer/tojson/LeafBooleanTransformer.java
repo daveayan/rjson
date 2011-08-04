@@ -23,42 +23,27 @@
  */
 package rjson.transformer.tojson;
 
-import mirage.ReflectionUtils;
-import rjson.Rjson;
-import rjson.printer.Printer;
-import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.CanTransform;
 import transformers.Context;
 
-public class LeafBooleanTransformer implements ObjectToJsonTransformer, CanTransform<Boolean, String> {
-	public void transformToJson(Object object, Printer printer, Rjson rjson) {
-		if (object == null) {
-			ToJsonTransformationUtils.printData(null, printer);
-			return;
+public class LeafBooleanTransformer implements CanTransform {
+	public String transform(Object from, Class<?> to, Context context) {
+		if (from == null) {
+			ToJsonTransformationUtils.printData(null, ToJsonTransformationUtils.printer(context));
+		} else {
+			ToJsonTransformationUtils.printData(from, ToJsonTransformationUtils.printer(context));
 		}
-		ToJsonTransformationUtils.printData(object, printer);
+		return null;
 	}
-
-	public boolean canConvertToJson(Object object) {
-		if (object == null) {
+	
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		if (from == null) {
 			return true;
 		}
-		if (object instanceof java.lang.Boolean) {
+		if (from instanceof java.lang.Boolean) {
 			return true;
 		}
 		return false;
-	}
-
-	public boolean canTransform(Boolean from, Class<?> to) {
-		return from != null & to != null & ReflectionUtils.objectIsOfType(from, Boolean.class) & ReflectionUtils.objectIsOfType(to, String.class);
-	}
-
-	public String name() {
-		return Boolean.class.getName() + "-" + String.class.getName();
-	}
-
-	public String transform(Boolean from, Context context) {
-		return ToJsonTransformationUtils.formatData(from);
 	}
 }

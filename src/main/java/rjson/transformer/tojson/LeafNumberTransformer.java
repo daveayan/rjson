@@ -23,42 +23,35 @@
  */
 package rjson.transformer.tojson;
 
-import mirage.ReflectionUtils;
-import rjson.Rjson;
-import rjson.printer.Printer;
-import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.CanTransform;
 import transformers.Context;
 
-public class LeafNumberTransformer implements ObjectToJsonTransformer, CanTransform<Number, String> {
-	public void transformToJson(Object object, Printer printer, Rjson rjson) {
+public class LeafNumberTransformer implements CanTransform {
+	public void transformToJson(Object object, Class<?> to, Context context) {
 		if (object == null) {
-			ToJsonTransformationUtils.printData(null, printer);
+			ToJsonTransformationUtils.printData(null, ToJsonTransformationUtils.printer(context));
 			return;
 		}
-		ToJsonTransformationUtils.printData(object, printer);
+		ToJsonTransformationUtils.printData(object, ToJsonTransformationUtils.printer(context));
 	}
-
-	public boolean canConvertToJson(Object object) {
-		if (object == null) {
+	
+	public String transform(Object from, Class<?> to, Context context) {
+		if (from == null) {
+			ToJsonTransformationUtils.printData(null, ToJsonTransformationUtils.printer(context));
+		} else {
+			ToJsonTransformationUtils.printData(from, ToJsonTransformationUtils.printer(context));
+		}
+		return null;
+	}
+	
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		if (from == null) {
 			return true;
 		}
-		if (object instanceof java.lang.Number) {
+		if (from instanceof java.lang.Number) {
 			return true;
 		}
 		return false;
-	}
-
-	public boolean canTransform(Number from, Class<?> to) {
-		return from != null & to != null & ReflectionUtils.objectIsOfType(from, Number.class) & ReflectionUtils.objectIsOfType(to, String.class);
-	}
-
-	public String name() {
-		return Number.class.getName() + "-" + String.class.getName();
-	}
-
-	public String transform(Number from, Context context) {
-		return ToJsonTransformationUtils.formatData(from);
 	}
 }

@@ -3,9 +3,9 @@ package rjson.domain;
 import rjson.Rjson;
 import rjson.printer.Printer;
 import rjson.transformer.JsonToObjectTransformer;
-import rjson.transformer.ObjectToJsonTransformer;
+import transformers.Context;
 
-public class SampleBothTransformer implements ObjectToJsonTransformer, JsonToObjectTransformer {
+public class SampleBothTransformer implements JsonToObjectTransformer {
 	public boolean canConvertToJson(Object object) {
 		return false;
 	}
@@ -20,5 +20,10 @@ public class SampleBothTransformer implements ObjectToJsonTransformer, JsonToObj
 
 	public Object transformJsonToObject(Object object, Rjson rjson) {
 		return null;
+	}
+
+	public void transformToJson(Object object, Class<?> to, Context context) {
+		// TODO Auto-generated method stub
+		
 	}
 }

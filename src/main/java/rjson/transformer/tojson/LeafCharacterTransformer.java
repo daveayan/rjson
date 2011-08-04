@@ -23,42 +23,27 @@
  */
 package rjson.transformer.tojson;
 
-import mirage.ReflectionUtils;
-import rjson.Rjson;
-import rjson.printer.Printer;
-import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.CanTransform;
 import transformers.Context;
 
-public class LeafCharacterTransformer implements ObjectToJsonTransformer, CanTransform<Character, String> {
-	public void transformToJson(Object object, Printer printer, Rjson rjson) {
-		if (object == null) {
-			ToJsonTransformationUtils.printData(null, printer);
-			return;
+public class LeafCharacterTransformer implements CanTransform {
+	public String transform(Object from, Class<?> to, Context context) {
+		if (from == null) {
+			ToJsonTransformationUtils.printData(null, ToJsonTransformationUtils.printer(context));
+		} else {
+			ToJsonTransformationUtils.printData(from, ToJsonTransformationUtils.printer(context));
 		}
-		ToJsonTransformationUtils.printData(object, printer);
+		return null;
 	}
-
-	public boolean canConvertToJson(Object object) {
-		if (object == null) {
+	
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		if (from == null) {
 			return true;
 		}
-		if (object instanceof java.lang.Character) {
+		if (from instanceof java.lang.Character) {
 			return true;
 		}
 		return false;
-	}
-
-	public boolean canTransform(Character from, Class<?> to) {
-		return from != null & to != null & ReflectionUtils.objectIsOfType(from, Character.class) & ReflectionUtils.objectIsOfType(to, String.class);
-	}
-
-	public String name() {
-		return Character.class.getName() + "-" + String.class.getName();
-	}
-
-	public String transform(Character from, Context context) {
-		return ToJsonTransformationUtils.formatData(from);
 	}
 }

@@ -36,8 +36,6 @@ import org.json.JSONTokener;
 import rjson.printer.Printer;
 import rjson.printer.StringBufferPrinter;
 import rjson.transformer.JsonToObjectTransformer;
-import rjson.transformer.ObjectToJsonTransformer;
-import rjson.transformer.Transformer;
 import rjson.transformer.tojson.ArrayTransformer;
 import rjson.transformer.tojson.FieldBasedTransformer;
 import rjson.transformer.tojson.IterableTransformer;
@@ -55,12 +53,13 @@ import rjson.transformer.toobject.JsonIntegerTransformer;
 import rjson.transformer.toobject.JsonObjectAsMapTransformer;
 import rjson.transformer.toobject.JsonObjectTransformer;
 import rjson.transformer.toobject.JsonStringTransformer;
+import transformers.CanTransform;
+import transformers.Context;
 
 public class Rjson {
-	private List<ObjectToJsonTransformer> default_object_to_json_transformers = null;
-	private Map<String, ObjectToJsonTransformer> custom_object_to_json_transformers = null;
 	private List<JsonToObjectTransformer> default_json_to_object_transformers = null;
 	private Map<String, JsonToObjectTransformer> custom_json_to_object_transformers = null;
+	private transformers.Transformer transformer;
 	private boolean ignoreModifiers = false;
 
 	public static Rjson newInstance() {
@@ -69,17 +68,23 @@ public class Rjson {
 		return rjson;
 	}
 
-	public Rjson with(Transformer transformer) {
-		if (transformer instanceof ObjectToJsonTransformer) {
-			this.registerObjectToJsonTransformer((ObjectToJsonTransformer) transformer, true);
-		}
+	public Rjson with(CanTransform transformer) {
+		this.transformer.and_a(transformer);
+		return this;
+	}
+	
+	public Rjson and(CanTransform transformer) {
+		return with(transformer);
+	}
+	
+	public Rjson with(JsonToObjectTransformer transformer) {
 		if (transformer instanceof JsonToObjectTransformer) {
 			this.registerJsonToObjectTransformer((JsonToObjectTransformer) transformer, true);
 		}
 		return this;
 	}
 
-	public Rjson and(Transformer transformer) {
+	public Rjson and(JsonToObjectTransformer transformer) {
 		return with(transformer);
 	}
 
@@ -141,58 +146,32 @@ public class Rjson {
 
 	public String toJson(Object object) {
 		Printer printer = new StringBufferPrinter();
-		convertToJson(object, printer);
+		Context context = Context.newInstance().put("rjson", this).and("printer", printer);
+		transformer.transform(object, String.class, context);
 		return printer.getOutput();
-	}
-
-	public void convertToJson(Object object, Printer printer) {
-		try {
-			for (ObjectToJsonTransformer transformer : custom_object_to_json_transformers.values()) {
-				if (transformer.canConvertToJson(object)) {
-					transformer.transformToJson(object, printer, this);
-					return;
-				}
-			}
-			for (ObjectToJsonTransformer transformer : default_object_to_json_transformers) {
-				if (transformer.canConvertToJson(object)) {
-					transformer.transformToJson(object, printer, this);
-					return;
-				}
-			}
-		} catch (Throwable th) {
-			th.printStackTrace();
-			// System.out.println("ERROR CONVERTING : " +
-			// object.getClass().getName());
-			// printer.print("ERROR CONVERTING : " +
-			// object.getClass().getName());
-			// printer.print(th.getMessage());
-		}
 	}
 
 	private void initialize() {
 		setUpdefaultObjectToJsonTransformers();
 		setUpdefaultJsonToObjectTransformers();
-		custom_object_to_json_transformers = new HashMap<String, ObjectToJsonTransformer>();
 		custom_json_to_object_transformers = new HashMap<String, JsonToObjectTransformer>();
 	}
 
 	private void setUpdefaultObjectToJsonTransformers() {
-		if (default_object_to_json_transformers != null)
-			return;
-		default_object_to_json_transformers = new ArrayList<ObjectToJsonTransformer>();
-
-		default_object_to_json_transformers.add(new LeafBooleanTransformer());
-		default_object_to_json_transformers.add(new LeafCharacterTransformer());
-		default_object_to_json_transformers.add(new LeafDateTransformer());
-		default_object_to_json_transformers.add(new LeafNumberTransformer());
-		default_object_to_json_transformers.add(new LeafPrimitiveTransformer());
-		default_object_to_json_transformers.add(new LeafStringTransformer());
-		default_object_to_json_transformers.add(new IterableTransformer());
-		default_object_to_json_transformers.add(new MapTransformer());
-		default_object_to_json_transformers.add(new ArrayTransformer());
-		default_object_to_json_transformers.add(new FieldBasedTransformer());
+		this.transformer = transformers.Transformer.newInstance().clear()
+		.with_b(new LeafBooleanTransformer())
+		.and_b(new LeafBooleanTransformer())
+		.and_b(new LeafCharacterTransformer())
+		.and_b(new LeafDateTransformer())
+		.and_b(new LeafNumberTransformer())
+		.and_b(new LeafPrimitiveTransformer())
+		.and_b(new LeafStringTransformer())
+		.and_b(new IterableTransformer())
+		.and_b(new MapTransformer())
+		.and_b(new ArrayTransformer())
+		.and_b(new FieldBasedTransformer());
 	}
-
+	
 	private void setUpdefaultJsonToObjectTransformers() {
 		if (default_json_to_object_transformers != null)
 			return;
@@ -205,20 +184,6 @@ public class Rjson {
 		default_json_to_object_transformers.add(new JsonArrayTransformer());
 		default_json_to_object_transformers.add(new JsonObjectAsMapTransformer());
 		default_json_to_object_transformers.add(new JsonObjectTransformer());
-	}
-
-	private void registerObjectToJsonTransformer(ObjectToJsonTransformer transformer, boolean replaceIfExists) {
-		if (transformer == null)
-			return;
-		String key = transformer.getClass().getName();
-		if (custom_object_to_json_transformers.containsKey(key)) {
-			if (replaceIfExists) {
-				custom_object_to_json_transformers.remove(key);
-				custom_object_to_json_transformers.put(key, transformer);
-			}
-		} else {
-			custom_object_to_json_transformers.put(key, transformer);
-		}
 	}
 
 	private void registerJsonToObjectTransformer(JsonToObjectTransformer transformer, boolean replaceIfExists) {

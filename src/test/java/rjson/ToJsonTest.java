@@ -36,9 +36,10 @@ import rjson.domain.Person;
 import rjson.test.Given;
 import rjson.test.Then;
 import rjson.test.When;
-import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.tojson.FieldBasedTransformer;
 import rjson.utils.RjsonUtil;
+import transformers.CanTransform;
+import transformers.Context;
 
 public class ToJsonTest {
 	private Given given;
@@ -234,10 +235,10 @@ public class ToJsonTest {
 
 	@Test
 	public void toJsonPersonObjectNotIncludingAddress() throws IOException {
-		ObjectToJsonTransformer excludeAddressTransformer = new FieldBasedTransformer() {
+		CanTransform excludeAddressTransformer = new FieldBasedTransformer() {
 			@Override
-			public boolean canConvertToJson(Object object) {
-				if (object instanceof rjson.domain.Person)
+			public boolean canTransform(Object from, Class<?> to, Context context) {
+				if (from instanceof rjson.domain.Person)
 					return true;
 				return false;
 			}
@@ -249,16 +250,16 @@ public class ToJsonTest {
 			}
 		};
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
-		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().with(excludeAddressTransformer));
+		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().with((CanTransform) excludeAddressTransformer));
 		given.when("toJson").isCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test
 	public void toJsonPersonObjectExcludingAddress() throws IOException {
-		ObjectToJsonTransformer excludeAddressTransformer = new FieldBasedTransformer() {
+		CanTransform excludeAddressTransformer = new FieldBasedTransformer() {
 			@Override
-			public boolean canConvertToJson(Object object) {
-				if (object instanceof rjson.domain.Person)
+			public boolean canTransform(Object from, Class<?> to, Context context) {
+				if (from instanceof rjson.domain.Person)
 					return true;
 				return false;
 			}
@@ -270,7 +271,7 @@ public class ToJsonTest {
 			}
 		};
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
-		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().with(excludeAddressTransformer));
+		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().with((CanTransform) excludeAddressTransformer));
 		given.when("toJson").isCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 }

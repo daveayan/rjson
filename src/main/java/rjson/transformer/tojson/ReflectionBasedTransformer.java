@@ -24,33 +24,31 @@ package rjson.transformer.tojson;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import rjson.Rjson;
-import rjson.printer.Printer;
-import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
+import transformers.CanTransform;
+import transformers.Context;
 
-public abstract class ReflectionBasedTransformer implements ObjectToJsonTransformer {
-
-	public void transformToJson(Object object, Printer printer, Rjson rjson) {
-		printer.printNewLine();
-		printer.indent();
-		printer.print("{");
-		printer.increaseIndent();
-		printer.printNewLine();
+public abstract class ReflectionBasedTransformer implements CanTransform {
+	public void transformToJson(Object object, Class<?> to, Context context) {
+		ToJsonTransformationUtils.printer(context).printNewLine();
+		ToJsonTransformationUtils.printer(context).indent();
+		ToJsonTransformationUtils.printer(context).print("{");
+		ToJsonTransformationUtils.printer(context).increaseIndent();
+		ToJsonTransformationUtils.printer(context).printNewLine();
 		if (object == null)
 			return;
 
-		ToJsonTransformationUtils.printClassName(object, printer);
+		ToJsonTransformationUtils.printClassName(object, ToJsonTransformationUtils.printer(context));
 
-		reflectionBasedTransform(object, printer, rjson);
+		reflectionBasedTransform(object, to, context);
 
-		printer.printNewLine();
-		printer.decreaseIndent();
-		printer.indent();
-		printer.print("}");
+		ToJsonTransformationUtils.printer(context).printNewLine();
+		ToJsonTransformationUtils.printer(context).decreaseIndent();
+		ToJsonTransformationUtils.printer(context).indent();
+		ToJsonTransformationUtils.printer(context).print("}");
 	}
 
-	public abstract void reflectionBasedTransform(Object object, Printer printer, Rjson rjson);
+	public abstract void reflectionBasedTransform(Object from, Class<?> to, Context context);
 
 	public boolean include(Field field) {
 		return true;
@@ -62,5 +60,10 @@ public abstract class ReflectionBasedTransformer implements ObjectToJsonTransfor
 
 	public boolean include(Method method) {
 		return true;
+	}
+
+	public String transform(Object from, Class<?> to, Context context) {
+		transformToJson(from, to, context);
+		return null;
 	}
 }

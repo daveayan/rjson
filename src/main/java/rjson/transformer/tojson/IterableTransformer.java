@@ -25,38 +25,38 @@ package rjson.transformer.tojson;
 
 import java.util.Iterator;
 
-import rjson.Rjson;
-import rjson.printer.Printer;
-import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
+import transformers.CanTransform;
+import transformers.Context;
 
-public class IterableTransformer implements ObjectToJsonTransformer {
-	public void transformToJson(Object object, Printer printer, Rjson rjson) {
-		printer.print("[");
-		printer.increaseIndent();
-		printer.indent();
-		if (object == null)
-			return;
-		Iterator<?> iter = ((Iterable<?>) object).iterator();
+public class IterableTransformer implements CanTransform {
+	public String transform(Object from, Class<?> to, Context context) {
+		ToJsonTransformationUtils.printer(context).print("[");
+		ToJsonTransformationUtils.printer(context).increaseIndent();
+		ToJsonTransformationUtils.printer(context).indent();
+		if (from == null)
+			return null;
+		Iterator<?> iter = ((Iterable<?>) from).iterator();
 		while (true) {
 			if (!iter.hasNext())
 				break;
 			Object newObject = iter.next();
-			printer.printNewLine();
-			printer.indent();
-			ToJsonTransformationUtils.delegateHandlingOf(newObject, printer, rjson);
+			ToJsonTransformationUtils.printer(context).printNewLine();
+			ToJsonTransformationUtils.printer(context).indent();
+			context.transformer().delegateTransformation(newObject, to, context);
 			if (iter.hasNext())
-				ToJsonTransformationUtils.hasMoreElements(printer);
+				ToJsonTransformationUtils.hasMoreElements(ToJsonTransformationUtils.printer(context));
 		}
-		printer.printNewLine();
-		printer.decreaseIndent();
-		printer.indent();
-		printer.print("]");
+		ToJsonTransformationUtils.printer(context).printNewLine();
+		ToJsonTransformationUtils.printer(context).decreaseIndent();
+		ToJsonTransformationUtils.printer(context).indent();
+		ToJsonTransformationUtils.printer(context).print("]");
+		return null;
 	}
-
-	public boolean canConvertToJson(Object object) {
-		if (object != null) {
-			if (object instanceof java.lang.Iterable<?>) {
+	
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		if (from != null) {
+			if (from instanceof java.lang.Iterable<?>) {
 				return true;
 			}
 		}
