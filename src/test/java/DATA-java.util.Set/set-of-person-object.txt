@@ -47,8 +47,8 @@
                 "balance": 100.0, 
                 "lastUpdate": "null", 
                 "someMap": {                    
-                    "B": "200", 
-                    "A": "100"
+                    "A": "100", 
+                    "B": "200"
                 }, 
                 "id": 1
             }
