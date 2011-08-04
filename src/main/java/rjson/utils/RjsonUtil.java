@@ -40,7 +40,7 @@ public class RjsonUtil {
 	}
 
 	public static String fileAsString(String file) throws IOException {
-		return FileUtils.readFileToString(new File(file));
+		return FileUtils.readFileToString(new File(file)).replaceAll("\\r\\n", "\n");
 	}
 
 	public static Rjson completeSerializer() {
@@ -60,8 +60,9 @@ public class RjsonUtil {
 					return;
 				}
 			}
-//			field.set(objectToBeReturned, value);
-//			field.set(objectToBeReturned, Cast.convert(value, ReflectionUtils.getInstanceOfClassForcibly(field.getType())));
+			// field.set(objectToBeReturned, value);
+			// field.set(objectToBeReturned, Cast.convert(value,
+			// ReflectionUtils.getInstanceOfClassForcibly(field.getType())));
 			Object transformedValue = Transformer.newInstance().transform(value, field.getType(), null);
 			field.set(objectToBeReturned, transformedValue);
 		} catch (IllegalArgumentException e) {

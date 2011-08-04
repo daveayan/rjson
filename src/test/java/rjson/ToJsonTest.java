@@ -24,8 +24,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -146,6 +148,32 @@ public class ToJsonTest {
 	}
 
 	@Test
+	public void toJsonEmptySet() throws IOException {
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/empty-list.txt");
+		when.methodIsCalledWith(new HashSet<String>()).assertThatReturnValueIsSameAs(expectedJson);
+	}
+
+	@Test
+	public void toJsonStringSet() throws IOException {
+		Set<String> set = new HashSet<String>();
+		set.add("qwerty");
+		set.add("asdfgh");
+		set.add("qwerty");
+
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
+		when.methodIsCalledWith(set).assertThatReturnValueIsSameAs(expectedJson);
+	}
+
+	@Test
+	public void toJsonComplexObjectSet() throws IOException {
+		Set<Person> set = new HashSet<Person>();
+		set.add(Person.getFullyLoadedInstance());
+
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.Set/set-of-person-object.txt");
+		when.methodIsCalledWith(set).assertThatReturnValueIsSameAs(expectedJson);
+	}
+
+	@Test
 	public void toJsonEmptyArray() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/empty-list.txt");
 		when.methodIsCalledWith((Object) new String[] {}).assertThatReturnValueIsSameAs(expectedJson);
@@ -156,8 +184,8 @@ public class ToJsonTest {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
 		when.methodIsCalledWith((Object) new String[] { "qwerty", "asdfgh" }).assertThatReturnValueIsSameAs(expectedJson);
 	}
-	
-//	@Test
+
+	// @Test
 	public void toJsonByteArray() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
 		when.methodIsCalledWith("Hello World".getBytes()).assertThatReturnValueIsSameAs(expectedJson);
