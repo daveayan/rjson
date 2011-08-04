@@ -59,7 +59,7 @@ import transformers.Context;
 public class Rjson {
 	private List<JsonToObjectTransformer> default_json_to_object_transformers = null;
 	private Map<String, JsonToObjectTransformer> custom_json_to_object_transformers = null;
-	private transformers.Transformer transformer;
+	private transformers.Transformer object_to_json_transformer;
 	private boolean ignoreModifiers = false;
 
 	public static Rjson newInstance() {
@@ -69,7 +69,7 @@ public class Rjson {
 	}
 
 	public Rjson with(CanTransform transformer) {
-		this.transformer.and_a(transformer);
+		this.object_to_json_transformer.and_a(transformer);
 		return this;
 	}
 	
@@ -147,7 +147,7 @@ public class Rjson {
 	public String toJson(Object object) {
 		Printer printer = new StringBufferPrinter();
 		Context context = Context.newInstance().put("rjson", this).and("printer", printer);
-		transformer.transform(object, String.class, context);
+		object_to_json_transformer.transform(object, String.class, context);
 		return printer.getOutput();
 	}
 
@@ -158,7 +158,7 @@ public class Rjson {
 	}
 
 	private void setUpdefaultObjectToJsonTransformers() {
-		this.transformer = transformers.Transformer.newInstance().clear()
+		this.object_to_json_transformer = transformers.Transformer.newInstance().clear()
 		.with_b(new LeafBooleanTransformer())
 		.and_b(new LeafBooleanTransformer())
 		.and_b(new LeafCharacterTransformer())

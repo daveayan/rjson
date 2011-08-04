@@ -37,7 +37,7 @@
             "class": "rjson.domain.SampleBothTransformer", 
         }
     }, 
-    "transformer": 
+    "object_to_json_transformer": 
     {
         "class": "transformers.Transformer", 
         "transformers_a": [            

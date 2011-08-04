@@ -33,7 +33,7 @@
     ], 
     "custom_json_to_object_transformers": {        
     }, 
-    "transformer": 
+    "object_to_json_transformer": 
     {
         "class": "transformers.Transformer", 
         "transformers_a": [            
