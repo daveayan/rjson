@@ -9,6 +9,10 @@
         "transformers_b":[            
             
             {
+                "class":"rjson.transformer.tojson.IgnoreClassTransformation",
+            },
+            
+            {
                 "class":"rjson.transformer.tojson.LeafBooleanTransformer",
             },
             
@@ -86,6 +90,10 @@
             
             {
                 "class":"rjson.transformer.toobject.JsonObjectTransformer",
+            },
+            
+            {
+                "class":"rjson.transformer.toobject.JsonArrayToHashSetTransformer",
             }
         ],
         "default_transformer":"null"

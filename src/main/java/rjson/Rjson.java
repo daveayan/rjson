@@ -34,6 +34,7 @@ import rjson.transformer.JsonToObjectTransformer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.tojson.ArrayTransformer;
 import rjson.transformer.tojson.FieldBasedTransformer;
+import rjson.transformer.tojson.IgnoreClassTransformation;
 import rjson.transformer.tojson.IterableTransformer;
 import rjson.transformer.tojson.LeafBooleanTransformer;
 import rjson.transformer.tojson.LeafCharacterTransformer;
@@ -42,6 +43,7 @@ import rjson.transformer.tojson.LeafNumberTransformer;
 import rjson.transformer.tojson.LeafPrimitiveTransformer;
 import rjson.transformer.tojson.LeafStringTransformer;
 import rjson.transformer.tojson.MapTransformer;
+import rjson.transformer.toobject.JsonArrayToHashSetTransformer;
 import rjson.transformer.toobject.JsonArrayTransformer;
 import rjson.transformer.toobject.JsonBooleanTransformer;
 import rjson.transformer.toobject.JsonDoubleTransformer;
@@ -141,6 +143,7 @@ public class Rjson {
 	private void setUpDefaultObjectToJsonTransformers() {
 		this.object_to_json_transformer = Transformer.newInstance().clear()
 			.with_default_transformer(new FieldBasedTransformer())
+			.and_b(new IgnoreClassTransformation())
 			.and_b(new LeafBooleanTransformer())
 			.and_b(new LeafBooleanTransformer())
 			.and_b(new LeafCharacterTransformer())
@@ -161,7 +164,8 @@ public class Rjson {
 			.and_b(new JsonDoubleTransformer())
 			.and_b(new JsonArrayTransformer())
 			.and_b(new JsonObjectAsMapTransformer())
-			.and_b(new JsonObjectTransformer());
+			.and_b(new JsonObjectTransformer())
+			.and_b(new JsonArrayToHashSetTransformer());
 	}
 
 	public boolean ignoreModifiers() {

@@ -24,6 +24,8 @@ package rjson.transformer.toobject;
 import java.util.ArrayList;
 import java.util.List;
 
+import mirage.ReflectionUtils;
+
 import org.json.JSONArray;
 
 import rjson.transformer.JsonToObjectTransformer;
@@ -31,7 +33,12 @@ import transformers.Context;
 
 public class JsonArrayTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		return from instanceof JSONArray && to.getName().trim().equals("java.lang.Object");
+		if(from instanceof JSONArray) {
+			if(ReflectionUtils.classIsOfEitherType(to, ArrayList.class, Object.class)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public Object transform(Object from, Class<?> to, Context context) {

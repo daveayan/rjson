@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -68,7 +69,7 @@ public class ToObjectTest {
 		expectedObject.put("key2", "asdfgh");
 		String actualJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.Map/string-string-map.txt");
 		Rjson.newInstance().toObject(actualJson, HashSet.class);
-//		when.methodIsCalledWith(actualJson).assertThatReturnValueIsSameAs(expectedObject);
+		// when.methodIsCalledWith(actualJson).assertThatReturnValueIsSameAs(expectedObject);
 	}
 
 	@Test
@@ -85,10 +86,10 @@ public class ToObjectTest {
 		String actualJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
 		when.methodIsCalledWith(actualJson).assertThatReturnValueIsSameAs(expectedObject);
 	}
-	
+
 	@Test
 	public void toObjectJsonForAListAsSet() throws IOException {
-		List<String> expectedObject = new ArrayList<String>();
+		Set<String> expectedObject = new HashSet<String>();
 		expectedObject.add("qwerty");
 		expectedObject.add("asdfgh");
 		String actualJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
