@@ -23,10 +23,7 @@
  */
 package rjson.transformer;
 
-import rjson.Rjson;
+import transformers.CanTransform;
 
-public interface JsonToObjectTransformer {
-	public Object transformJsonToObject(Object object, Rjson rjson);
-
-	public boolean canConvertToObject(Object object);
+public interface JsonToObjectTransformer extends CanTransform {
 }

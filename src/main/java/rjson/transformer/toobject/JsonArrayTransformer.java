@@ -26,20 +26,20 @@ import java.util.List;
 
 import org.json.JSONArray;
 
-import rjson.Rjson;
 import rjson.transformer.JsonToObjectTransformer;
+import transformers.Context;
 
 public class JsonArrayTransformer implements JsonToObjectTransformer {
-	public Object transformJsonToObject(Object object, Rjson rjson) {
-		JSONArray ja = (JSONArray) object;
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		return from instanceof JSONArray;
+	}
+
+	public Object transform(Object from, Class<?> to, Context context) {
+		JSONArray ja = (JSONArray) from;
 		List<Object> newList = new ArrayList<Object>();
 		for (Object item : ja.getList()) {
-			newList.add(rjson.jsonObjectToObjectControl(item));
+			newList.add(context.transformer().delegateTransformation(item, to, context));
 		}
 		return newList;
-	}
-	
-	public boolean canConvertToObject(Object object) {
-		return object instanceof JSONArray;
 	}
 }

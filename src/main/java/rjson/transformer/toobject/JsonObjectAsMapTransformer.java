@@ -27,23 +27,22 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import rjson.Rjson;
 import rjson.transformer.JsonToObjectTransformer;
+import transformers.Context;
 
 public class JsonObjectAsMapTransformer implements JsonToObjectTransformer {
-	public Object transformJsonToObject(Object object, Rjson rjson) {
-		JSONObject jo = (JSONObject) object;
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		return (from instanceof JSONObject) && ! ((JSONObject) from).has("class");
+	}
+
+	public Object transform(Object from, Class<?> to, Context context) {
+		JSONObject jo = (JSONObject) from;
 		Map<Object, Object> newMap = new HashMap<Object, Object>();
 		Iterator<?> iter = jo.getMap().keySet().iterator();
 		while (iter.hasNext()) {
 			Object key = iter.next();
-			newMap.put(key, rjson.jsonObjectToObjectControl(jo.getMap().get(key)));
+			newMap.put(key, context.transformer().delegateTransformation(jo.getMap().get(key), to, context));
 		}
 		return newMap;
-	}
-	
-
-	public boolean canConvertToObject(Object object) {
-		return (object instanceof JSONObject) && ! ((JSONObject) object).has("class");
 	}
 }

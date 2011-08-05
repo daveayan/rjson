@@ -25,11 +25,11 @@ package rjson.transformer.tojson;
 
 import java.util.Iterator;
 
+import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
-import transformers.CanTransform;
 import transformers.Context;
 
-public class IterableTransformer implements CanTransform {
+public class IterableTransformer implements ObjectToJsonTransformer {
 	public String transform(Object from, Class<?> to, Context context) {
 		ToJsonTransformationUtils.printer(context).print("[");
 		ToJsonTransformationUtils.printer(context).increaseIndent();

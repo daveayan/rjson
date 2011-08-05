@@ -30,13 +30,17 @@ import mirage.ReflectionUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import rjson.Rjson;
 import rjson.transformer.JsonToObjectTransformer;
 import rjson.utils.RjsonUtil;
+import transformers.Context;
 
 public class JsonObjectTransformer implements JsonToObjectTransformer {
-	public Object transformJsonToObject(Object object, Rjson rjson) {
-		JSONObject jo = (JSONObject) object;
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		return (from instanceof JSONObject) && ((JSONObject) from).has("class");
+	}
+
+	public Object transform(Object from, Class<?> to, Context context) {
+		JSONObject jo = (JSONObject) from;
 		try {
 			Object objectToBeReturned = ReflectionUtils.objectFor(jo.getString("class"));
 			List<Field> fields = ReflectionUtils.getAllFieldsIn(objectToBeReturned);
@@ -46,7 +50,7 @@ public class JsonObjectTransformer implements JsonToObjectTransformer {
 				ReflectionUtils.makeAccessible(field);
 				if (jo.has(field.getName())) {
 					Object jsonField = jo.get(field.getName());
-					Object returnObject = rjson.jsonObjectToObjectControl(jsonField);
+					Object returnObject = context.transformer().delegateTransformation(jsonField, to, context);
 					RjsonUtil.setField(field, objectToBeReturned, returnObject);
 				}
 			}
@@ -60,9 +64,5 @@ public class JsonObjectTransformer implements JsonToObjectTransformer {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	public boolean canConvertToObject(Object object) {
-		return (object instanceof JSONObject) && ((JSONObject) object).has("class");
 	}
 }

@@ -2,11 +2,11 @@ package rjson.domain;
 
 import rjson.Rjson;
 import rjson.printer.Printer;
+import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
-import transformers.CanTransform;
 import transformers.Context;
 
-public class SampleObjectToJsonTransformer implements CanTransform {
+public class SampleObjectToJsonTransformer implements ObjectToJsonTransformer {
 	public boolean canConvertToJson(Object object) {
 		return false;
 	}

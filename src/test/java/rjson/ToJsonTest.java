@@ -38,6 +38,7 @@ import rjson.domain.Person;
 import rjson.test.Given;
 import rjson.test.Then;
 import rjson.test.When;
+import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.tojson.FieldBasedTransformer;
 import rjson.utils.RjsonUtil;
 import transformers.CanTransform;
@@ -278,7 +279,7 @@ public class ToJsonTest {
 			}
 		};
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
-		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().with((CanTransform) excludeAddressTransformer));
+		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().with((ObjectToJsonTransformer) excludeAddressTransformer));
 		given.when("toJson").isCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
@@ -299,7 +300,7 @@ public class ToJsonTest {
 			}
 		};
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
-		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().with((CanTransform) excludeAddressTransformer));
+		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().with((ObjectToJsonTransformer) excludeAddressTransformer));
 		given.when("toJson").isCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 }

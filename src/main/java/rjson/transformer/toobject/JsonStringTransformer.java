@@ -23,18 +23,18 @@ package rjson.transformer.toobject;
 
 import org.json.JSONObject;
 
-import rjson.Rjson;
 import rjson.transformer.JsonToObjectTransformer;
+import transformers.Context;
 
 public class JsonStringTransformer implements JsonToObjectTransformer {
-	public Object transformJsonToObject(Object object, Rjson rjson) {
-		String string = (String) object;
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		return from instanceof String;
+	}
+
+	public Object transform(Object from, Class<?> to, Context context) {
+		String string = (String) from;
 		if (string != null && string.equals(JSONObject.NULL.toString()))
 			return null;
 		return string;
-	}
-	
-	public boolean canConvertToObject(Object object) {
-		return object instanceof String;
 	}
 }

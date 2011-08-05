@@ -21,14 +21,14 @@
  */
 package rjson.transformer.toobject;
 
-import rjson.Rjson;
 import rjson.transformer.JsonToObjectTransformer;
+import transformers.Context;
 
 public class JsonIntegerTransformer implements JsonToObjectTransformer {
-	public Object transformJsonToObject(Object object, Rjson rjson) {
-		return object;
+	public boolean canTransform(Object from, Class<?> to, Context context) {
+		return from instanceof Integer;
 	}
-	public boolean canConvertToObject(Object object) {
-		return object instanceof Integer;
+	public Object transform(Object from, Class<?> to, Context context) {
+		return from;
 	}
 }

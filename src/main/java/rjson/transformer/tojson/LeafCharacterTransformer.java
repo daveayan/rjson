@@ -23,11 +23,11 @@
  */
 package rjson.transformer.tojson;
 
+import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
-import transformers.CanTransform;
 import transformers.Context;
 
-public class LeafCharacterTransformer implements CanTransform {
+public class LeafCharacterTransformer implements ObjectToJsonTransformer {
 	public String transform(Object from, Class<?> to, Context context) {
 		if (from == null) {
 			ToJsonTransformationUtils.printData(null, ToJsonTransformationUtils.printer(context));

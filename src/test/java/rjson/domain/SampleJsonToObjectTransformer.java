@@ -1,14 +1,14 @@
 package rjson.domain;
 
-import rjson.Rjson;
 import rjson.transformer.JsonToObjectTransformer;
+import transformers.Context;
 
 public class SampleJsonToObjectTransformer implements JsonToObjectTransformer {
-	public boolean canConvertToObject(Object object) {
+	public boolean canTransform(Object from, Class<?> to, Context context) {
 		return false;
 	}
 
-	public Object transformJsonToObject(Object object, Rjson rjson) {
+	public Object transform(Object from, Class<?> to, Context context) {
 		return null;
 	}
 

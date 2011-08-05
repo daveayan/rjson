@@ -24,11 +24,11 @@ package rjson.transformer.tojson;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
-import transformers.CanTransform;
 import transformers.Context;
 
-public abstract class ReflectionBasedTransformer implements CanTransform {
+public abstract class ReflectionBasedTransformer implements ObjectToJsonTransformer {
 	public void transformToJson(Object object, Class<?> to, Context context) {
 		ToJsonTransformationUtils.printer(context).printNewLine();
 		ToJsonTransformationUtils.printer(context).indent();
