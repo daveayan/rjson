@@ -134,13 +134,14 @@ public class Rjson {
 	}
 
 	private void initialize() {
-		setUpdefaultObjectToJsonTransformers();
-		setUpdefaultJsonToObjectTransformers();
+		setUpDefaultObjectToJsonTransformers();
+		setUpDefaultJsonToObjectTransformers();
 	}
 
-	private void setUpdefaultObjectToJsonTransformers() {
-		this.object_to_json_transformer = transformers.Transformer.newInstance().clear()
-			.with_b(new LeafBooleanTransformer())
+	private void setUpDefaultObjectToJsonTransformers() {
+		this.object_to_json_transformer = Transformer.newInstance().clear()
+			.with_default_transformer(new FieldBasedTransformer())
+			.and_b(new LeafBooleanTransformer())
 			.and_b(new LeafBooleanTransformer())
 			.and_b(new LeafCharacterTransformer())
 			.and_b(new LeafDateTransformer())
@@ -149,11 +150,10 @@ public class Rjson {
 			.and_b(new LeafStringTransformer())
 			.and_b(new IterableTransformer())
 			.and_b(new MapTransformer())
-			.and_b(new ArrayTransformer())
-			.and_b(new FieldBasedTransformer());
+			.and_b(new ArrayTransformer());
 	}
 	
-	private void setUpdefaultJsonToObjectTransformers() {
+	private void setUpDefaultJsonToObjectTransformers() {
 		this.json_to_object_transformer = Transformer.newInstance().clear()
 			.with_b(new JsonBooleanTransformer())
 			.and_b(new JsonIntegerTransformer())

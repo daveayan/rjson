@@ -50,12 +50,12 @@
             
             {
                 "class":"rjson.transformer.tojson.ArrayTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.tojson.FieldBasedTransformer",
             }
-        ]
+        ],
+        "default_transformer":
+        {
+            "class":"rjson.transformer.tojson.FieldBasedTransformer",
+        }
     },
     "json_to_object_transformer":
     {
@@ -91,7 +91,8 @@
             {
                 "class":"rjson.transformer.toobject.JsonObjectTransformer",
             }
-        ]
+        ],
+        "default_transformer":"null"
     },
     "ignoreModifiers":false
 }
