@@ -32,7 +32,7 @@ import transformers.Context;
 
 public class JsonObjectAsMapTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		return (from instanceof JSONObject) && ! ((JSONObject) from).has("class");
+		return (from instanceof JSONObject) && ! ((JSONObject) from).has("class") && to.getName().trim().equals("java.lang.Object");
 	}
 
 	public Object transform(Object from, Class<?> to, Context context) {

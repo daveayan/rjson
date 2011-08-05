@@ -28,7 +28,7 @@ import transformers.Context;
 
 public class JsonStringTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		return from instanceof String;
+		return from instanceof String && to.getName().trim().equals("java.lang.Object");
 	}
 
 	public Object transform(Object from, Class<?> to, Context context) {

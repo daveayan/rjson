@@ -31,7 +31,7 @@ import transformers.Context;
 
 public class JsonArrayTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		return from instanceof JSONArray;
+		return from instanceof JSONArray && to.getName().trim().equals("java.lang.Object");
 	}
 
 	public Object transform(Object from, Class<?> to, Context context) {

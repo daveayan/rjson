@@ -24,6 +24,7 @@ package rjson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class ToObjectTest {
 	@Before
 	public void setup() {
 		given = Given.objectUnderTestIs(Rjson.newInstance());
-		when = given.when("fromJson");
+		when = given.when("toObject");
 	}
 
 	@Test
@@ -66,7 +67,8 @@ public class ToObjectTest {
 		expectedObject.put("key1", "qwerty");
 		expectedObject.put("key2", "asdfgh");
 		String actualJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.Map/string-string-map.txt");
-		when.methodIsCalledWith(actualJson).assertThatReturnValueIsSameAs(expectedObject);
+		Rjson.newInstance().toObject(actualJson, HashSet.class);
+//		when.methodIsCalledWith(actualJson).assertThatReturnValueIsSameAs(expectedObject);
 	}
 
 	@Test
@@ -82,6 +84,15 @@ public class ToObjectTest {
 		expectedObject.add("asdfgh");
 		String actualJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
 		when.methodIsCalledWith(actualJson).assertThatReturnValueIsSameAs(expectedObject);
+	}
+	
+	@Test
+	public void toObjectJsonForAListAsSet() throws IOException {
+		List<String> expectedObject = new ArrayList<String>();
+		expectedObject.add("qwerty");
+		expectedObject.add("asdfgh");
+		String actualJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
+		when.methodIsCalledWith(actualJson, HashSet.class).assertThatReturnValueIsSameAs(expectedObject);
 	}
 
 	@Test

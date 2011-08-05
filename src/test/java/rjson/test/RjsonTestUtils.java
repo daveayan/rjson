@@ -16,7 +16,7 @@ public class RjsonTestUtils {
 	}
 	
 	public static Object deserialize(String filepathandname) throws IOException {
-		return Rjson.newInstance().andIgnoreModifiers().fromJson(
+		return Rjson.newInstance().andIgnoreModifiers().toObject(
 				fileAsString(folderLocation + filepathandname));
 	}
 

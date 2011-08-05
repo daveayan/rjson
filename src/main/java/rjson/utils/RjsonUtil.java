@@ -36,7 +36,7 @@ import transformers.Transformer;
 public class RjsonUtil {
 
 	public static Object fileAsObject(String filename) throws IOException {
-		return Rjson.newInstance().fromJson(fileAsString(filename));
+		return Rjson.newInstance().toObject(fileAsString(filename));
 	}
 
 	public static String fileAsString(String file) throws IOException {

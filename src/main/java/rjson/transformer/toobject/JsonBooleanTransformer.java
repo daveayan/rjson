@@ -26,7 +26,7 @@ import transformers.Context;
 
 public class JsonBooleanTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		return from instanceof Boolean;
+		return from instanceof Boolean && to.getName().trim().equals("java.lang.Object");
 	}
 	public Object transform(Object from, Class<?> to, Context context) {
 		return from;

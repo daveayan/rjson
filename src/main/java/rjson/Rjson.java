@@ -91,43 +91,46 @@ public class Rjson {
 		return this;
 	}
 
-	public Object fromJson(String json) {
+	public Object toObject(String json) {
+		return toObject(json, Object.class);
+	}
+	
+	public Object toObject(String json, Class<?> to) {
 		JSONTokener tokener = new JSONTokener(json);
 		try {
-			return convertToObject(tokener);
+			return convertToObject(tokener, to);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
-
-	public Object convertToObject(JSONTokener tokener) throws JSONException {
-		char firstChar = tokener.nextClean();
-		if (firstChar == '\"') {
-			return json_to_object_transformer.transform(tokener.nextString('\"'), Object.class, null);
-		}
-		if (firstChar == '{') {
-			tokener.back();
-			return json_to_object_transformer.transform(new JSONObject(tokener), Object.class, null);
-		}
-		if (firstChar == '[') {
-			tokener.back();
-			return json_to_object_transformer.transform(new JSONArray(tokener), Object.class, null);
-		}
-		if (Character.isDigit(firstChar)) {
-			tokener.back();
-			return json_to_object_transformer.transform(tokener.nextValue(), Object.class, null);
-		}
-		tokener.back();
-		return json_to_object_transformer.transform(tokener.nextValue(), Object.class, null);
-	}
-
+	
 	public String toJson(Object object) {
 		Printer printer = new StringBufferPrinter();
 		Context context = Context.newInstance().put("rjson", this).and("printer", printer);
 		object_to_json_transformer.transform(object, String.class, context);
 		return printer.getOutput();
+	}
+
+	private Object convertToObject(JSONTokener tokener, Class<?> to) throws JSONException {
+		char firstChar = tokener.nextClean();
+		if (firstChar == '\"') {
+			return json_to_object_transformer.transform(tokener.nextString('\"'), to, null);
+		}
+		if (firstChar == '{') {
+			tokener.back();
+			return json_to_object_transformer.transform(new JSONObject(tokener), to, null);
+		}
+		if (firstChar == '[') {
+			tokener.back();
+			return json_to_object_transformer.transform(new JSONArray(tokener), to, null);
+		}
+		if (Character.isDigit(firstChar)) {
+			tokener.back();
+			return json_to_object_transformer.transform(tokener.nextValue(), to, null);
+		}
+		tokener.back();
+		return json_to_object_transformer.transform(tokener.nextValue(), to, null);
 	}
 
 	private void initialize() {
