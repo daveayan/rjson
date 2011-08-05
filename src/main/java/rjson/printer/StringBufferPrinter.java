@@ -27,7 +27,7 @@ public class StringBufferPrinter implements Printer {
 	StringBuffer buffer = new StringBuffer();
 
 	public void print(String string) {
-		buffer.append(string);
+		buffer.append(string.trim());
 	}
 
 	public void decreaseIndent() {

@@ -1,10 +1,10 @@
 [    
     [        
-        "qwerty", 
+        "qwerty",
         "asdfgh"
-    ], 
+    ],
     [        
-        "POIUYT", 
+        "POIUYT",
         "LKJHGF"
     ]
 ]

@@ -1,48 +1,48 @@
 
 {
-    "class": "rjson.domain.Person", 
-    "name": "QWERTY", 
-    "phones": [        
+    "class":"rjson.domain.Person",
+    "name":"QWERTY",
+    "phones":[        
         
         {
-            "class": "rjson.domain.PhoneNumber", 
-            "areaCode": "443", 
-            "number": "3233323", 
-            "id": 1
-        }, 
+            "class":"rjson.domain.PhoneNumber",
+            "areaCode":"443",
+            "number":"3233323",
+            "id":1
+        },
         
         {
-            "class": "rjson.domain.PhoneNumber", 
-            "areaCode": "657", 
-            "number": "9466354", 
-            "id": 1
+            "class":"rjson.domain.PhoneNumber",
+            "areaCode":"657",
+            "number":"9466354",
+            "id":1
         }
-    ], 
-    "accounts": [        
+    ],
+    "accounts":[        
         
         {
-            "class": "rjson.domain.Account", 
-            "accountNumber": 123, 
-            "balance": 100.0, 
-            "lastUpdate": "null", 
-            "someMap": {                
-                "A": "100", 
-                "B": "200"
-            }, 
-            "id": 1
+            "class":"rjson.domain.Account",
+            "accountNumber":123,
+            "balance":100.0,
+            "lastUpdate":"null",
+            "someMap":{                
+                "A":"100",
+                "B":"200"
+            },
+            "id":1
         }
-    ], 
-    "drives": [        
+    ],
+    "drives":[        
         
         {
-            "class": "rjson.domain.Car", 
-            "numberOfWheels": 4
-        }, 
+            "class":"rjson.domain.Car",
+            "numberOfWheels":4
+        },
         
         {
-            "class": "rjson.domain.Scooter", 
-            "numberOfWheels": 2
+            "class":"rjson.domain.Scooter",
+            "numberOfWheels":2
         }
-    ], 
-    "id": 1
+    ],
+    "id":1
 }
