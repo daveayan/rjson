@@ -58,8 +58,6 @@ public class Then {
 	}
 
 	private void assertEquals(Object expectedObject, Object returnObject) {
-		// System.out.println(StringUtils.difference(expectedObject.toString(),
-		// returnObject.toString()));
 		Assert.assertEquals(expectedObject, returnObject);
 	}
 

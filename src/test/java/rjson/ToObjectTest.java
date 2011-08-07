@@ -34,6 +34,7 @@ import org.junit.Test;
 
 import rjson.domain.Person;
 import rjson.test.Given;
+import rjson.test.Then;
 import rjson.test.When;
 import rjson.utils.RjsonUtil;
 
@@ -85,15 +86,6 @@ public class ToObjectTest {
 		expectedObject.add("asdfgh");
 		String actualJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
 		when.methodIsCalledWith(actualJson).assertThatReturnValueIsSameAs(expectedObject);
-	}
-
-	@Test
-	public void toObjectJsonForAListAsSet() throws IOException {
-		Set<String> expectedObject = new HashSet<String>();
-		expectedObject.add("qwerty");
-		expectedObject.add("asdfgh");
-		String actualJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
-		when.methodIsCalledWith(actualJson, HashSet.class).assertThatReturnValueIsSameAs(expectedObject);
 	}
 
 	@Test

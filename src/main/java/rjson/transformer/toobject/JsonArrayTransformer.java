@@ -34,7 +34,7 @@ import transformers.Context;
 public class JsonArrayTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
 		if(from instanceof JSONArray) {
-			if(ReflectionUtils.classIsOfEitherType(to, ArrayList.class, Object.class)) {
+			if(ReflectionUtils.classImplements(to, List.class)) {
 				return true;
 			}
 		}

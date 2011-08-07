@@ -10,10 +10,10 @@ import org.json.JSONArray;
 import rjson.transformer.JsonToObjectTransformer;
 import transformers.Context;
 
-public class JsonArrayToHashSetTransformer implements JsonToObjectTransformer {
+public class JsonArrayToSetTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
 		if (from instanceof JSONArray) {
-			if (ReflectionUtils.classIsOfEitherType(to, HashSet.class)) {
+			if (ReflectionUtils.classImplements(to, Set.class)) {
 				return true;
 			}
 		}

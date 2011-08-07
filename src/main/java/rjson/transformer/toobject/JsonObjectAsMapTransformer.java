@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import mirage.ReflectionUtils;
+
 import org.json.JSONObject;
 
 import rjson.transformer.JsonToObjectTransformer;
@@ -32,7 +34,7 @@ import transformers.Context;
 
 public class JsonObjectAsMapTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		return (from instanceof JSONObject) && ! ((JSONObject) from).has("class") && to.getName().trim().equals("java.lang.Object");
+		return (from instanceof JSONObject) && ! ((JSONObject) from).has("class") && ReflectionUtils.classImplements(to, Map.class);
 	}
 
 	public Object transform(Object from, Class<?> to, Context context) {
@@ -41,7 +43,8 @@ public class JsonObjectAsMapTransformer implements JsonToObjectTransformer {
 		Iterator<?> iter = jo.getMap().keySet().iterator();
 		while (iter.hasNext()) {
 			Object key = iter.next();
-			newMap.put(key, context.transformer().delegateTransformation(jo.getMap().get(key), to, context));
+			Object value = jo.getMap().get(key);
+			newMap.put(key, context.transformer().delegateTransformation(value, to, context));
 		}
 		return newMap;
 	}

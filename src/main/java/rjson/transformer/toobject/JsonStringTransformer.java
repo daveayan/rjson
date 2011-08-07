@@ -21,6 +21,8 @@
  */
 package rjson.transformer.toobject;
 
+import mirage.ReflectionUtils;
+
 import org.json.JSONObject;
 
 import rjson.transformer.JsonToObjectTransformer;
@@ -28,7 +30,7 @@ import transformers.Context;
 
 public class JsonStringTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		return from instanceof String && to.getName().trim().equals("java.lang.Object");
+		return from instanceof String && ReflectionUtils.classIsOfEitherType(to, String.class);
 	}
 
 	public Object transform(Object from, Class<?> to, Context context) {

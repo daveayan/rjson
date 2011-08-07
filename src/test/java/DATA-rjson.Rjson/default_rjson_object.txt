@@ -93,7 +93,7 @@
             },
             
             {
-                "class":"rjson.transformer.toobject.JsonArrayToHashSetTransformer",
+                "class":"rjson.transformer.toobject.JsonArrayToSetTransformer",
             }
         ],
         "default_transformer":"null"

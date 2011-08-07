@@ -23,6 +23,9 @@
  */
 package rjson;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,13 +46,15 @@ import rjson.transformer.tojson.LeafNumberTransformer;
 import rjson.transformer.tojson.LeafPrimitiveTransformer;
 import rjson.transformer.tojson.LeafStringTransformer;
 import rjson.transformer.tojson.MapTransformer;
-import rjson.transformer.toobject.JsonArrayToHashSetTransformer;
+import rjson.transformer.toobject.JsonArrayToSetTransformer;
 import rjson.transformer.toobject.JsonArrayTransformer;
 import rjson.transformer.toobject.JsonBooleanTransformer;
+import rjson.transformer.toobject.JsonDoubleToFloatTransformer;
 import rjson.transformer.toobject.JsonDoubleTransformer;
 import rjson.transformer.toobject.JsonIntegerTransformer;
 import rjson.transformer.toobject.JsonObjectAsMapTransformer;
 import rjson.transformer.toobject.JsonObjectTransformer;
+import rjson.transformer.toobject.JsonStringToDateTransformer;
 import rjson.transformer.toobject.JsonStringTransformer;
 import transformers.Context;
 import transformers.Transformer;
@@ -100,7 +105,7 @@ public class Rjson {
 	public Object toObject(String json, Class<?> to) {
 		JSONTokener tokener = new JSONTokener(json);
 		try {
-			return convertToObject(tokener, to);
+			return convertToObject(json, tokener, to);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -114,25 +119,31 @@ public class Rjson {
 		return printer.getOutput();
 	}
 
-	private Object convertToObject(JSONTokener tokener, Class<?> to) throws JSONException {
+	private Object convertToObject(String json, JSONTokener tokener, Class<?> to) throws JSONException {
 		char firstChar = tokener.nextClean();
 		if (firstChar == '\"') {
-			return json_to_object_transformer.transform(tokener.nextString('\"'), to, null);
+			return json_to_object_transformer.transform(tokener.nextString('\"'), String.class, null);
 		}
 		if (firstChar == '{') {
 			tokener.back();
-			return json_to_object_transformer.transform(new JSONObject(tokener), to, null);
+			JSONObject jsonObject = new JSONObject(tokener);
+			if(! jsonObject.has("class")) {
+				return json_to_object_transformer.transform(jsonObject, HashMap.class, null);
+			} else {
+				tokener = new JSONTokener(json);
+				tokener.nextClean();
+			}
 		}
 		if (firstChar == '[') {
 			tokener.back();
-			return json_to_object_transformer.transform(new JSONArray(tokener), to, null);
+			return json_to_object_transformer.transform(new JSONArray(tokener), ArrayList.class, null);
 		}
 		if (Character.isDigit(firstChar)) {
 			tokener.back();
-			return json_to_object_transformer.transform(tokener.nextValue(), to, null);
+			return json_to_object_transformer.transform(tokener.nextValue(), Double.class, null);
 		}
 		tokener.back();
-		return json_to_object_transformer.transform(tokener.nextValue(), to, null);
+		return json_to_object_transformer.transform(tokener.nextValue(), Object.class, null);
 	}
 
 	private void initialize() {
@@ -160,12 +171,14 @@ public class Rjson {
 		this.json_to_object_transformer = Transformer.newInstance().clear()
 			.with_b(new JsonBooleanTransformer())
 			.and_b(new JsonIntegerTransformer())
+			.and_b(new JsonStringToDateTransformer())
 			.and_b(new JsonStringTransformer())
 			.and_b(new JsonDoubleTransformer())
-			.and_b(new JsonArrayTransformer())
+			.and_b(new JsonDoubleToFloatTransformer())
 			.and_b(new JsonObjectAsMapTransformer())
 			.and_b(new JsonObjectTransformer())
-			.and_b(new JsonArrayToHashSetTransformer());
+			.and_b(new JsonArrayTransformer())
+			.and_b(new JsonArrayToSetTransformer());
 	}
 
 	public boolean ignoreModifiers() {

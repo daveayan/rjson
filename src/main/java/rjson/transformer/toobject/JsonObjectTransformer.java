@@ -31,12 +31,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import rjson.transformer.JsonToObjectTransformer;
-import rjson.utils.RjsonUtil;
 import transformers.Context;
 
 public class JsonObjectTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		return (from instanceof JSONObject) && ((JSONObject) from).has("class") && to.getName().trim().equals("java.lang.Object");
+		return (from instanceof JSONObject) && (((JSONObject) from).has("class") || to.getName().trim().equals("java.lang.Object"));
 	}
 
 	public Object transform(Object from, Class<?> to, Context context) {
@@ -50,8 +49,25 @@ public class JsonObjectTransformer implements JsonToObjectTransformer {
 				ReflectionUtils.makeAccessible(field);
 				if (jo.has(field.getName())) {
 					Object jsonField = jo.get(field.getName());
-					Object returnObject = context.transformer().delegateTransformation(jsonField, to, context);
-					RjsonUtil.setField(field, objectToBeReturned, returnObject);
+					Object returnObject = context.transformer().delegateTransformation(jsonField, field.getType(), context);
+					try {
+						field.set(objectToBeReturned, returnObject);
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+//					Object returnObject = context.transformer().delegateTransformation(jsonField, to, context);
+//					try {
+//						Object transformedValue = context.transformer().delegateTransformation(returnObject, field.getType(), context);
+//						field.set(objectToBeReturned, transformedValue);
+//					} catch (IllegalArgumentException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (IllegalAccessException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					RjsonUtil.setField(field, objectToBeReturned, returnObject, context);
 				}
 			}
 			return objectToBeReturned;

@@ -94,7 +94,7 @@ public class Person extends BaseDomainObject {
 	}
 
 	public String toString() {
-		return name + "\n" + addresses + "\n" + phones + "\n" + accounts;
+		return name + "\n" + addresses + "\n" + phones + "\n" + accounts + "\n" + drives;
 	}
 	
 	public void setAddresses(Map<String, Address> addresses) {

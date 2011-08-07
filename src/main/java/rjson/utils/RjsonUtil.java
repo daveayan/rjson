@@ -31,7 +31,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
 import rjson.Rjson;
-import transformers.Transformer;
+import transformers.Context;
 
 public class RjsonUtil {
 
@@ -47,23 +47,9 @@ public class RjsonUtil {
 		return Rjson.newInstance().with(new NullifyDateTransformer()).andIgnoreModifiers();
 	}
 
-	public static void setField(Field field, Object objectToBeReturned, Object value) {
+	public static void setField(Field field, Object objectToBeReturned, Object value, Context context) {
 		try {
-			if (field.getType().isPrimitive() && value == null)
-				return;
-			if (field.getType().getName().trim().equals("java.util.Date"))
-				return;
-			if (value != null && value.getClass().getName().equals("java.lang.Double")) {
-				if (field.getClass().getName().equals("java.lang.Float") || field.getType().getName().equals("float")) {
-					Double dblValue = (Double) value;
-					field.set(objectToBeReturned, dblValue.floatValue());
-					return;
-				}
-			}
-			// field.set(objectToBeReturned, value);
-			// field.set(objectToBeReturned, Cast.convert(value,
-			// ReflectionUtils.getInstanceOfClassForcibly(field.getType())));
-			Object transformedValue = Transformer.newInstance().transform(value, field.getType(), null);
+			Object transformedValue = context.transformer().delegateTransformation(value, field.getType(), context);
 			field.set(objectToBeReturned, transformedValue);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
