@@ -101,11 +101,15 @@
             },
             
             {
-                "class":"rjson.transformer.toobject.JsonArrayTransformer",
+                "class":"rjson.transformer.toobject.JsonArrayToSetTransformer",
             },
             
             {
-                "class":"rjson.transformer.toobject.JsonArrayToSetTransformer",
+                "class":"rjson.transformer.toobject.JsonArrayToVectorTransformer",
+            },
+            
+            {
+                "class":"rjson.transformer.toobject.JsonArrayTransformer",
             }
         ],
         "default_transformer":"null"

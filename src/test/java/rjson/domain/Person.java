@@ -24,14 +24,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 public class Person extends BaseDomainObject {
 	public String name;
 	private Map<String, Address> addresses = new HashMap<String, Address>();
 	protected List<PhoneNumber> phones = new ArrayList<PhoneNumber>();
-	private Vector<Account> accounts = new Vector<Account>();
-	private Vector<Drivable> drives = new Vector<Drivable>();
+	private List<Account> accounts = new ArrayList<Account>();
+	private List<Drivable> drives = new ArrayList<Drivable>();
 
 	public static Person getPartialInstance1() {
 		PhoneNumber ph1 = new PhoneNumber("443", "3233323");
