@@ -15,6 +15,11 @@
         "Office":
         {
             "class":"rjson.domain.Address",
+            
+            
+            
+            
+            
             "address":"sawmill village dr",
             "state":"OH",
             "city":"Columbus",

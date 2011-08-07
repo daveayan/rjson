@@ -47,6 +47,7 @@ import rjson.transformer.tojson.LeafPrimitiveTransformer;
 import rjson.transformer.tojson.LeafStringTransformer;
 import rjson.transformer.tojson.MapTransformer;
 import rjson.transformer.toobject.JsonArrayToSetTransformer;
+import rjson.transformer.toobject.JsonArrayToVectorTransformer;
 import rjson.transformer.toobject.JsonArrayTransformer;
 import rjson.transformer.toobject.JsonBooleanTransformer;
 import rjson.transformer.toobject.JsonDoubleToFloatTransformer;
@@ -54,8 +55,8 @@ import rjson.transformer.toobject.JsonDoubleTransformer;
 import rjson.transformer.toobject.JsonIntegerTransformer;
 import rjson.transformer.toobject.JsonObjectAsMapTransformer;
 import rjson.transformer.toobject.JsonObjectTransformer;
-import rjson.transformer.toobject.JsonStringToDateTransformer;
 import rjson.transformer.toobject.JsonStringTransformer;
+import rjson.transformer.toobject.NullTransformation;
 import transformers.Context;
 import transformers.Transformer;
 
@@ -169,16 +170,17 @@ public class Rjson {
 	
 	private void setUpDefaultJsonToObjectTransformers() {
 		this.json_to_object_transformer = Transformer.newInstance().clear()
-			.with_b(new JsonBooleanTransformer())
+			.with_b(new NullTransformation())
+			.and_b(new JsonBooleanTransformer())
 			.and_b(new JsonIntegerTransformer())
-			.and_b(new JsonStringToDateTransformer())
 			.and_b(new JsonStringTransformer())
 			.and_b(new JsonDoubleTransformer())
 			.and_b(new JsonDoubleToFloatTransformer())
 			.and_b(new JsonObjectAsMapTransformer())
 			.and_b(new JsonObjectTransformer())
-			.and_b(new JsonArrayTransformer())
-			.and_b(new JsonArrayToSetTransformer());
+			.and_b(new JsonArrayToSetTransformer())
+			.and_b(new JsonArrayToVectorTransformer())
+			.and_b(new JsonArrayTransformer());
 	}
 
 	public boolean ignoreModifiers() {

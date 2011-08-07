@@ -27,14 +27,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import rjson.domain.Person;
 import rjson.test.Given;
-import rjson.test.Then;
 import rjson.test.When;
 import rjson.utils.RjsonUtil;
 

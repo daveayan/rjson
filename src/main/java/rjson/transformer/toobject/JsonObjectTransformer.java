@@ -35,6 +35,7 @@ import transformers.Context;
 
 public class JsonObjectTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
+		if(from == null) { return false; }
 		return (from instanceof JSONObject) && (((JSONObject) from).has("class") || to.getName().trim().equals("java.lang.Object"));
 	}
 

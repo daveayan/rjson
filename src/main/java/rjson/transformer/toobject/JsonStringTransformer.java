@@ -22,21 +22,16 @@
 package rjson.transformer.toobject;
 
 import mirage.ReflectionUtils;
-
-import org.json.JSONObject;
-
 import rjson.transformer.JsonToObjectTransformer;
 import transformers.Context;
 
 public class JsonStringTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
+		if(from == null) { return false; }
 		return from instanceof String && ReflectionUtils.classIsOfEitherType(to, String.class);
 	}
 
 	public Object transform(Object from, Class<?> to, Context context) {
-		String string = (String) from;
-		if (string != null && string.equals(JSONObject.NULL.toString()))
-			return null;
-		return string;
+		return from;
 	}
 }

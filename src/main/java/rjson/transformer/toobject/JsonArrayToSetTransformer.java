@@ -12,6 +12,7 @@ import transformers.Context;
 
 public class JsonArrayToSetTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
+		if(from == null) { return false; }
 		if (from instanceof JSONArray) {
 			if (ReflectionUtils.classImplements(to, Set.class)) {
 				return true;

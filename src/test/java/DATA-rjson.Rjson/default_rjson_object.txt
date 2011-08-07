@@ -65,6 +65,10 @@
         "transformers_b":[            
             
             {
+                "class":"rjson.transformer.toobject.NullTransformation",
+            },
+            
+            {
                 "class":"rjson.transformer.toobject.JsonBooleanTransformer",
             },
             
@@ -81,7 +85,7 @@
             },
             
             {
-                "class":"rjson.transformer.toobject.JsonArrayTransformer",
+                "class":"rjson.transformer.toobject.JsonDoubleToFloatTransformer",
             },
             
             {
@@ -90,6 +94,10 @@
             
             {
                 "class":"rjson.transformer.toobject.JsonObjectTransformer",
+            },
+            
+            {
+                "class":"rjson.transformer.toobject.JsonArrayTransformer",
             },
             
             {

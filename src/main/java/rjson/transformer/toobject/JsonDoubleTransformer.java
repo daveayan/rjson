@@ -26,6 +26,7 @@ import transformers.Context;
 
 public class JsonDoubleTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
+		if(from == null) { return false; }
 		return from instanceof Double && to.getName().trim().equals("java.lang.Object");
 	}
 	public Object transform(Object from, Class<?> to, Context context) {
