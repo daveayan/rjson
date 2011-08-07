@@ -29,12 +29,22 @@ import java.lang.reflect.Field;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import rjson.Rjson;
 import transformers.Context;
 
 public class RjsonUtil {
 
+	public static String reformat(String inputJson) {
+		try {
+			return (new JSONObject(inputJson)).toString(2);
+		} catch (JSONException e) {
+		}
+		return inputJson;
+	}
+	
 	public static Object fileAsObject(String filename) throws IOException {
 		return Rjson.newInstance().toObject(fileAsString(filename));
 	}

@@ -39,6 +39,12 @@ public class Then {
 		assertEquals(expectedObject, returnObject);
 		return this;
 	}
+	
+	public Then assertThatReturnJsonIsSameAs(String expectedJson) {
+		assertThatThereAreNoSideEffects();
+		assertEquals(RjsonUtil.reformat(expectedJson), RjsonUtil.reformat(returnObject.toString()));
+		return this;
+	}
 
 	public Then assertThatReturnJsonIsSameAsJsonFor(Object expectedObject) {
 		assertThatThereAreNoSideEffects();
@@ -54,7 +60,7 @@ public class Then {
 
 	private void assertJsonEquals(Object expectedObject, Object returnObject) {
 		Rjson rjson = Rjson.newInstance().with(new NullifyDateTransformer()).andIgnoreModifiers();
-		assertEquals(rjson.toJson(expectedObject), rjson.toJson(returnObject));
+		assertEquals(RjsonUtil.reformat(rjson.toJson(expectedObject)), RjsonUtil.reformat(rjson.toJson(returnObject)));
 	}
 
 	private void assertEquals(Object expectedObject, Object returnObject) {
