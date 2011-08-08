@@ -57,6 +57,7 @@ import rjson.transformer.toobject.JsonObjectAsMapTransformer;
 import rjson.transformer.toobject.JsonObjectTransformer;
 import rjson.transformer.toobject.JsonStringTransformer;
 import rjson.transformer.toobject.NullTransformation;
+import rjson.utils.RjsonUtil;
 import transformers.Context;
 import transformers.Transformer;
 
@@ -117,7 +118,7 @@ public class Rjson {
 		Printer printer = new StringBufferPrinter();
 		Context context = Context.newInstance().put("rjson", this).and("printer", printer);
 		object_to_json_transformer.transform(object, String.class, context);
-		return printer.getOutput();
+		return RjsonUtil.reformat(printer.getOutput());
 	}
 
 	private Object convertToObject(String json, JSONTokener tokener, Class<?> to) throws JSONException {
@@ -156,7 +157,6 @@ public class Rjson {
 		this.object_to_json_transformer = Transformer.newInstance().clear()
 			.with_default_transformer(new FieldBasedTransformer())
 			.and_b(new IgnoreClassTransformation())
-			.and_b(new LeafBooleanTransformer())
 			.and_b(new LeafBooleanTransformer())
 			.and_b(new LeafCharacterTransformer())
 			.and_b(new LeafDateTransformer())

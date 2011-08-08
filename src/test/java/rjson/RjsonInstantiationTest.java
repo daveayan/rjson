@@ -33,12 +33,31 @@ import rjson.transformer.ObjectToJsonTransformer;
 import rjson.utils.RjsonUtil;
 
 public class RjsonInstantiationTest {
+	
+	@Test
+	public void trial() throws IOException {
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
+		String json1 = RjsonUtil.reformat(expectedJson);
+		String json2 = RjsonUtil.reformat(expectedJson);
+		String json3 = RjsonUtil.reformat(expectedJson);
+		
+		String json4 = RjsonUtil.reformat(json1);
+		String json5 = RjsonUtil.reformat(json4);
+		String json6 = RjsonUtil.reformat(json5);
+		
+		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(json2, json3);
+		
+		Assert.assertEquals(json4, json6);
+	}
 
 	@Test
 	public void verifyDefaultJsonObject() throws IOException {
-		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
+//		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
+		Object expectedObject = RjsonUtil.fileAsObject("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
+		String expectedJson = serializer().toJson(expectedObject);
 		String actualJson = serializer().toJson(Rjson.newInstance());
-		Assert.assertEquals(expectedJson, actualJson);
+		Assert.assertEquals(expectedJson, RjsonUtil.reformat(actualJson));
 	}
 
 	@Test

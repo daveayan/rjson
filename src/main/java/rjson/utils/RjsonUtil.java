@@ -25,7 +25,6 @@ package rjson.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -33,7 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import rjson.Rjson;
-import transformers.Context;
 
 public class RjsonUtil {
 
@@ -55,19 +53,6 @@ public class RjsonUtil {
 
 	public static Rjson completeSerializer() {
 		return Rjson.newInstance().with(new NullifyDateTransformer()).andIgnoreModifiers();
-	}
-
-	public static void setField(Field field, Object objectToBeReturned, Object value, Context context) {
-		try {
-			Object transformedValue = context.transformer().delegateTransformation(value, field.getType(), context);
-			field.set(objectToBeReturned, transformedValue);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public static String escapeJsonCharactersIn(String string) {
