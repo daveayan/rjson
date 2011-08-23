@@ -27,8 +27,8 @@ SOFTWARE.
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -131,10 +131,35 @@ public class JSONObject {
      */
     private Map map;
     
+    
+    // daveayan CUSTOM CODE BEGINS HERE
     public Map getMap() {
     	return map;
     }
-
+    public boolean equals(Object o) {
+    	JSONObject other = (JSONObject) o;
+    	if(other == null) {
+    		return false;
+    	}
+    	Iterator thisIterator = this.keys();
+    	while(thisIterator.hasNext()) {
+    		String thiskey = (String) thisIterator.next();
+    		try {
+				Object thisValue = this.get(thiskey);
+				Object otherValue = other.get(thiskey);
+				if(! thisValue.equals(otherValue)) {
+					System.out.println("JO NE : " + thisValue + " : " + otherValue);
+					return false;
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+				return false;
+			}
+    	}
+    	return true;
+    }
+    // daveayan CUSTOM CODE ENDS HERE
+    
 
     /**
      * It is sometimes more convenient and less ambiguous to have a

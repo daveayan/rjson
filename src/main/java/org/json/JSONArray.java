@@ -93,6 +93,34 @@ public class JSONArray {
     	return myArrayList;
     }
     
+    // daveayan CUSTOM CODE BEGINS HERE
+    
+    @Override
+    public boolean equals(Object o) {
+    	JSONArray other = (JSONArray) o;
+    	if(other == null) {
+    		return false;
+    	}
+    	if(this.myArrayList == null && other.getList() == null)
+    		return true;
+    	if(this.myArrayList != null && other.getList() == null)
+    		return false;
+    	if(this.myArrayList == null && other.getList() != null)
+    		return false;
+    	if(this.myArrayList.size() != other.getList().size())
+    		return false;
+    	for(int i = 0; i < this.myArrayList.size(); i++) {
+    		Object thisObject = this.myArrayList.get(i);
+    		Object otherObject = other.getList().get(i);
+    		if(!thisObject.equals(otherObject)) {
+    			System.out.println("JA NE : " + thisObject + " : " + otherObject);
+    			return false;
+    		}
+    	}
+    	return true;
+    }
+    
+    // daveayan CUSTOM CODE ENDS HERE
 
     /**
      * Construct an empty JSONArray.
