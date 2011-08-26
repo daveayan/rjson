@@ -33,21 +33,21 @@ public class StringBufferPrinter implements Printer {
 	}
 
 	public void decreaseIndent() {
-		indentspaces -= 4;
+//		indentspaces -= 4;
 	}
 
 	public void increaseIndent() {
-		indentspaces += 4;
+//		indentspaces += 4;
 	}
 
 	public void printNewLine() {
-		buffer.append(NEWLINE);
+//		buffer.append(NEWLINE);
 	}
 
 	public void indent() {
-		for (int i = 0; i < indentspaces; i++) {
-			buffer.append(SINGLE_SPACE);
-		}
+//		for (int i = 0; i < indentspaces; i++) {
+//			buffer.append(SINGLE_SPACE);
+//		}
 	}
 
 	public String getOutput() {

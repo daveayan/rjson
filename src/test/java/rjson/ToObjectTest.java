@@ -114,13 +114,13 @@ public class ToObjectTest {
 	@Test
 	public void toObjectJsonForAComplexObject() throws IOException {
 		String actualJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object.txt");
-		when.methodIsCalledWith(actualJson).assertThatReturnJsonIsSameAsJsonFor(Person.getFullyLoadedInstance());
+		when.methodIsCalledWith(actualJson).assertThatReturnValueIsSameAs(Person.getFullyLoadedInstance());
 	}
 
 	@Test
 	public void toObjectJsonForAComplexObjectWithNullValue() throws IOException {
 		String actualJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-null-address.txt");
-		when.methodIsCalledWith(actualJson).assertThatReturnJsonIsSameAsJsonFor(Person.getFullyLoadedInstanceWithNullAddress());
+		when.methodIsCalledWith(actualJson).assertThatReturnValueIsSameAs(Person.getFullyLoadedInstanceWithNullAddress());
 	}
 
 	@Test

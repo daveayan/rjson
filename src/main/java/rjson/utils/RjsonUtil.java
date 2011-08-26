@@ -28,17 +28,42 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import rjson.Rjson;
 
 public class RjsonUtil {
+	
+	public static Object getJsonObject(String json) throws JSONException {
+		JSONTokener tokener = new JSONTokener(json);
+		char firstChar = tokener.nextClean();
+		if (firstChar == '\"') {
+			return tokener.nextString('\"');
+		}
+		if (firstChar == '{') {
+			tokener.back();
+			return new JSONObject(tokener);
+		}
+		if (firstChar == '[') {
+			tokener.back();
+			return new JSONArray(tokener);
+		}
+		if (Character.isDigit(firstChar)) {
+			tokener.back();
+			return tokener.nextValue();
+		}
+		tokener.back();
+		return tokener.nextValue();
+	}
 
 	public static String reformat(String inputJson) {
 		try {
 			return (new JSONObject(inputJson)).toString(2);
 		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 		return inputJson;
 	}

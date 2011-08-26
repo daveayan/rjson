@@ -1,5 +1,6 @@
 package rjson.test;
 
+import org.json.JSONException;
 import org.junit.Assert;
 
 import rjson.Rjson;
@@ -9,8 +10,7 @@ import rjson.utils.RjsonUtil;
 public class Then {
 	public Then assertThatObjectUnderTestIsNotModified() {
 		String objectUnderTestJsonAfterTestExecution = RjsonUtil.completeSerializer().toJson(when.given().objectUnderTest());
-		if (!objectUnderTestJsonAfterTestExecution.equals(when.given().objectUnderTestJsonBeforeTestExecution()))
-			throw new AssertionError();
+		assertJsonEqualsLiterally(when.given().objectUnderTestJsonBeforeTestExecution(), objectUnderTestJsonAfterTestExecution);
 		return this;
 	}
 
@@ -23,7 +23,7 @@ public class Then {
 		for (int i = 0; i < when.inputParams().size(); i++) {
 			Object object = when.inputParams().get(i);
 			String afterExecutionJson = rjson.toJson(object);
-			assertEquals(afterExecutionJson, when.inputParamJsons().get(i));
+			assertJsonEqualsLiterally(afterExecutionJson, when.inputParamJsons().get(i));
 		}
 		return this;
 	}
@@ -46,25 +46,31 @@ public class Then {
 		return this;
 	}
 
-	public Then assertThatReturnJsonIsSameAsJsonFor(Object expectedObject) {
-		assertThatThereAreNoSideEffects();
-		assertJsonEquals(expectedObject, returnObject);
-		return this;
-	}
-
 	public static Then thenAssertChanges(When when) {
 		Then then = new Then();
 		then.when = when;
 		return then;
 	}
 
-	private void assertJsonEquals(Object expectedObject, Object returnObject) {
-		Rjson rjson = Rjson.newInstance().with(new NullifyDateTransformer()).andIgnoreModifiers();
-		assertEquals(RjsonUtil.reformat(rjson.toJson(expectedObject)), RjsonUtil.reformat(rjson.toJson(returnObject)));
+	private void assertJsonEqualsLiterally(String expectedJson, String actualJson) {
+		Assert.assertEquals(expectedJson, actualJson);
 	}
-
-	private void assertEquals(Object expectedObject, Object returnObject) {
-		Assert.assertEquals(expectedObject, returnObject);
+	
+	public void assertJsonEquals(String expectedJson, String actualJson) {
+		try {
+			Object expectedJsonObject = RjsonUtil.getJsonObject(expectedJson);
+			Object returnJsonObject = RjsonUtil.getJsonObject(actualJson);
+			Assert.assertEquals(expectedJsonObject, returnJsonObject);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+	
+	public void assertEquals(Object expectedObject, Object actualObject) {
+		String expectedjson = RjsonUtil.completeSerializer().toJson(expectedObject);
+		String actualjson = RjsonUtil.completeSerializer().toJson(returnObject);
+		assertJsonEquals(expectedjson, actualjson);
 	}
 
 	private When when;
