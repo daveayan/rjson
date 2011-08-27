@@ -129,11 +129,11 @@ public class JSONObject {
     /**
      * The map where the JSONObject's properties are kept.
      */
-    private Map map;
+    private Map<Object, Object> map;
     
     
     // daveayan CUSTOM CODE BEGINS HERE
-    public Map getMap() {
+    public Map<Object, Object> getMap() {
     	return map;
     }
     public boolean equals(Object o) {
@@ -141,7 +141,7 @@ public class JSONObject {
     	if(other == null) {
     		return false;
     	}
-    	Iterator thisIterator = this.keys();
+    	Iterator<Object> thisIterator = this.keys();
     	while(thisIterator.hasNext()) {
     		String thiskey = (String) thisIterator.next();
     		try {
@@ -173,7 +173,7 @@ public class JSONObject {
      * Construct an empty JSONObject.
      */
     public JSONObject() {
-        this.map = new HashMap();
+        this.map = new HashMap<Object, Object>();
     }
 
 
@@ -261,8 +261,9 @@ public class JSONObject {
      *  the JSONObject.
      * @throws JSONException 
      */
-    public JSONObject(Map map) {
-        this.map = new HashMap();
+    @SuppressWarnings("rawtypes")
+	public JSONObject(Map<Object, Object> map) {
+        this.map = new HashMap<Object, Object>();
         if (map != null) {
             Iterator i = map.entrySet().iterator();
             while (i.hasNext()) {
@@ -312,7 +313,8 @@ public class JSONObject {
      * @param names An array of strings, the names of the fields to be obtained
      * from the object.
      */
-    public JSONObject(Object object, String names[]) {
+    @SuppressWarnings("rawtypes")
+	public JSONObject(Object object, String names[]) {
         this();
         Class c = object.getClass();
         for (int i = 0; i < names.length; i += 1) {
@@ -345,7 +347,8 @@ public class JSONObject {
      * @param locale The Locale to load the ResourceBundle for.
      * @throws JSONException If any JSONExceptions are detected.
      */
-    public JSONObject(String baseName, Locale locale) throws JSONException {
+    @SuppressWarnings("rawtypes")
+	public JSONObject(String baseName, Locale locale) throws JSONException {
         this();
         ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale, 
                 Thread.currentThread().getContextClassLoader());
@@ -618,7 +621,7 @@ public class JSONObject {
         if (length == 0) {
             return null;
         }
-        Iterator iterator = jo.keys();
+        Iterator<Object> iterator = jo.keys();
         String[] names = new String[length];
         int i = 0;
         while (iterator.hasNext()) {
@@ -634,7 +637,8 @@ public class JSONObject {
      *
      * @return An array of field names, or null if there are no names.
      */
-    public static String[] getNames(Object object) {
+    @SuppressWarnings("rawtypes")
+	public static String[] getNames(Object object) {
         if (object == null) {
             return null;
         }
@@ -724,7 +728,7 @@ public class JSONObject {
      *
      * @return An iterator of the keys.
      */
-    public Iterator keys() {
+    public Iterator<Object> keys() {
         return this.map.keySet().iterator();
     }
 
@@ -747,7 +751,7 @@ public class JSONObject {
      */
     public JSONArray names() {
         JSONArray ja = new JSONArray();
-        Iterator  keys = this.keys();
+        Iterator<Object>  keys = this.keys();
         while (keys.hasNext()) {
             ja.put(keys.next());
         }
@@ -978,7 +982,8 @@ public class JSONObject {
     }
 
 
-    private void populateMap(Object bean) {
+    @SuppressWarnings("rawtypes")
+	private void populateMap(Object bean) {
         Class klass = bean.getClass();
 
 // If klass is a System class then set includeSuperClass to false. 
@@ -1047,7 +1052,7 @@ public class JSONObject {
      * @return      this.
      * @throws JSONException
      */
-    public JSONObject put(String key, Collection value) throws JSONException {
+    public JSONObject put(String key, Collection<Object> value) throws JSONException {
         put(key, new JSONArray(value));
         return this;
     }
@@ -1103,7 +1108,7 @@ public class JSONObject {
      * @return      this.
      * @throws JSONException
      */
-    public JSONObject put(String key, Map value) throws JSONException {
+    public JSONObject put(String key, Map<Object, Object> value) throws JSONException {
         put(key, new JSONObject(value));
         return this;
     }
@@ -1359,7 +1364,7 @@ public class JSONObject {
      */
     public String toString() {
         try {
-            Iterator     keys = this.keys();
+            Iterator<Object>     keys = this.keys();
             StringBuffer sb = new StringBuffer("{");
 
             while (keys.hasNext()) {
@@ -1415,7 +1420,7 @@ public class JSONObject {
         if (length == 0) {
             return "{}";
         }
-        Iterator     keys = this.keys();
+        Iterator<Object>     keys = this.keys();
         int          newindent = indent + indentFactor;
         Object       object;
         StringBuffer sb = new StringBuffer("{");
@@ -1474,7 +1479,8 @@ public class JSONObject {
      *  with <code>}</code>&nbsp;<small>(right brace)</small>.
      * @throws JSONException If the value is or contains an invalid number.
      */
-    public static String valueToString(Object value) throws JSONException {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public static String valueToString(Object value) throws JSONException {
         if (value == null || value.equals(null)) {
             return "null";
         }
@@ -1524,7 +1530,8 @@ public class JSONObject {
      *  with <code>}</code>&nbsp;<small>(right brace)</small>.
      * @throws JSONException If the object contains an invalid number.
      */
-     static String valueToString(
+     @SuppressWarnings({ "unchecked", "rawtypes" })
+	static String valueToString(
          Object value, 
          int    indentFactor, 
          int    indent
@@ -1578,7 +1585,8 @@ public class JSONObject {
       * @param object The object to wrap
       * @return The wrapped value
       */
-     public static Object wrap(Object object) {
+     @SuppressWarnings({ "rawtypes", "unchecked" })
+	public static Object wrap(Object object) {
          try {
              if (object == null) {
                  return NULL;
@@ -1631,7 +1639,7 @@ public class JSONObject {
      public Writer write(Writer writer) throws JSONException {
         try {
             boolean  commanate = false;
-            Iterator keys = this.keys();
+            Iterator<Object> keys = this.keys();
             writer.write('{');
 
             while (keys.hasNext()) {
