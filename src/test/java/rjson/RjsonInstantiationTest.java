@@ -56,21 +56,21 @@ public class RjsonInstantiationTest {
 		Object expectedObject = RjsonUtil.fileAsObject("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
 		String expectedJson = serializer().toJson(expectedObject);
 		String actualJson = serializer().toJson(Rjson.newInstance());
-		rjson.test.Assert.thatEquals(expectedJson, actualJson);
+		zen.Assert.thatEquals(expectedJson, actualJson);
 	}
 
 	@Test
 	public void verifyDefaultJsonObjectIgnoringModifiers() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_ignoring_modifiers.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().andIgnoreModifiers());
-		rjson.test.Assert.thatEquals(expectedJson, actualJson);
+		zen.Assert.thatEquals(expectedJson, actualJson);
 	}
 
 	@Test
 	public void verifyDefaultJsonObjectWithCustomObjectToJsonTransformer() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_object_to_json_transformer.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleObjectToJsonTransformer()));
-		rjson.test.Assert.thatEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
+		zen.Assert.thatEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 
 	// @Test

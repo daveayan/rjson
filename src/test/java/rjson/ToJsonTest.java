@@ -35,14 +35,14 @@ import org.junit.Test;
 import rjson.domain.ObjectWithFinal;
 import rjson.domain.ObjectWithTransient;
 import rjson.domain.Person;
-import rjson.test.Given;
-import rjson.test.Then;
-import rjson.test.When;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.tojson.FieldBasedTransformer;
 import rjson.utils.RjsonUtil;
 import transformers.CanTransform;
 import transformers.Context;
+import zen.Given;
+import zen.Then;
+import zen.When;
 
 public class ToJsonTest {
 	private Given given;

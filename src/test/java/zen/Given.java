@@ -1,4 +1,4 @@
-package rjson.test;
+package zen;
 
 import rjson.utils.RjsonUtil;
 

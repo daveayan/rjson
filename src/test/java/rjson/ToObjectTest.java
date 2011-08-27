@@ -32,9 +32,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import rjson.domain.Person;
-import rjson.test.Given;
-import rjson.test.When;
 import rjson.utils.RjsonUtil;
+import zen.Given;
+import zen.When;
 
 public class ToObjectTest {
 	private Given given;

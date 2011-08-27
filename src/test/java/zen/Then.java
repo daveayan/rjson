@@ -1,6 +1,6 @@
-package rjson.test;
+package zen;
 
-import rjson.test.Assert;
+import zen.Assert;
 import rjson.Rjson;
 import rjson.utils.NullifyDateTransformer;
 import rjson.utils.RjsonUtil;
