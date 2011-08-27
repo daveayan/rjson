@@ -53,25 +53,24 @@ public class RjsonInstantiationTest {
 
 	@Test
 	public void verifyDefaultJsonObject() throws IOException {
-//		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
 		Object expectedObject = RjsonUtil.fileAsObject("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
 		String expectedJson = serializer().toJson(expectedObject);
 		String actualJson = serializer().toJson(Rjson.newInstance());
-		Assert.assertEquals(expectedJson, RjsonUtil.reformat(actualJson));
+		rjson.test.Assert.thatEquals(expectedJson, actualJson);
 	}
 
 	@Test
 	public void verifyDefaultJsonObjectIgnoringModifiers() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_ignoring_modifiers.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().andIgnoreModifiers());
-		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
+		rjson.test.Assert.thatEquals(expectedJson, actualJson);
 	}
 
 	@Test
 	public void verifyDefaultJsonObjectWithCustomObjectToJsonTransformer() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_object_to_json_transformer.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleObjectToJsonTransformer()));
-		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
+		rjson.test.Assert.thatEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 
 	// @Test
@@ -84,7 +83,7 @@ public class RjsonInstantiationTest {
 	@Test
 	public void verifyDefaultJsonObjectWithCustomJsonToObjectTransformer() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_json_to_object_transformer.txt");
-		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleJsonToObjectTransformer()));		
+		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleJsonToObjectTransformer()));
 		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 

@@ -1,114 +1,39 @@
-
 {
-    "class":"rjson.Rjson",
-    "object_to_json_transformer":
-    {
-        "class":"transformers.Transformer",
-        "transformers_a":[            
-        ],
-        "transformers_b":[            
-            
-            {
-                "class":"rjson.transformer.tojson.IgnoreClassTransformation",
-            },
-            
-            {
-                "class":"rjson.transformer.tojson.LeafBooleanTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.tojson.LeafBooleanTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.tojson.LeafCharacterTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.tojson.LeafDateTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.tojson.LeafNumberTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.tojson.LeafPrimitiveTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.tojson.LeafStringTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.tojson.IterableTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.tojson.MapTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.tojson.ArrayTransformer",
-            }
-        ],
-        "default_transformer":
-        {
-            "class":"rjson.transformer.tojson.FieldBasedTransformer",
-        }
-    },
-    "json_to_object_transformer":
-    {
-        "class":"transformers.Transformer",
-        "transformers_a":[            
-        ],
-        "transformers_b":[            
-            
-            {
-                "class":"rjson.transformer.toobject.NullTransformation",
-            },
-            
-            {
-                "class":"rjson.transformer.toobject.JsonBooleanTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.toobject.JsonIntegerTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.toobject.JsonStringTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.toobject.JsonDoubleTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.toobject.JsonDoubleToFloatTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.toobject.JsonObjectAsMapTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.toobject.JsonObjectTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.toobject.JsonArrayToSetTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.toobject.JsonArrayToVectorTransformer",
-            },
-            
-            {
-                "class":"rjson.transformer.toobject.JsonArrayTransformer",
-            }
-        ],
-        "default_transformer":"null"
-    },
-    "ignoreModifiers":true
+  "json_to_object_transformer": {
+    "transformers_b": [
+      {"class": "rjson.transformer.toobject.NullTransformation"},
+      {"class": "rjson.transformer.toobject.JsonBooleanTransformer"},
+      {"class": "rjson.transformer.toobject.JsonIntegerTransformer"},
+      {"class": "rjson.transformer.toobject.JsonStringTransformer"},
+      {"class": "rjson.transformer.toobject.JsonDoubleTransformer"},
+      {"class": "rjson.transformer.toobject.JsonDoubleToFloatTransformer"},
+      {"class": "rjson.transformer.toobject.JsonObjectAsMapTransformer"},
+      {"class": "rjson.transformer.toobject.JsonObjectTransformer"},
+      {"class": "rjson.transformer.toobject.JsonArrayToSetTransformer"},
+      {"class": "rjson.transformer.toobject.JsonArrayToVectorTransformer"},
+      {"class": "rjson.transformer.toobject.JsonArrayTransformer"}
+    ],
+    "default_transformer": null,
+    "transformers_a": [],
+    "class": "transformers.Transformer"
+  },
+  "ignoreModifiers": true,
+  "class": "rjson.Rjson",
+  "object_to_json_transformer": {
+    "transformers_b": [
+      {"class": "rjson.transformer.tojson.IgnoreClassTransformation"},
+      {"class": "rjson.transformer.tojson.LeafBooleanTransformer"},
+      {"class": "rjson.transformer.tojson.LeafCharacterTransformer"},
+      {"class": "rjson.transformer.tojson.LeafDateTransformer"},
+      {"class": "rjson.transformer.tojson.LeafNumberTransformer"},
+      {"class": "rjson.transformer.tojson.LeafPrimitiveTransformer"},
+      {"class": "rjson.transformer.tojson.LeafStringTransformer"},
+      {"class": "rjson.transformer.tojson.IterableTransformer"},
+      {"class": "rjson.transformer.tojson.MapTransformer"},
+      {"class": "rjson.transformer.tojson.ArrayTransformer"}
+    ],
+    "default_transformer": {"class": "rjson.transformer.tojson.FieldBasedTransformer"},
+    "transformers_a": [],
+    "class": "transformers.Transformer"
+  }
 }

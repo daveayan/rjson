@@ -60,8 +60,16 @@ public class RjsonUtil {
 	}
 
 	public static String reformat(String inputJson) {
+		String lineSeperator = System.getProperty("line.separator");
+		inputJson = inputJson.replaceAll(lineSeperator, "");
+		inputJson = unEscapeJsonCharactersIn(inputJson);
 		try {
-			return (new JSONObject(inputJson)).toString(2);
+			Object object = RjsonUtil.getJsonObject(inputJson);
+			if(object instanceof JSONObject) {
+				return (new JSONObject(inputJson)).toString(2);
+			} else if(object instanceof JSONArray) {
+				return (new JSONArray(inputJson)).toString(2);
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -86,6 +94,15 @@ public class RjsonUtil {
 		newString = StringUtils.replace(newString, "]", "\\]");
 		newString = StringUtils.replace(newString, "{", "\\{");
 		newString = StringUtils.replace(newString, "}", "\\}");
+		return newString;
+	}
+	
+	public static String unEscapeJsonCharactersIn(String string) {
+		String newString = StringUtils.replace(string, "\"", "");
+		newString = StringUtils.replace(newString, "\\[", "[");
+		newString = StringUtils.replace(newString, "\\]", "]");
+		newString = StringUtils.replace(newString, "\\{", "{");
+		newString = StringUtils.replace(newString, "\\}", "}");
 		return newString;
 	}
 }

@@ -10,6 +10,5 @@ public class JSONObject_equals_Test {
 		JSONObject jo1 = new JSONObject(RjsonUtil.completeSerializer().toJson(Person.getFullyLoadedInstanceWithNullAddress()));
 		JSONObject jo2 = new JSONObject(RjsonUtil.completeSerializer().toJson(Person.getFullyLoadedInstance()));
 		boolean equals = jo1.equals(jo2);
-		System.out.println(equals);
 	}
 }

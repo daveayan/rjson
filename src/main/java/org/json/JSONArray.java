@@ -113,7 +113,6 @@ public class JSONArray {
     		Object thisObject = this.myArrayList.get(i);
     		Object otherObject = other.getList().get(i);
     		if(!thisObject.equals(otherObject)) {
-    			System.out.println("JA NE : " + thisObject + " : " + otherObject);
     			return false;
     		}
     	}

@@ -13,8 +13,8 @@
       {"class": "rjson.transformer.toobject.JsonArrayToVectorTransformer"},
       {"class": "rjson.transformer.toobject.JsonArrayTransformer"}
     ],
+    "default_transformer": null,
     "transformers_a": [],
-    "default_transformer": "null",
     "class": "transformers.Transformer"
   },
   "ignoreModifiers": false,
@@ -32,8 +32,8 @@
       {"class": "rjson.transformer.tojson.MapTransformer"},
       {"class": "rjson.transformer.tojson.ArrayTransformer"}
     ],
-    "transformers_a": [],
     "default_transformer": {"class": "rjson.transformer.tojson.FieldBasedTransformer"},
+    "transformers_a": [],
     "class": "transformers.Transformer"
   }
 }

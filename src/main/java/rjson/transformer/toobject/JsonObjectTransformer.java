@@ -52,23 +52,17 @@ public class JsonObjectTransformer implements JsonToObjectTransformer {
 					Object jsonField = jo.get(field.getName());
 					Object returnObject = context.transformer().delegateTransformation(jsonField, field.getType(), context);
 					try {
+						if(returnObject != null) {
+							if(returnObject.getClass().getName().trim().equals("org.json.JSONObject$Null")) {
+								returnObject = null;
+							}
+						}
 						field.set(objectToBeReturned, returnObject);
 					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
+					} catch (IllegalArgumentException iae) {
+						iae.printStackTrace();
 					}
-//					Object returnObject = context.transformer().delegateTransformation(jsonField, to, context);
-//					try {
-//						Object transformedValue = context.transformer().delegateTransformation(returnObject, field.getType(), context);
-//						field.set(objectToBeReturned, transformedValue);
-//					} catch (IllegalArgumentException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (IllegalAccessException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					RjsonUtil.setField(field, objectToBeReturned, returnObject, context);
 				}
 			}
 			return objectToBeReturned;

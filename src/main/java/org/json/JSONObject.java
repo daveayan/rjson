@@ -148,7 +148,6 @@ public class JSONObject {
 				Object thisValue = this.get(thiskey);
 				Object otherValue = other.get(thiskey);
 				if(! thisValue.equals(otherValue)) {
-					System.out.println("JO NE : " + thisValue + " : " + otherValue);
 					return false;
 				}
 			} catch (JSONException e) {
