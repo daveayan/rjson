@@ -58,7 +58,6 @@ import rjson.transformer.toobject.JsonObjectAsMapTransformer;
 import rjson.transformer.toobject.JsonObjectTransformer;
 import rjson.transformer.toobject.JsonStringTransformer;
 import rjson.transformer.toobject.NullTransformation;
-import rjson.transformer.toobject.StringToByteArrayTransformer;
 import rjson.utils.RjsonUtil;
 import transformers.Context;
 import transformers.Transformer;
@@ -185,8 +184,7 @@ public class Rjson {
 			.and_b(new JsonObjectTransformer())
 			.and_b(new JsonArrayToSetTransformer())
 			.and_b(new JsonArrayToVectorTransformer())
-			.and_b(new JsonArrayTransformer())
-			.and_b(new StringToByteArrayTransformer());
+			.and_b(new JsonArrayTransformer());
 	}
 
 	public boolean ignoreModifiers() {

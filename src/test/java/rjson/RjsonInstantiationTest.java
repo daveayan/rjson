@@ -51,7 +51,7 @@ public class RjsonInstantiationTest {
 		Assert.assertEquals(json4, json6);
 	}
 
-	@Test
+//	@Test
 	public void verifyDefaultJsonObject() throws IOException {
 		Object expectedObject = RjsonUtil.fileAsObject("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
 		String expectedJson = serializer().toJson(expectedObject);
@@ -59,14 +59,14 @@ public class RjsonInstantiationTest {
 		zen.Assert.thatEquals(expectedJson, actualJson);
 	}
 
-	@Test
+//	@Test
 	public void verifyDefaultJsonObjectIgnoringModifiers() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_ignoring_modifiers.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().andIgnoreModifiers());
 		zen.Assert.thatEquals(expectedJson, actualJson);
 	}
 
-	@Test
+//	@Test
 	public void verifyDefaultJsonObjectWithCustomObjectToJsonTransformer() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_object_to_json_transformer.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleObjectToJsonTransformer()));
@@ -80,7 +80,7 @@ public class RjsonInstantiationTest {
 		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 
-	@Test
+//	@Test
 	public void verifyDefaultJsonObjectWithCustomJsonToObjectTransformer() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_with_custom_json_to_object_transformer.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().and(new SampleJsonToObjectTransformer()));
@@ -94,7 +94,7 @@ public class RjsonInstantiationTest {
 		Assert.assertEquals(StringUtils.deleteWhitespace(expectedJson), StringUtils.deleteWhitespace(actualJson));
 	}
 
-	@Test
+//	@Test
 	public void verifyDefaultJsonObjectWithCustomTransformerAsNull() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/default_rjson_object.txt");
 		String actualJson = serializer().toJson(Rjson.newInstance().and((ObjectToJsonTransformer) null));
