@@ -36,6 +36,7 @@ import rjson.printer.StringBufferPrinter;
 import rjson.transformer.JsonToObjectTransformer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.tojson.ArrayTransformer;
+import rjson.transformer.tojson.ByteArrayTransformer;
 import rjson.transformer.tojson.FieldBasedTransformer;
 import rjson.transformer.tojson.IgnoreClassTransformation;
 import rjson.transformer.tojson.IterableTransformer;
@@ -57,6 +58,7 @@ import rjson.transformer.toobject.JsonObjectAsMapTransformer;
 import rjson.transformer.toobject.JsonObjectTransformer;
 import rjson.transformer.toobject.JsonStringTransformer;
 import rjson.transformer.toobject.NullTransformation;
+import rjson.transformer.toobject.StringToByteArrayTransformer;
 import rjson.utils.RjsonUtil;
 import transformers.Context;
 import transformers.Transformer;
@@ -118,7 +120,9 @@ public class Rjson {
 		Printer printer = new StringBufferPrinter();
 		Context context = Context.newInstance().put("rjson", this).and("printer", printer);
 		object_to_json_transformer.transform(object, String.class, context);
-		return RjsonUtil.reformat(printer.getOutput());
+//		return RjsonUtil.reformat(printer.getOutput());
+		return RjsonUtil.unEscapeJsonCharactersIn(printer.getOutput());
+//		return printer.getOutput();
 	}
 
 	private Object convertToObject(String json, JSONTokener tokener, Class<?> to) throws JSONException {
@@ -165,7 +169,8 @@ public class Rjson {
 			.and_b(new LeafStringTransformer())
 			.and_b(new IterableTransformer())
 			.and_b(new MapTransformer())
-			.and_b(new ArrayTransformer());
+			.and_b(new ArrayTransformer())
+			.and_b(new ByteArrayTransformer());
 	}
 	
 	private void setUpDefaultJsonToObjectTransformers() {
@@ -180,7 +185,8 @@ public class Rjson {
 			.and_b(new JsonObjectTransformer())
 			.and_b(new JsonArrayToSetTransformer())
 			.and_b(new JsonArrayToVectorTransformer())
-			.and_b(new JsonArrayTransformer());
+			.and_b(new JsonArrayTransformer())
+			.and_b(new StringToByteArrayTransformer());
 	}
 
 	public boolean ignoreModifiers() {

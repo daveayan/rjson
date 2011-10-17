@@ -38,6 +38,9 @@ import rjson.Rjson;
 public class RjsonUtil {
 	
 	public static Object getJsonObject(String json) throws JSONException {
+		if(StringUtils.isEmpty(json)) {
+			return "";
+		}
 		JSONTokener tokener = new JSONTokener(json);
 		char firstChar = tokener.nextClean();
 		if (firstChar == '\"') {

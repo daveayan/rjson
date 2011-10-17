@@ -58,6 +58,10 @@ public class ToJsonTest {
 	public void toJsonNullObject() throws IOException {
 		when.methodIsCalledWith((Object) null).assertThatReturnValueIsSameAs("\"null\"");
 	}
+	
+	@Test public void toJsonEmptyObject() {
+		when.methodIsCalledWith("").assertThatReturnValueIsSameAs("");
+	}
 
 	@Test
 	public void toJsonPrimitiveInt() throws IOException {
@@ -186,10 +190,9 @@ public class ToJsonTest {
 		when.methodIsCalledWith((Object) new String[] { "qwerty", "asdfgh" }).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
-	// @Test
+	@Test
 	public void toJsonByteArray() throws IOException {
-		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.List/string-list.txt");
-		when.methodIsCalledWith("Hello World".getBytes()).assertThatReturnValueIsSameAs(expectedJson);
+		when.methodIsCalledWith("Hello World".getBytes()).assertThatReturnValueIsSameAs("Hello World");
 	}
 
 	@Test

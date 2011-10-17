@@ -35,7 +35,7 @@ public class ArrayTransformer extends IterableTransformer {
 
 	public boolean canConvertToJson(Object object) {
 		if (object != null) {
-			if (object.getClass().isArray()) {
+			if (object.getClass().isArray() && ByteArrayTransformer.canNotHandle(object)) {
 				return true;
 			}
 		}
