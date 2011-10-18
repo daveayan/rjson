@@ -119,8 +119,8 @@ public class Rjson {
 		Printer printer = new StringBufferPrinter();
 		Context context = Context.newInstance().put("rjson", this).and("printer", printer);
 		object_to_json_transformer.transform(object, String.class, context);
-//		return RjsonUtil.reformat(printer.getOutput());
-		return RjsonUtil.unEscapeJsonCharactersIn(printer.getOutput());
+		return RjsonUtil.reformat(printer.getOutput());
+//		return RjsonUtil.unEscapeJsonCharactersIn(printer.getOutput());
 //		return printer.getOutput();
 	}
 
@@ -173,7 +173,7 @@ public class Rjson {
 	}
 	
 	private void setUpDefaultJsonToObjectTransformers() {
-		this.json_to_object_transformer = Transformer.newInstance().clear()
+		this.json_to_object_transformer = Transformer.newInstance().clear().setup_built_in_transformers()
 			.with_b(new NullTransformation())
 			.and_b(new JsonBooleanTransformer())
 			.and_b(new JsonIntegerTransformer())
