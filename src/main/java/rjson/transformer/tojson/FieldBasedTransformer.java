@@ -45,7 +45,7 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 				Field field = iter.next();
 				if (Modifier.isTransient(field.getModifiers()))
 					continue;
-				if (Modifier.isFinal(field.getModifiers()))
+				if (ToJsonTransformationUtils.rjson(context).doNotIgnoreFinal() && Modifier.isFinal(field.getModifiers()))
 					continue;
 				if (ToJsonTransformationUtils.rjson(context).ignoreModifiers() || ReflectionUtils.isAccessible(field)) {
 					ReflectionUtils.makeAccessible(field);

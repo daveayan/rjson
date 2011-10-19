@@ -66,6 +66,7 @@ public class Rjson {
 	private transformers.Transformer object_to_json_transformer;
 	private transformers.Transformer json_to_object_transformer;
 	private boolean ignoreModifiers = false;
+	private boolean ignoreFinal = false;
 
 	public static Rjson newInstance() {
 		Rjson rjson = new Rjson();
@@ -98,6 +99,16 @@ public class Rjson {
 
 	public Rjson andDoNotIgnoreModifiers() {
 		this.ignoreModifiers = false;
+		return this;
+	}
+	
+	public Rjson andIgnoreFinal() {
+		this.ignoreFinal = true;
+		return this;
+	}
+	
+	public Rjson andDoNotIgnoreFinal() {
+		this.ignoreFinal = false;
 		return this;
 	}
 
@@ -189,6 +200,14 @@ public class Rjson {
 
 	public boolean ignoreModifiers() {
 		return ignoreModifiers;
+	}
+	
+	public boolean ignoreFinal() {
+		return ignoreFinal;
+	}
+	
+	public boolean doNotIgnoreFinal() {
+		return ! ignoreFinal();
 	}
 
 	private Rjson() {

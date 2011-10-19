@@ -247,9 +247,17 @@ public class ToJsonTest {
 	}
 
 	@Test
-	public void toJsonRespectsFinal() throws IOException {
+	public void toJsonRespectsFinalWhenIgnoreFinalIsFalse() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinal/default.txt");
 		when.methodIsCalledWith(new ObjectWithFinal()).assertThatReturnValueIsSameAs(expectedJson);
+	}
+	
+	@Test
+	public void toJsonOverridesFinalWhenIgnoreFinalIsTrue() throws IOException {
+		Given given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().andIgnoreFinal());
+		When when = given.when("toJson");
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinal/object-with-final-ignored.txt");
+		when.methodIsCalledWith(new ObjectWithFinal()).assertThatReturnValueIsExactlySameAs(expectedJson);
 	}
 
 	@Test

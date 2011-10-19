@@ -1,5 +1,6 @@
 package org.json;
 
+
 import org.junit.Test;
 
 import rjson.domain.Person;
