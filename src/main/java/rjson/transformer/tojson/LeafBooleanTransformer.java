@@ -41,7 +41,7 @@ public class LeafBooleanTransformer implements ObjectToJsonTransformer {
 		if (from == null) {
 			return true;
 		}
-		if (from instanceof java.lang.Boolean) {
+		if (from instanceof java.lang.Boolean && "java.lang.String".equals(to.getName())) {
 			return true;
 		}
 		return false;

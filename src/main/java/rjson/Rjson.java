@@ -26,6 +26,8 @@ package rjson;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +65,7 @@ import transformers.Context;
 import transformers.Transformer;
 
 public class Rjson {
+	private static Log log = LogFactory.getLog(Rjson.class);
 	private transformers.Transformer object_to_json_transformer;
 	private transformers.Transformer json_to_object_transformer;
 	private boolean ignoreModifiers = false;
@@ -127,10 +130,13 @@ public class Rjson {
 	}
 	
 	public String toJson(Object object) {
+		log.info("Converting to json " + object);
 		Printer printer = new StringBufferPrinter();
 		Context context = Context.newInstance().put("rjson", this).and("printer", printer);
 		object_to_json_transformer.transform(object, String.class, context);
-		return RjsonUtil.reformat(printer.getOutput());
+		String json = RjsonUtil.reformat(printer.getOutput());
+		log.info("json is : " + json);
+		return json;
 //		return RjsonUtil.unEscapeJsonCharactersIn(printer.getOutput());
 //		return printer.getOutput();
 	}
