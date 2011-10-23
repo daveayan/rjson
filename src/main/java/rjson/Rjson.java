@@ -49,6 +49,7 @@ import rjson.transformer.tojson.LeafNumberTransformer;
 import rjson.transformer.tojson.LeafPrimitiveTransformer;
 import rjson.transformer.tojson.LeafStringTransformer;
 import rjson.transformer.tojson.MapTransformer;
+import rjson.transformer.tojson.RjsonAllowTransformationChecker;
 import rjson.transformer.toobject.JsonArrayToSetTransformer;
 import rjson.transformer.toobject.JsonArrayToVectorTransformer;
 import rjson.transformer.toobject.JsonArrayTransformer;
@@ -61,60 +62,23 @@ import rjson.transformer.toobject.JsonObjectTransformer;
 import rjson.transformer.toobject.JsonStringTransformer;
 import rjson.transformer.toobject.NullTransformation;
 import rjson.utils.RjsonUtil;
+import transformers.AllowTransformation;
 import transformers.Context;
 import transformers.Transformer;
 
 public class Rjson {
 	private static Log log = LogFactory.getLog(Rjson.class);
+	private AllowTransformation allow_transformation = new RjsonAllowTransformationChecker();
 	private transformers.Transformer object_to_json_transformer;
 	private transformers.Transformer json_to_object_transformer;
-	private boolean ignoreModifiers = false;
-	private boolean ignoreFinal = false;
+	private boolean recordAllModifiers = false, recordFinal = false, recordStatic = false;
 
 	public static Rjson newInstance() {
 		Rjson rjson = new Rjson();
 		rjson.initialize();
 		return rjson;
 	}
-
-	public Rjson with(ObjectToJsonTransformer transformer) {
-		this.object_to_json_transformer.and_a(transformer);
-		return this;
-	}
 	
-	public Rjson and(ObjectToJsonTransformer transformer) {
-		return with(transformer);
-	}
-	
-	public Rjson with(JsonToObjectTransformer transformer) {
-		this.json_to_object_transformer.and_a(transformer);
-		return this;
-	}
-	
-	public Rjson and(JsonToObjectTransformer transformer) {
-		return with(transformer);
-	}
-
-	public Rjson andIgnoreModifiers() {
-		this.ignoreModifiers = true;
-		return this;
-	}
-
-	public Rjson andDoNotIgnoreModifiers() {
-		this.ignoreModifiers = false;
-		return this;
-	}
-	
-	public Rjson andIgnoreFinal() {
-		this.ignoreFinal = true;
-		return this;
-	}
-	
-	public Rjson andDoNotIgnoreFinal() {
-		this.ignoreFinal = false;
-		return this;
-	}
-
 	public Object toObject(String json) {
 		return toObject(json, Object.class);
 	}
@@ -175,6 +139,7 @@ public class Rjson {
 
 	private void setUpDefaultObjectToJsonTransformers() {
 		this.object_to_json_transformer = Transformer.newInstance().clear()
+			.allow_transformation_checker(new RjsonAllowTransformationChecker())
 			.with_default_transformer(new FieldBasedTransformer())
 			.and_b(new IgnoreClassTransformation())
 			.and_b(new LeafBooleanTransformer())
@@ -203,17 +168,77 @@ public class Rjson {
 			.and_b(new JsonArrayToVectorTransformer())
 			.and_b(new JsonArrayTransformer());
 	}
+	
+	public Rjson with(ObjectToJsonTransformer transformer) {
+		this.object_to_json_transformer.and_a(transformer);
+		return this;
+	}
+	
+	public Rjson and(ObjectToJsonTransformer transformer) {
+		return with(transformer);
+	}
+	
+	public Rjson with(JsonToObjectTransformer transformer) {
+		this.json_to_object_transformer.and_a(transformer);
+		return this;
+	}
+	
+	public Rjson and(JsonToObjectTransformer transformer) {
+		return with(transformer);
+	}
 
-	public boolean ignoreModifiers() {
-		return ignoreModifiers;
+	public Rjson andRecordAllModifiers() {
+		this.recordAllModifiers = true;
+		return this;
+	}
+
+	public Rjson andDoNotRecordAllModifiers() {
+		this.recordAllModifiers = false;
+		return this;
 	}
 	
-	public boolean ignoreFinal() {
-		return ignoreFinal;
+	public Rjson andRecordFinal() {
+		this.recordFinal = true;
+		return this;
 	}
 	
-	public boolean doNotIgnoreFinal() {
-		return ! ignoreFinal();
+	public Rjson andDoNotRecordFinal() {
+		this.recordFinal = false;
+		return this;
+	}
+	
+	public Rjson andRecordStatic() {
+		this.recordStatic = true;
+		return this;
+	}
+	
+	public Rjson andDoNotRecordStatic() {
+		this.recordStatic = false;
+		return this;
+	}
+
+	public boolean recordAllModifiers() {
+		return recordAllModifiers;
+	}
+	
+	public boolean recordFinal() {
+		return recordFinal;
+	}
+	
+	public boolean doNotRecordFinal() {
+		return ! recordFinal();
+	}
+	
+	public boolean recordStatic() {
+		return recordStatic;
+	}
+	
+	public boolean doNotRecordStatic() {
+		return ! recordStatic();
+	}
+	
+	public AllowTransformation allow_transformation() {
+		return this.allow_transformation;
 	}
 
 	private Rjson() {

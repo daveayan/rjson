@@ -62,7 +62,7 @@ public class RjsonInstantiationTest {
 //	@Test
 	public void verifyDefaultJsonObjectIgnoringModifiers() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.Rjson/rjson_object_ignoring_modifiers.txt");
-		String actualJson = serializer().toJson(Rjson.newInstance().andIgnoreModifiers());
+		String actualJson = serializer().toJson(Rjson.newInstance().andRecordAllModifiers());
 		zen.Assert.thatEquals(expectedJson, actualJson);
 	}
 
@@ -102,6 +102,6 @@ public class RjsonInstantiationTest {
 	}
 
 	private Rjson serializer() {
-		return Rjson.newInstance().andIgnoreModifiers();
+		return Rjson.newInstance().andRecordAllModifiers();
 	}
 }

@@ -88,7 +88,7 @@ public class RjsonUtil {
 	}
 
 	public static Rjson completeSerializer() {
-		return Rjson.newInstance().with(new NullifyDateTransformer()).andIgnoreModifiers();
+		return Rjson.newInstance().with(new NullifyDateTransformer()).andRecordAllModifiers();
 	}
 
 	public static String escapeJsonCharactersIn(String string) {

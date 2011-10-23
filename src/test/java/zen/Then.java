@@ -17,7 +17,7 @@ public class Then {
 	}
 
 	public Then assertThatInputParametersAreNotModified() {
-		Rjson rjson = Rjson.newInstance().and(new NullifyDateTransformer()).andIgnoreModifiers();
+		Rjson rjson = Rjson.newInstance().and(new NullifyDateTransformer()).andRecordAllModifiers();
 		for (int i = 0; i < when.inputParams().size(); i++) {
 			Object object = when.inputParams().get(i);
 			String afterExecutionJson = rjson.toJson(object);

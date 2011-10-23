@@ -32,7 +32,7 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import rjson.domain.ObjectWithFinal;
+import rjson.domain.ObjectWithFinalAndStatic;
 import rjson.domain.ObjectWithTransient;
 import rjson.domain.Person;
 import rjson.transformer.ObjectToJsonTransformer;
@@ -223,7 +223,7 @@ public class ToJsonTest {
 
 	@Test
 	public void toJsonAComplexObjectRespectingModifiers() throws IOException {
-		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().andDoNotIgnoreModifiers());
+		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().andDoNotRecordAllModifiers());
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object-respecting-modifiers.txt");
 		given.when("toJson").isCalledWith(new Object[] { Person.getFullyLoadedInstance() }).assertThatReturnValueIsSameAs(expectedJson);
 	}
@@ -247,17 +247,39 @@ public class ToJsonTest {
 	}
 
 	@Test
-	public void toJsonRespectsFinalWhenIgnoreFinalIsFalse() throws IOException {
-		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinal/default.txt");
-		when.methodIsCalledWith(new ObjectWithFinal()).assertThatReturnValueIsSameAs(expectedJson);
+	public void toJsonWhenFinalIsNotRecorded() throws IOException {
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinalAndStatic/object-with-final-not-recorded.txt");
+		when.methodIsCalledWith(new ObjectWithFinalAndStatic()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 	
 	@Test
-	public void toJsonOverridesFinalWhenIgnoreFinalIsTrue() throws IOException {
-		Given given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().andIgnoreFinal());
+	public void toJsonWhenFinalIsRecorded() throws IOException {
+		Given given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().andRecordFinal());
 		When when = given.when("toJson");
-		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinal/object-with-final-ignored.txt");
-		when.methodIsCalledWith(new ObjectWithFinal()).assertThatReturnValueIsExactlySameAs(expectedJson);
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinalAndStatic/object-with-final-recorded.txt");
+		when.methodIsCalledWith(new ObjectWithFinalAndStatic()).assertThatReturnValueIsExactlySameAs(expectedJson);
+	}
+	
+	@Test
+	public void toJsonWhenStaticIsNotRecorded() throws IOException {
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinalAndStatic/object-with-static-not-recorded.txt");
+		when.methodIsCalledWith(new ObjectWithFinalAndStatic()).assertThatReturnValueIsSameAs(expectedJson);
+	}
+	
+	@Test
+	public void toJsonWhenStaticIsRecorded() throws IOException {
+		Given given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().andRecordStatic());
+		When when = given.when("toJson");
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinalAndStatic/object-with-static-recorded.txt");
+		when.methodIsCalledWith(new ObjectWithFinalAndStatic()).assertThatReturnValueIsExactlySameAs(expectedJson);
+	}
+	
+	@Test
+	public void toJsonWhenStaticAndFinalIsRecorded() throws IOException {
+		Given given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().andRecordStatic().andRecordFinal());
+		When when = given.when("toJson");
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinalAndStatic/object-with-final-and-static-recorded.txt");
+		when.methodIsCalledWith(new ObjectWithFinalAndStatic()).assertThatReturnValueIsExactlySameAs(expectedJson);
 	}
 
 	@Test

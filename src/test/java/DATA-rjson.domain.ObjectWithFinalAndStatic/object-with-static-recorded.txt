@@ -1,0 +1,6 @@
+{
+  "class": "rjson.domain.ObjectWithFinalAndStatic",
+  "nonStaticString": "This is not static",
+  "staticString": "This is static",
+  "nonFinalString":"This is not final",
+}
