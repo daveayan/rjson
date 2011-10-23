@@ -24,6 +24,7 @@
 package rjson.transformer.tojson;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 				if (!iter.hasNext())
 					break;
 				Field field = iter.next();
-				if(ToJsonTransformationUtils.rjson(context).allow_transformation().allowTransformation(field, context)) {
+				if(allowTransformation(field, context)) {
 					ReflectionUtils.makeAccessible(field);
 					try {
 						if (exclude(field)) {
@@ -69,6 +70,24 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 				}
 			}
 		}
+	}
+	
+	public boolean allowTransformation(Field field, Context context) {
+		if (field != null) {
+			if (Modifier.isTransient(field.getModifiers())) {
+				return false;
+			}
+			if (ToJsonTransformationUtils.rjson(context).doNotRecordFinal() && Modifier.isFinal(field.getModifiers())) {
+				return false;
+			}
+			if (ToJsonTransformationUtils.rjson(context).doNotRecordStatic() && Modifier.isStatic(field.getModifiers())) {
+				return false;
+			}
+			if (ToJsonTransformationUtils.rjson(context).recordAllModifiers() || ReflectionUtils.isAccessible(field)) {
+				return true;
+			}
+		}
+		return true;
 	}
 	
 	public boolean canTransform(Object from, Class<?> to, Context context) {

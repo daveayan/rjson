@@ -49,7 +49,6 @@ import rjson.transformer.tojson.LeafNumberTransformer;
 import rjson.transformer.tojson.LeafPrimitiveTransformer;
 import rjson.transformer.tojson.LeafStringTransformer;
 import rjson.transformer.tojson.MapTransformer;
-import rjson.transformer.tojson.RjsonAllowTransformationChecker;
 import rjson.transformer.toobject.JsonArrayToSetTransformer;
 import rjson.transformer.toobject.JsonArrayToVectorTransformer;
 import rjson.transformer.toobject.JsonArrayTransformer;
@@ -62,13 +61,11 @@ import rjson.transformer.toobject.JsonObjectTransformer;
 import rjson.transformer.toobject.JsonStringTransformer;
 import rjson.transformer.toobject.NullTransformation;
 import rjson.utils.RjsonUtil;
-import transformers.AllowTransformation;
 import transformers.Context;
 import transformers.Transformer;
 
 public class Rjson {
 	private static Log log = LogFactory.getLog(Rjson.class);
-	private AllowTransformation allow_transformation = new RjsonAllowTransformationChecker();
 	private transformers.Transformer object_to_json_transformer;
 	private transformers.Transformer json_to_object_transformer;
 	private boolean recordAllModifiers = false, recordFinal = false, recordStatic = false;
@@ -139,7 +136,6 @@ public class Rjson {
 
 	private void setUpDefaultObjectToJsonTransformers() {
 		this.object_to_json_transformer = Transformer.newInstance().clear()
-			.allow_transformation_checker(new RjsonAllowTransformationChecker())
 			.with_default_transformer(new FieldBasedTransformer())
 			.and_b(new IgnoreClassTransformation())
 			.and_b(new LeafBooleanTransformer())
@@ -235,10 +231,6 @@ public class Rjson {
 	
 	public boolean doNotRecordStatic() {
 		return ! recordStatic();
-	}
-	
-	public AllowTransformation allow_transformation() {
-		return this.allow_transformation;
 	}
 
 	private Rjson() {
