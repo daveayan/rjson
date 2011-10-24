@@ -31,6 +31,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import rjson.domain.ObjectWithEnum;
+import rjson.domain.ObjectWithFinalAndStatic;
 import rjson.domain.Person;
 import rjson.utils.RjsonUtil;
 import zen.Given;
@@ -46,6 +48,12 @@ public class ToObjectTest {
 		when = given.when("toObject");
 	}
 
+	@Test
+	public void toObjectAnObjectHavingEnum() throws IOException {
+		String actualJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithEnum/object-with-enum.txt");
+		when.methodIsCalledWith(actualJson).assertThatReturnValueIsSameAs(new ObjectWithEnum());
+	}
+	
 	@Test
 	public void toObjectJsonRepresentingNull() {
 		when.methodIsCalledWith("\"null\"").assertThatReturnValueIsSameAs(null);
