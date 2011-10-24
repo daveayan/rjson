@@ -32,6 +32,7 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import rjson.domain.ObjectWithEnum;
 import rjson.domain.ObjectWithFinalAndStatic;
 import rjson.domain.ObjectWithTransient;
 import rjson.domain.Person;
@@ -280,6 +281,12 @@ public class ToJsonTest {
 		When when = given.when("toJson");
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinalAndStatic/object-with-final-and-static-recorded.txt");
 		when.methodIsCalledWith(new ObjectWithFinalAndStatic()).assertThatReturnValueIsExactlySameAs(expectedJson);
+	}
+	
+	@Test
+	public void toJsonAnObjectWithEnum() throws IOException {
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithEnum/object-with-enum.txt");
+		when.methodIsCalledWith(new ObjectWithEnum()).assertThatReturnValueIsExactlySameAs(expectedJson);
 	}
 
 	@Test

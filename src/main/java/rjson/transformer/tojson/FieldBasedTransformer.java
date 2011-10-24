@@ -77,6 +77,9 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 			if (Modifier.isTransient(field.getModifiers())) {
 				return false;
 			}
+			if(field.isEnumConstant()) {
+				return false;
+			}
 			if (ToJsonTransformationUtils.rjson(context).doNotRecordFinal() && Modifier.isFinal(field.getModifiers())) {
 				return false;
 			}
