@@ -33,8 +33,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import rjson.printer.Printer;
-import rjson.printer.StringBufferPrinter;
 import rjson.transformer.JsonToObjectTransformer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.tojson.ArrayTransformer;
@@ -92,10 +90,10 @@ public class Rjson {
 	
 	public String toJson(Object object) {
 		log.info("Converting to json " + object);
-		Printer printer = new StringBufferPrinter();
-		Context context = Context.newInstance().put("rjson", this).and("printer", printer);
+		StringBuffer json_buffer = new StringBuffer();
+		Context context = Context.newInstance().put("rjson", this).and("json_buffer", json_buffer);
 		object_to_json_transformer.transform(object, String.class, context);
-		String json = RjsonUtil.reformat(printer.getOutput());
+		String json = RjsonUtil.reformat(json_buffer.toString());
 		log.info("json is : " + json);
 		return json;
 	}

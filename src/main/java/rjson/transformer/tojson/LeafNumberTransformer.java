@@ -30,17 +30,17 @@ import transformers.Context;
 public class LeafNumberTransformer implements ObjectToJsonTransformer {
 	public void transformToJson(Object object, Class<?> to, Context context) {
 		if (object == null) {
-			ToJsonTransformationUtils.printData(null, ToJsonTransformationUtils.printer(context));
+			ToJsonTransformationUtils.printData(null, (StringBuffer) context.get("json_buffer"));
 			return;
 		}
-		ToJsonTransformationUtils.printData(object, ToJsonTransformationUtils.printer(context));
+		ToJsonTransformationUtils.printData(object, (StringBuffer) context.get("json_buffer"));
 	}
 	
 	public String transform(Object from, Class<?> to, Context context) {
 		if (from == null) {
-			ToJsonTransformationUtils.printData(null, ToJsonTransformationUtils.printer(context));
+			ToJsonTransformationUtils.printData(null, (StringBuffer) context.get("json_buffer"));
 		} else {
-			ToJsonTransformationUtils.printData(from, ToJsonTransformationUtils.printer(context));
+			ToJsonTransformationUtils.printData(from, (StringBuffer) context.get("json_buffer"));
 		}
 		return null;
 	}

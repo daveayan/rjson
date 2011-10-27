@@ -32,9 +32,7 @@ import transformers.Context;
 
 public class MapTransformer implements ObjectToJsonTransformer {
 	public String transform(Object from, Class<?> to, Context context) {
-		ToJsonTransformationUtils.printer(context).print("{");
-		ToJsonTransformationUtils.printer(context).increaseIndent();
-		ToJsonTransformationUtils.printer(context).indent();
+		((StringBuffer) context.get("json_buffer")).append("{");
 		if (from == null)
 			return null;
 
@@ -45,15 +43,12 @@ public class MapTransformer implements ObjectToJsonTransformer {
 				break;
 			Object key = iter.next();
 			Object newObject = objectMap.get(key);
-			ToJsonTransformationUtils.printMapKeyName(key.toString(), ToJsonTransformationUtils.printer(context));
+			ToJsonTransformationUtils.printMapKeyName(key.toString(), (StringBuffer) context.get("json_buffer"));
 			context.transformer().delegateTransformation(newObject, to, context);
 			if (iter.hasNext())
-				ToJsonTransformationUtils.hasMoreElements(ToJsonTransformationUtils.printer(context));
+				ToJsonTransformationUtils.hasMoreElements((StringBuffer) context.get("json_buffer"));
 		}
-		ToJsonTransformationUtils.printer(context).printNewLine();
-		ToJsonTransformationUtils.printer(context).decreaseIndent();
-		ToJsonTransformationUtils.printer(context).indent();
-		ToJsonTransformationUtils.printer(context).print("}");
+		((StringBuffer) context.get("json_buffer")).append("}");
 		return null;
 	}
 	

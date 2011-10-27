@@ -52,10 +52,10 @@ public class FieldBasedTransformer implements ObjectToJsonTransformer {
 						}
 						if (include(field)) {
 							if (pendingHasMoreElements) {
-								ToJsonTransformationUtils.hasMoreElements(ToJsonTransformationUtils.printer(context));
+								ToJsonTransformationUtils.hasMoreElements((StringBuffer) context.get("json_buffer"));
 								pendingHasMoreElements = false;
 							}
-							ToJsonTransformationUtils.printFieldName(field.getName(), ToJsonTransformationUtils.printer(context));
+							ToJsonTransformationUtils.printFieldName(field.getName(), (StringBuffer) context.get("json_buffer"));
 							context.transformer().delegateTransformation(field.get(object), to, context);
 						}
 					} catch (IllegalArgumentException e) {
@@ -104,22 +104,15 @@ public class FieldBasedTransformer implements ObjectToJsonTransformer {
 	}
 	
 	public void transformToJson(Object object, Class<?> to, Context context) {
-		ToJsonTransformationUtils.printer(context).printNewLine();
-		ToJsonTransformationUtils.printer(context).indent();
-		ToJsonTransformationUtils.printer(context).print("{");
-		ToJsonTransformationUtils.printer(context).increaseIndent();
-		ToJsonTransformationUtils.printer(context).printNewLine();
+		((StringBuffer) context.get("json_buffer")).append("{");
 		if (object == null)
 			return;
 
-		ToJsonTransformationUtils.printClassName(object, ToJsonTransformationUtils.printer(context));
+		ToJsonTransformationUtils.printClassName(object, (StringBuffer) context.get("json_buffer"));
 
 		reflectionBasedTransform(object, to, context);
 
-		ToJsonTransformationUtils.printer(context).printNewLine();
-		ToJsonTransformationUtils.printer(context).decreaseIndent();
-		ToJsonTransformationUtils.printer(context).indent();
-		ToJsonTransformationUtils.printer(context).print("}");
+		((StringBuffer) context.get("json_buffer")).append("}");
 	}
 	
 	public boolean include(Field field) {

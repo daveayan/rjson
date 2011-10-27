@@ -32,9 +32,9 @@ import transformers.Context;
 public class LeafDateTransformer implements ObjectToJsonTransformer {
 	public String transform(Object from, Class<?> to, Context context) {
 		if (from == null) {
-			ToJsonTransformationUtils.printData(null, ToJsonTransformationUtils.printer(context));
+			ToJsonTransformationUtils.printData(null, (StringBuffer) context.get("json_buffer"));
 		} else {
-			ToJsonTransformationUtils.printData(((Date) from).getTime(), ToJsonTransformationUtils.printer(context));
+			ToJsonTransformationUtils.printData(((Date) from).getTime(), (StringBuffer) context.get("json_buffer"));
 		}
 		return null;
 	}

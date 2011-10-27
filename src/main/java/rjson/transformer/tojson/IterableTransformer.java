@@ -31,9 +31,7 @@ import transformers.Context;
 
 public class IterableTransformer implements ObjectToJsonTransformer {
 	public String transform(Object from, Class<?> to, Context context) {
-		ToJsonTransformationUtils.printer(context).print("[");
-		ToJsonTransformationUtils.printer(context).increaseIndent();
-		ToJsonTransformationUtils.printer(context).indent();
+		((StringBuffer) context.get("json_buffer")).append("[");
 		if (from == null)
 			return null;
 		Iterator<?> iter = ((Iterable<?>) from).iterator();
@@ -41,16 +39,11 @@ public class IterableTransformer implements ObjectToJsonTransformer {
 			if (!iter.hasNext())
 				break;
 			Object newObject = iter.next();
-			ToJsonTransformationUtils.printer(context).printNewLine();
-			ToJsonTransformationUtils.printer(context).indent();
 			context.transformer().delegateTransformation(newObject, to, context);
 			if (iter.hasNext())
-				ToJsonTransformationUtils.hasMoreElements(ToJsonTransformationUtils.printer(context));
+				ToJsonTransformationUtils.hasMoreElements((StringBuffer) context.get("json_buffer"));
 		}
-		ToJsonTransformationUtils.printer(context).printNewLine();
-		ToJsonTransformationUtils.printer(context).decreaseIndent();
-		ToJsonTransformationUtils.printer(context).indent();
-		ToJsonTransformationUtils.printer(context).print("]");
+		((StringBuffer) context.get("json_buffer")).append("]");
 		return null;
 	}
 	
