@@ -81,11 +81,11 @@ public class FieldBasedTransformer implements ObjectToJsonTransformer {
 			if(field.isEnumConstant()) {
 				return false;
 			}
-			if (ToJsonTransformationUtils.rjson(context).doNotRecordStaticFinals() 
-					&& Modifier.isFinal(field.getModifiers()) 
-					&& Modifier.isStatic(field.getModifiers())) {
-				return false;
-			}
+//			if (ToJsonTransformationUtils.rjson(context).doNotRecordStaticFinals() 
+//					&& Modifier.isFinal(field.getModifiers()) 
+//					&& Modifier.isStatic(field.getModifiers())) {
+//				return false;
+//			}
 			if (ToJsonTransformationUtils.rjson(context).doNotRecordFinal() && Modifier.isFinal(field.getModifiers())) {
 				return false;
 			}
