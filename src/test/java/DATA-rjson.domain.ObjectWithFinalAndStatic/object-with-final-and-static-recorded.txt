@@ -3,6 +3,5 @@
   "staticString": "This is static",
   "class": "rjson.domain.ObjectWithFinalAndStatic",
   "nonFinalString": "This is not final",
-  "nonStaticString": "This is not static",
-  "finalAndStaticString": "This is final and static"
+  "nonStaticString": "This is not static"
 }

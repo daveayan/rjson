@@ -24,16 +24,17 @@
 package rjson.transformer.tojson;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Iterator;
 import java.util.List;
 
 import mirage.ReflectionUtils;
+import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
-public class FieldBasedTransformer extends ReflectionBasedTransformer {
-	@Override
+public class FieldBasedTransformer implements ObjectToJsonTransformer {
 	public void reflectionBasedTransform(Object object, Class<?> to, Context context) {
 		List<Field> fields = ReflectionUtils.getAllFieldsIn(object);
 		boolean pendingHasMoreElements = false;
@@ -80,6 +81,11 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 			if(field.isEnumConstant()) {
 				return false;
 			}
+			if (ToJsonTransformationUtils.rjson(context).doNotRecordStaticFinals() 
+					&& Modifier.isFinal(field.getModifiers()) 
+					&& Modifier.isStatic(field.getModifiers())) {
+				return false;
+			}
 			if (ToJsonTransformationUtils.rjson(context).doNotRecordFinal() && Modifier.isFinal(field.getModifiers())) {
 				return false;
 			}
@@ -95,5 +101,41 @@ public class FieldBasedTransformer extends ReflectionBasedTransformer {
 	
 	public boolean canTransform(Object from, Class<?> to, Context context) {
 		return true;
+	}
+	
+	public void transformToJson(Object object, Class<?> to, Context context) {
+		ToJsonTransformationUtils.printer(context).printNewLine();
+		ToJsonTransformationUtils.printer(context).indent();
+		ToJsonTransformationUtils.printer(context).print("{");
+		ToJsonTransformationUtils.printer(context).increaseIndent();
+		ToJsonTransformationUtils.printer(context).printNewLine();
+		if (object == null)
+			return;
+
+		ToJsonTransformationUtils.printClassName(object, ToJsonTransformationUtils.printer(context));
+
+		reflectionBasedTransform(object, to, context);
+
+		ToJsonTransformationUtils.printer(context).printNewLine();
+		ToJsonTransformationUtils.printer(context).decreaseIndent();
+		ToJsonTransformationUtils.printer(context).indent();
+		ToJsonTransformationUtils.printer(context).print("}");
+	}
+	
+	public boolean include(Field field) {
+		return true;
+	}
+
+	public boolean exclude(Field field) {
+		return false;
+	}
+
+	public boolean include(Method method) {
+		return true;
+	}
+
+	public String transform(Object from, Class<?> to, Context context) {
+		transformToJson(from, to, context);
+		return null;
 	}
 }

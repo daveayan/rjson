@@ -68,7 +68,7 @@ public class Rjson {
 	private static Log log = LogFactory.getLog(Rjson.class);
 	private transformers.Transformer object_to_json_transformer;
 	private transformers.Transformer json_to_object_transformer;
-	private boolean recordAllModifiers = false, recordFinal = false, recordStatic = false;
+	private boolean recordAllModifiers = false, recordFinal = false, recordStatic = false, recordStaticFinals = false;
 
 	public static Rjson newInstance() {
 		Rjson rjson = new Rjson();
@@ -98,8 +98,6 @@ public class Rjson {
 		String json = RjsonUtil.reformat(printer.getOutput());
 		log.info("json is : " + json);
 		return json;
-//		return RjsonUtil.unEscapeJsonCharactersIn(printer.getOutput());
-//		return printer.getOutput();
 	}
 
 	private Object convertToObject(String json, JSONTokener tokener, Class<?> to) throws JSONException {
@@ -212,6 +210,16 @@ public class Rjson {
 		this.recordStatic = false;
 		return this;
 	}
+	
+	public Rjson andRecordStaticFinals() {
+		this.recordStaticFinals = true;
+		return this;
+	}
+	
+	public Rjson andDoNotRecordStaticFinals() {
+		this.recordStaticFinals = false;
+		return this;
+	}
 
 	public boolean recordAllModifiers() {
 		return recordAllModifiers;
@@ -231,6 +239,14 @@ public class Rjson {
 	
 	public boolean doNotRecordStatic() {
 		return ! recordStatic();
+	}
+	
+	public boolean recordStaticFinals() {
+		return recordStaticFinals;
+	}
+	
+	public boolean doNotRecordStaticFinals() {
+		return ! recordStaticFinals();
 	}
 
 	private Rjson() {
