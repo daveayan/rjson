@@ -29,21 +29,11 @@ import transformers.Context;
 
 public class LeafBooleanTransformer implements ObjectToJsonTransformer {
 	public String transform(Object from, Class<?> to, Context context) {
-		if (from == null) {
-			ToJsonTransformationUtils.printData(null, (StringBuffer) context.get("json_buffer"));
-		} else {
 			ToJsonTransformationUtils.printData(from, (StringBuffer) context.get("json_buffer"));
-		}
 		return null;
 	}
 	
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		if (from == null) {
-			return true;
-		}
-		if (from instanceof java.lang.Boolean && "java.lang.String".equals(to.getName())) {
-			return true;
-		}
-		return false;
+		return from != null && from instanceof java.lang.Boolean && "java.lang.String".equals(to.getName());
 	}
 }

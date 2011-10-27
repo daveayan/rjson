@@ -48,11 +48,6 @@ public class IterableTransformer implements ObjectToJsonTransformer {
 	}
 	
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		if (from != null) {
-			if (from instanceof java.lang.Iterable<?>) {
-				return true;
-			}
-		}
-		return false;
+		return from != null && from instanceof java.lang.Iterable<?>;
 	}
 }

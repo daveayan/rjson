@@ -30,22 +30,12 @@ import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
 public class LeafDateTransformer implements ObjectToJsonTransformer {
-	public String transform(Object from, Class<?> to, Context context) {
-		if (from == null) {
-			ToJsonTransformationUtils.printData(null, (StringBuffer) context.get("json_buffer"));
-		} else {
-			ToJsonTransformationUtils.printData(((Date) from).getTime(), (StringBuffer) context.get("json_buffer"));
-		}
+	public String transform(Object from, Class< ? > to, Context context) {
+		ToJsonTransformationUtils.printData(((Date) from).getTime(), (StringBuffer) context.get("json_buffer"));
 		return null;
 	}
-	
-	public boolean canTransform(Object from, Class<?> to, Context context) {
-		if (from == null) {
-			return true;
-		}
-		if (from instanceof java.util.Date) {
-			return true;
-		}
-		return false;
+
+	public boolean canTransform(Object from, Class< ? > to, Context context) {
+		return from != null && from instanceof java.util.Date;
 	}
 }

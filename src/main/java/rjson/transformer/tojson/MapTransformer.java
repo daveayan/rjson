@@ -53,9 +53,6 @@ public class MapTransformer implements ObjectToJsonTransformer {
 	}
 	
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		if (from instanceof java.util.Map<?, ?>) {
-			return true;
-		}
-		return false;
+		return from instanceof java.util.Map<?, ?>;
 	}
 }

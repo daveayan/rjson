@@ -28,30 +28,12 @@ import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
 public class LeafNumberTransformer implements ObjectToJsonTransformer {
-	public void transformToJson(Object object, Class<?> to, Context context) {
-		if (object == null) {
-			ToJsonTransformationUtils.printData(null, (StringBuffer) context.get("json_buffer"));
-			return;
-		}
-		ToJsonTransformationUtils.printData(object, (StringBuffer) context.get("json_buffer"));
-	}
-	
 	public String transform(Object from, Class<?> to, Context context) {
-		if (from == null) {
-			ToJsonTransformationUtils.printData(null, (StringBuffer) context.get("json_buffer"));
-		} else {
 			ToJsonTransformationUtils.printData(from, (StringBuffer) context.get("json_buffer"));
-		}
 		return null;
 	}
 	
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		if (from == null) {
-			return true;
-		}
-		if (from instanceof java.lang.Number) {
-			return true;
-		}
-		return false;
+		return from != null && from instanceof java.lang.Number;
 	}
 }

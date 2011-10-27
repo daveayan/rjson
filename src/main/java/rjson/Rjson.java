@@ -47,6 +47,7 @@ import rjson.transformer.tojson.LeafNumberTransformer;
 import rjson.transformer.tojson.LeafPrimitiveTransformer;
 import rjson.transformer.tojson.LeafStringTransformer;
 import rjson.transformer.tojson.MapTransformer;
+import rjson.transformer.tojson.NullToJsonTransformer;
 import rjson.transformer.toobject.JsonArrayToSetTransformer;
 import rjson.transformer.toobject.JsonArrayToVectorTransformer;
 import rjson.transformer.toobject.JsonArrayTransformer;
@@ -133,6 +134,7 @@ public class Rjson {
 	private void setUpDefaultObjectToJsonTransformers() {
 		this.object_to_json_transformer = Transformer.newInstance().clear()
 			.with_default_transformer(new FieldBasedTransformer())
+			.and_b(new NullToJsonTransformer())
 			.and_b(new IgnoreClassTransformation())
 			.and_b(new LeafBooleanTransformer())
 			.and_b(new LeafCharacterTransformer())

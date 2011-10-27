@@ -28,22 +28,12 @@ import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
 public class LeafStringTransformer implements ObjectToJsonTransformer {
-	public String transform(Object from, Class<?> to, Context context) {
-		if (from == null) {
-			ToJsonTransformationUtils.printData(null, (StringBuffer) context.get("json_buffer"));
-		} else {
-			ToJsonTransformationUtils.printData(from.toString(), (StringBuffer) context.get("json_buffer"));
-		}
+	public String transform(Object from, Class< ? > to, Context context) {
+		ToJsonTransformationUtils.printData(from.toString(), (StringBuffer) context.get("json_buffer"));
 		return null;
 	}
-	
-	public boolean canTransform(Object from, Class<?> to, Context context) {
-		if (from == null) {
-			return true;
-		}
-		if (from instanceof java.lang.String) {
-			return true;
-		}
-		return false;
+
+	public boolean canTransform(Object from, Class< ? > to, Context context) {
+		return from != null && from instanceof java.lang.String;
 	}
 }
