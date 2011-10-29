@@ -54,7 +54,7 @@ public class ToJsonTest {
 
 	@Before
 	public void setup() {
-		given = Given.that().rjsonInstanceIs(RjsonUtil.completeSerializer().with(new RecursiveObjectTransformer()));
+		given = Given.that().rjsonInstanceIs(RjsonUtil.completeSerializer());
 		given.objectUnderTestIs(RjsonUtil.completeSerializer());
 		when = given.when("toJson");
 	}
@@ -358,8 +358,8 @@ public class ToJsonTest {
 	
 	@Test
 	public void toJsonARecursiveObject() throws IOException {
-		Given given = Given.that().rjsonInstanceIs(RjsonUtil.completeSerializer().with(new RecursiveObjectTransformer()));
-		given.objectUnderTestIs(RjsonUtil.completeSerializer().with(new RecursiveObjectTransformer()));
+		Given given = Given.that().rjsonInstanceIs(RjsonUtil.completeSerializer().with(new RjsonTestDomainExclusions()));
+		given.objectUnderTestIs(RjsonUtil.completeSerializer().with(new RjsonTestDomainExclusions()));
 		When when = given.when("toJson");
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.RecursiveObject/converted-with-custom-transformer.txt");
 		when.methodIsCalledWith(new RecursiveObject()).assertThatReturnValueIsExactlySameAs(expectedJson);

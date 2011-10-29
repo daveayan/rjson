@@ -23,8 +23,10 @@
  */
 package rjson;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import rjson.domain.Exclusion;
 import rjson.transformer.JsonToObjectTransformer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.tojson.ArrayTransformer;
@@ -67,6 +70,7 @@ public class Rjson {
 	private static Log log = LogFactory.getLog(Rjson.class);
 	private transformers.Transformer object_to_json_transformer;
 	private transformers.Transformer json_to_object_transformer;
+	private List<Exclusion> exclusions = new ArrayList<Exclusion>();
 	private boolean recordAllModifiers = false, recordFinal = false, recordStatic = false;
 
 	public static Rjson newInstance() {
@@ -163,6 +167,15 @@ public class Rjson {
 			.and_b(new JsonArrayTransformer());
 	}
 	
+	public boolean exclude(Field field, Object from, Class<?> to, Context context) {
+		for(Exclusion exclusion: exclusions) {
+			if(exclusion.exclude(field, from, to, context)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public Rjson with(ObjectToJsonTransformer transformer) {
 		this.object_to_json_transformer.and_a(transformer);
 		return this;
@@ -229,6 +242,15 @@ public class Rjson {
 	
 	public boolean doNotRecordStatic() {
 		return ! recordStatic();
+	}
+	
+	public Rjson with(Exclusion exclusion) {
+		this.exclusions.add(exclusion);
+		return this;
+	}
+	
+	public Rjson andWith(Exclusion exclusion) {
+		return with(exclusion);
 	}
 
 	private Rjson() {

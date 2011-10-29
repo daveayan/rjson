@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import mirage.ReflectionUtils;
+import rjson.Rjson;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
@@ -48,6 +49,9 @@ public class FieldBasedTransformer implements ObjectToJsonTransformer {
 					ReflectionUtils.makeAccessible(field);
 					try {
 						if (exclude(field)) {
+							continue;
+						}
+						if(((Rjson)context.get("rjson")).exclude(field, object, to, context)) {
 							continue;
 						}
 						if (include(field)) {
