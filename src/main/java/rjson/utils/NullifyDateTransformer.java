@@ -10,10 +10,6 @@ public class NullifyDateTransformer extends FieldBasedTransformer {
 	}
 
 	public boolean canTransform(Object from, Class<?> to, Context context) {
-		return canConvertToJson(from);
-	}
-	
-	public boolean canConvertToJson(Object object) {
-		return object != null && object instanceof java.util.Date;
+		return from != null && from instanceof java.util.Date;
 	}
 }

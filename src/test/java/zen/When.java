@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mirage.ReflectionUtils;
-import rjson.Rjson;
-import rjson.utils.RjsonUtil;
 
 public class When {
 	public Then methodIsCalledWith(Object... parameters) {
@@ -39,10 +37,9 @@ public class When {
 	
 	private void recordParameters(Object[] parameters) {
 		if(parameters == null) return;
-		Rjson rjson = RjsonUtil.completeSerializer();
 		for(Object parameter: parameters) {
 			inputParams.add(parameter);
-			inputParamJsons.add(rjson.toJson(parameter));
+			inputParamJsons.add(given.rjsonInstance().toJson(parameter));
 		}
 	}
 

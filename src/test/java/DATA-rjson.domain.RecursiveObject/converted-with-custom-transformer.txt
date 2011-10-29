@@ -1,0 +1,61 @@
+{
+  "person": {
+    "id": 1,
+    "accounts": [{
+      "id": 1,
+      "balance": 100,
+      "accountNumber": 123,
+      "lastUpdate": null,
+      "class": "rjson.domain.Account",
+      "someMap": {
+        "A": 100,
+        "B": 200
+      }
+    }],
+    "name": "QWERTY",
+    "class": "rjson.domain.Person",
+    "drives": [
+      {
+        "class": "rjson.domain.Car",
+        "numberOfWheels": 4
+      },
+      {
+        "class": "rjson.domain.Scooter",
+        "numberOfWheels": 2
+      }
+    ],
+    "addresses": {
+      "Home": {
+        "id": 1,
+        "zip": 43016,
+        "address": "tuttles creek",
+        "state": "OH",
+        "class": "rjson.domain.Address",
+        "city": "Dublin"
+      },
+      "Office": {
+        "id": 1,
+        "zip": 43235,
+        "address": "sawmill village dr",
+        "state": "OH",
+        "class": "rjson.domain.Address",
+        "city": "Columbus"
+      }
+    },
+    "phones": [
+      {
+        "id": 1,
+        "areaCode": 443,
+        "class": "rjson.domain.PhoneNumber",
+        "number": 3233323
+      },
+      {
+        "id": 1,
+        "areaCode": 657,
+        "class": "rjson.domain.PhoneNumber",
+        "number": 9466354
+      }
+    ]
+  },
+  "class": "rjson.domain.RecursiveObject"
+}

@@ -32,7 +32,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import rjson.domain.ObjectWithEnum;
-import rjson.domain.ObjectWithFinalAndStatic;
 import rjson.domain.Person;
 import rjson.utils.RjsonUtil;
 import zen.Given;
@@ -44,7 +43,7 @@ public class ToObjectTest {
 
 	@Before
 	public void setup() {
-		given = Given.objectUnderTestIs(Rjson.newInstance());
+		given = Given.that().objectUnderTestIs(Rjson.newInstance());
 		when = given.when("toObject");
 	}
 

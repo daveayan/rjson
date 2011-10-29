@@ -1,13 +1,9 @@
 package zen;
 
-import zen.Assert;
-import rjson.Rjson;
-import rjson.utils.NullifyDateTransformer;
-import rjson.utils.RjsonUtil;
 
 public class Then {
 	public Then assertThatObjectUnderTestIsNotModified() {
-		String objectUnderTestJsonAfterTestExecution = RjsonUtil.completeSerializer().toJson(when.given().objectUnderTest());
+		String objectUnderTestJsonAfterTestExecution = when.given().rjsonInstance().toJson(when.given().objectUnderTest());
 		Assert.thatJsonEqualsLiterally(when.given().objectUnderTestJsonBeforeTestExecution(), objectUnderTestJsonAfterTestExecution);
 		return this;
 	}
@@ -17,10 +13,9 @@ public class Then {
 	}
 
 	public Then assertThatInputParametersAreNotModified() {
-		Rjson rjson = Rjson.newInstance().and(new NullifyDateTransformer()).andRecordAllModifiers();
 		for (int i = 0; i < when.inputParams().size(); i++) {
 			Object object = when.inputParams().get(i);
-			String afterExecutionJson = rjson.toJson(object);
+			String afterExecutionJson = when.given().rjsonInstance().toJson(object);
 			Assert.thatJsonEqualsLiterally(afterExecutionJson, when.inputParamJsons().get(i));
 		}
 		return this;
@@ -40,8 +35,8 @@ public class Then {
 	
 	public Then assertThatReturnValueIsExactlySameAs(Object expectedObject) {
 		assertThatThereAreNoSideEffects();
-		Assert.thatEquals(expectedObject, returnObject);
-		Assert.thatEquals(returnObject, expectedObject);
+		Assert.thatEquals(when.given().rjsonInstance(), expectedObject, returnObject);
+		Assert.thatEquals(when.given().rjsonInstance(), returnObject, expectedObject);
 		return this;
 	}
 

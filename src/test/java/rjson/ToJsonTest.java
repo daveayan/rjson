@@ -38,6 +38,7 @@ import rjson.domain.ObjectWithFinalAndStatic;
 import rjson.domain.ObjectWithStatic;
 import rjson.domain.ObjectWithTransient;
 import rjson.domain.Person;
+import rjson.domain.RecursiveObject;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.tojson.FieldBasedTransformer;
 import rjson.utils.RjsonUtil;
@@ -53,7 +54,8 @@ public class ToJsonTest {
 
 	@Before
 	public void setup() {
-		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer());
+		given = Given.that().rjsonInstanceIs(RjsonUtil.completeSerializer().with(new RecursiveObjectTransformer()));
+		given.objectUnderTestIs(RjsonUtil.completeSerializer());
 		when = given.when("toJson");
 	}
 
@@ -116,7 +118,7 @@ public class ToJsonTest {
 	@Test
 	public void toJsonDate() {
 		Date date = new Date(Long.parseLong("1309814968887"));
-		Given given = Given.objectUnderTestIs(Rjson.newInstance());
+		Given given = Given.that().objectUnderTestIs(Rjson.newInstance());
 		given.when("toJson").isCalledWith(date).assertThatReturnValueIsSameAs("1309814968887");
 	}
 
@@ -226,7 +228,7 @@ public class ToJsonTest {
 
 	@Test
 	public void toJsonAComplexObjectRespectingModifiers() throws IOException {
-		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().andDoNotRecordAllModifiers());
+		given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer().andDoNotRecordAllModifiers());
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.Person/fully-loaded-person-object-respecting-modifiers.txt");
 		given.when("toJson").isCalledWith(new Object[] { Person.getFullyLoadedInstance() }).assertThatReturnValueIsSameAs(expectedJson);
 	}
@@ -257,7 +259,7 @@ public class ToJsonTest {
 	
 	@Test
 	public void toJsonWhenFinalIsRecorded() throws IOException {
-		Given given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().andRecordFinal());
+		Given given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer().andRecordFinal());
 		When when = given.when("toJson");
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinal/with-final-recorded.txt");
 		when.methodIsCalledWith(new ObjectWithFinal()).assertThatReturnValueIsExactlySameAs(expectedJson);
@@ -271,7 +273,7 @@ public class ToJsonTest {
 	
 	@Test
 	public void toJsonWhenStaticIsRecorded() throws IOException {
-		Given given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().andRecordStatic());
+		Given given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer().andRecordStatic());
 		When when = given.when("toJson");
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithStatic/with-static-recorded.txt");
 		when.methodIsCalledWith(new ObjectWithStatic()).assertThatReturnValueIsExactlySameAs(expectedJson);
@@ -279,7 +281,7 @@ public class ToJsonTest {
 	
 	@Test
 	public void toJsonWhenStaticAndFinalIsRecorded() throws IOException {
-		Given given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().andRecordStatic().andRecordFinal());
+		Given given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer().andRecordStatic().andRecordFinal());
 		When when = given.when("toJson");
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinalAndStatic/with-static-and-final-recorded.txt");
 		when.methodIsCalledWith(new ObjectWithFinalAndStatic()).assertThatReturnValueIsExactlySameAs(expectedJson);
@@ -287,7 +289,7 @@ public class ToJsonTest {
 	
 	@Test
 	public void toJsonWhenStaticOrFinalNothingIsRecorded() throws IOException {
-		Given given = Given.objectUnderTestIs(RjsonUtil.completeSerializer());
+		Given given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer());
 		When when = given.when("toJson");
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.ObjectWithFinalAndStatic/with-nothing-recorded.txt");
 		when.methodIsCalledWith(new ObjectWithFinalAndStatic()).assertThatReturnValueIsExactlySameAs(expectedJson);
@@ -301,7 +303,7 @@ public class ToJsonTest {
 
 	@Test
 	public void toJsonMultipleTimesWithSameInstanceOfRjson() {
-		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer());
+		given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer());
 		when = given.when("toJson");
 		Then firstConversion = when.methodIsCalledWith(Person.getFullyLoadedInstance());
 		Then secondConversion = when.methodIsCalledWith(Person.getFullyLoadedInstance());
@@ -329,7 +331,7 @@ public class ToJsonTest {
 			}
 		};
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
-		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().with((ObjectToJsonTransformer) excludeAddressTransformer));
+		given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer().with((ObjectToJsonTransformer) excludeAddressTransformer));
 		given.when("toJson").isCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
@@ -350,7 +352,16 @@ public class ToJsonTest {
 			}
 		};
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.Person/person-object-with-addresses-excluded.txt");
-		given = Given.objectUnderTestIs(RjsonUtil.completeSerializer().with((ObjectToJsonTransformer) excludeAddressTransformer));
+		given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer().with((ObjectToJsonTransformer) excludeAddressTransformer));
 		given.when("toJson").isCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
+	}
+	
+	@Test
+	public void toJsonARecursiveObject() throws IOException {
+		Given given = Given.that().rjsonInstanceIs(RjsonUtil.completeSerializer().with(new RecursiveObjectTransformer()));
+		given.objectUnderTestIs(RjsonUtil.completeSerializer().with(new RecursiveObjectTransformer()));
+		When when = given.when("toJson");
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.RecursiveObject/converted-with-custom-transformer.txt");
+		when.methodIsCalledWith(new RecursiveObject()).assertThatReturnValueIsExactlySameAs(expectedJson);
 	}
 }

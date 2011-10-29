@@ -2,12 +2,17 @@ package zen;
 
 import org.json.JSONException;
 
+import rjson.Rjson;
 import rjson.utils.RjsonUtil;
 
 public class Assert {
 	public static void thatEquals(Object expectedObject, Object actualObject) {
-		String expectedjson = RjsonUtil.completeSerializer().toJson(expectedObject);
-		String actualjson = RjsonUtil.completeSerializer().toJson(actualObject);
+		thatEquals(RjsonUtil.completeSerializer(), expectedObject, actualObject);
+	}
+	
+	public static void thatEquals(Rjson rjson, Object expectedObject, Object actualObject) {
+		String expectedjson = rjson.toJson(expectedObject);
+		String actualjson = rjson.toJson(actualObject);
 		thatJsonEquals(expectedjson, actualjson);
 	}
 	
