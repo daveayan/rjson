@@ -24,7 +24,6 @@
 package rjson.transformer.tojson;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Iterator;
 import java.util.List;
@@ -48,20 +47,15 @@ public class FieldBasedTransformer implements ObjectToJsonTransformer {
 				if(allowTransformation(field, context)) {
 					ReflectionUtils.makeAccessible(field);
 					try {
-						if (exclude(field)) {
-							continue;
-						}
 						if(((Rjson)context.get("rjson")).exclude(field, object, to, context)) {
 							continue;
 						}
-						if (include(field)) {
-							if (pendingHasMoreElements) {
-								ToJsonTransformationUtils.hasMoreElements((StringBuffer) context.get("json_buffer"));
-								pendingHasMoreElements = false;
-							}
-							ToJsonTransformationUtils.printFieldName(field.getName(), (StringBuffer) context.get("json_buffer"));
-							context.transformer().delegateTransformation(field.get(object), to, context);
+						if (pendingHasMoreElements) {
+							ToJsonTransformationUtils.hasMoreElements((StringBuffer) context.get("json_buffer"));
+							pendingHasMoreElements = false;
 						}
+						ToJsonTransformationUtils.printFieldName(field.getName(), (StringBuffer) context.get("json_buffer"));
+						context.transformer().delegateTransformation(field.get(object), to, context);
 					} catch (IllegalArgumentException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -69,7 +63,7 @@ public class FieldBasedTransformer implements ObjectToJsonTransformer {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					if (include(field) && iter.hasNext()) {
+					if (iter.hasNext()) {
 						pendingHasMoreElements = true;
 					}
 				}
@@ -85,11 +79,6 @@ public class FieldBasedTransformer implements ObjectToJsonTransformer {
 			if(field.isEnumConstant()) {
 				return false;
 			}
-//			if (ToJsonTransformationUtils.rjson(context).doNotRecordStaticFinals() 
-//					&& Modifier.isFinal(field.getModifiers()) 
-//					&& Modifier.isStatic(field.getModifiers())) {
-//				return false;
-//			}
 			if (ToJsonTransformationUtils.rjson(context).doNotRecordFinal() && Modifier.isFinal(field.getModifiers())) {
 				return false;
 			}
@@ -117,18 +106,6 @@ public class FieldBasedTransformer implements ObjectToJsonTransformer {
 		reflectionBasedTransform(object, to, context);
 
 		((StringBuffer) context.get("json_buffer")).append("}");
-	}
-	
-	public boolean include(Field field) {
-		return true;
-	}
-
-	public boolean exclude(Field field) {
-		return false;
-	}
-
-	public boolean include(Method method) {
-		return true;
 	}
 
 	public String transform(Object from, Class<?> to, Context context) {
