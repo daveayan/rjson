@@ -23,10 +23,13 @@
  */
 package rjson;
 
+import java.lang.ref.SoftReference;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -96,8 +99,9 @@ public class Rjson {
 	public String toJson(Object object) {
 		log.info("Converting to json " + object);
 		StringBuffer json_buffer = new StringBuffer();
-		Context context = Context.newInstance().put("rjson", this).and("json_buffer", json_buffer);
+		Context context = Context.newInstance().put("rjson", this).and("json_buffer", json_buffer).and("cycle_set", new SoftReference<Set<?>>(new HashSet<Object>()));
 		object_to_json_transformer.transform(object, String.class, context);
+		log.info("json before formatting is : " + json_buffer.toString());
 		String json = RjsonUtil.reformat(json_buffer.toString());
 		log.info("json is : " + json);
 		return json;

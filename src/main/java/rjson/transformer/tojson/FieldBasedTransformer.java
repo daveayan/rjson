@@ -30,11 +30,11 @@ import java.util.List;
 
 import mirage.ReflectionUtils;
 import rjson.Rjson;
-import rjson.transformer.ObjectToJsonTransformer;
+import rjson.transformer.BaseTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
-public class FieldBasedTransformer implements ObjectToJsonTransformer {
+public class FieldBasedTransformer extends BaseTransformer {
 	public void reflectionBasedTransform(Object object, Class<?> to, Context context) {
 		List<Field> fields = ReflectionUtils.getAllFieldsIn(object);
 		boolean pendingHasMoreElements = false;
@@ -97,6 +97,7 @@ public class FieldBasedTransformer implements ObjectToJsonTransformer {
 	}
 	
 	public void transformToJson(Object object, Class<?> to, Context context) {
+		if(cycleDetectedWith(object, context)) return;
 		((StringBuffer) context.get("json_buffer")).append("{");
 		if (object == null)
 			return;

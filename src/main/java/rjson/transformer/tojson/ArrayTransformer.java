@@ -29,6 +29,7 @@ import transformers.Context;
 public class ArrayTransformer extends IterableTransformer {
 
 	public void transformToJson(Object object, Class<?> to, Context context) {
+		if(cycleDetectedWith(object, context)) return;
 		List<?> arrayAsList = Arrays.asList((Object[]) object);
 		super.transform(arrayAsList, to, context);
 	}

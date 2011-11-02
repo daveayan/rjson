@@ -23,13 +23,14 @@
  */
 package rjson.transformer.tojson;
 
-import rjson.transformer.ObjectToJsonTransformer;
+import rjson.transformer.BaseTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
-public class LeafBooleanTransformer implements ObjectToJsonTransformer {
+public class LeafBooleanTransformer extends BaseTransformer {
 	public String transform(Object from, Class<?> to, Context context) {
-			ToJsonTransformationUtils.printData(from, (StringBuffer) context.get("json_buffer"));
+		if(cycleDetectedWith(from, context)) return null;
+		ToJsonTransformationUtils.printData(from, (StringBuffer) context.get("json_buffer"));
 		return null;
 	}
 	

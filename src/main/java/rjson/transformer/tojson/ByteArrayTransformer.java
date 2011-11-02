@@ -5,6 +5,7 @@ import transformers.Context;
 
 public class ByteArrayTransformer extends ArrayTransformer {
 	public void transformToJson(Object object, Class<?> to, Context context) {
+		if(cycleDetectedWith(object, context)) return;
 		String str = new String((byte[]) object);
 		ToJsonTransformationUtils.printData(str.toString(), (StringBuffer) context.get("json_buffer"));
 	}

@@ -25,12 +25,13 @@ package rjson.transformer.tojson;
 
 import java.util.Iterator;
 
-import rjson.transformer.ObjectToJsonTransformer;
+import rjson.transformer.BaseTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
-public class IterableTransformer implements ObjectToJsonTransformer {
+public class IterableTransformer extends BaseTransformer {
 	public String transform(Object from, Class<?> to, Context context) {
+		if(cycleDetectedWith(from, context)) return null;
 		((StringBuffer) context.get("json_buffer")).append("[");
 		if (from == null)
 			return null;

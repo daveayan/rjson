@@ -25,12 +25,13 @@ package rjson.transformer.tojson;
 
 import java.util.Date;
 
-import rjson.transformer.ObjectToJsonTransformer;
+import rjson.transformer.BaseTransformer;
 import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
-public class LeafDateTransformer implements ObjectToJsonTransformer {
+public class LeafDateTransformer extends BaseTransformer {
 	public String transform(Object from, Class< ? > to, Context context) {
+		if(cycleDetectedWith(from, context)) return null;
 		ToJsonTransformationUtils.printData(((Date) from).getTime(), (StringBuffer) context.get("json_buffer"));
 		return null;
 	}
