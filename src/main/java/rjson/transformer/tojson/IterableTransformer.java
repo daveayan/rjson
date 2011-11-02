@@ -26,16 +26,13 @@ package rjson.transformer.tojson;
 import java.util.Iterator;
 
 import rjson.transformer.BaseTransformer;
-import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
 public class IterableTransformer extends BaseTransformer {
 	public String transform(Object from, Class< ? > to, Context context) {
 		if (cycleDetectedWith(from, context))
 			return null;
-		ToJsonTransformationUtils.printer(context).print("[");
-		ToJsonTransformationUtils.printer(context).increaseIndent();
-		ToJsonTransformationUtils.printer(context).indent();
+		printerIn(context).startOfCollection();
 		if (from == null)
 			return null;
 		Iterator< ? > iter = ((Iterable< ? >) from).iterator();
@@ -43,16 +40,13 @@ public class IterableTransformer extends BaseTransformer {
 			if (!iter.hasNext())
 				break;
 			Object newObject = iter.next();
-			ToJsonTransformationUtils.printer(context).printNewLine();
-			ToJsonTransformationUtils.printer(context).indent();
+			printerIn(context).printNewLine();
+			printerIn(context).indent();
 			context.transformer().delegateTransformation(newObject, to, context);
 			if (iter.hasNext())
-				ToJsonTransformationUtils.hasMoreElements(ToJsonTransformationUtils.printer(context));
+				hasMoreElements(context);
 		}
-		ToJsonTransformationUtils.printer(context).printNewLine();
-		ToJsonTransformationUtils.printer(context).decreaseIndent();
-		ToJsonTransformationUtils.printer(context).indent();
-		ToJsonTransformationUtils.printer(context).print("]");
+		printerIn(context).endOfCollection();
 		return null;
 	}
 

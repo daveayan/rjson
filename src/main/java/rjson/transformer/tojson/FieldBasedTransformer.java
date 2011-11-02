@@ -31,7 +31,6 @@ import java.util.List;
 import mirage.ReflectionUtils;
 import rjson.Rjson;
 import rjson.transformer.BaseTransformer;
-import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
 public class FieldBasedTransformer extends BaseTransformer {
@@ -51,10 +50,10 @@ public class FieldBasedTransformer extends BaseTransformer {
 							continue;
 						}
 						if (pendingHasMoreElements) {
-							ToJsonTransformationUtils.hasMoreElements(ToJsonTransformationUtils.printer(context));
+							hasMoreElements(context);
 							pendingHasMoreElements = false;
 						}
-						ToJsonTransformationUtils.printFieldName(field.getName(), ToJsonTransformationUtils.printer(context));
+						printFieldName(field.getName(), context);
 						context.transformer().delegateTransformation(field.get(object), to, context);
 					} catch (IllegalArgumentException e) {
 						// TODO Auto-generated catch block
@@ -79,13 +78,13 @@ public class FieldBasedTransformer extends BaseTransformer {
 			if (field.isEnumConstant()) {
 				return false;
 			}
-			if (ToJsonTransformationUtils.rjson(context).doNotRecordFinal() && Modifier.isFinal(field.getModifiers())) {
+			if (rjson(context).doNotRecordFinal() && Modifier.isFinal(field.getModifiers())) {
 				return false;
 			}
-			if (ToJsonTransformationUtils.rjson(context).doNotRecordStatic() && Modifier.isStatic(field.getModifiers())) {
+			if (rjson(context).doNotRecordStatic() && Modifier.isStatic(field.getModifiers())) {
 				return false;
 			}
-			if (ToJsonTransformationUtils.rjson(context).recordAllModifiers() || ReflectionUtils.isAccessible(field)) {
+			if (rjson(context).recordAllModifiers() || ReflectionUtils.isAccessible(field)) {
 				return true;
 			}
 		}
@@ -99,22 +98,15 @@ public class FieldBasedTransformer extends BaseTransformer {
 	public void transformToJson(Object object, Class< ? > to, Context context) {
 		if (cycleDetectedWith(object, context))
 			return;
-		ToJsonTransformationUtils.printer(context).printNewLine();
-		ToJsonTransformationUtils.printer(context).indent();
-		ToJsonTransformationUtils.printer(context).print("{");
-		ToJsonTransformationUtils.printer(context).increaseIndent();
-		ToJsonTransformationUtils.printer(context).printNewLine();
+		printerIn(context).startOfObject();
 		if (object == null)
 			return;
 
-		ToJsonTransformationUtils.printClassName(object, ToJsonTransformationUtils.printer(context));
+		printClassName(object, context);
 
 		reflectionBasedTransform(object, to, context);
 
-		ToJsonTransformationUtils.printer(context).printNewLine();
-		ToJsonTransformationUtils.printer(context).decreaseIndent();
-		ToJsonTransformationUtils.printer(context).indent();
-		ToJsonTransformationUtils.printer(context).print("}");
+		printerIn(context).endOfObject();
 	}
 
 	public String transform(Object from, Class< ? > to, Context context) {

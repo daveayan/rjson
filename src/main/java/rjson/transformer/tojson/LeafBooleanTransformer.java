@@ -24,13 +24,12 @@
 package rjson.transformer.tojson;
 
 import rjson.transformer.BaseTransformer;
-import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
 public class LeafBooleanTransformer extends BaseTransformer {
 	public String transform(Object from, Class<?> to, Context context) {
 		if(cycleDetectedWith(from, context)) return null;
-		ToJsonTransformationUtils.printData(from, ToJsonTransformationUtils.printer(context));
+		printData(from, context);
 		return null;
 	}
 	

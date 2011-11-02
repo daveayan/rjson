@@ -20,6 +20,9 @@
  */
 package rjson.printer;
 
+
+
+
 public class StringBufferPrinter implements Printer {
 	private static char SINGLE_SPACE = ' ';
 	private static String NEWLINE = "\n";
@@ -60,5 +63,46 @@ public class StringBufferPrinter implements Printer {
 
 	public void reset() {
 		buffer = new StringBuffer();
+	}
+
+	public void startOfObject() {
+		printNewLine();
+		indent();
+		print("{");
+		increaseIndent();
+		printNewLine();
+	}
+	
+	public void endOfObject() {
+		printNewLine();
+		decreaseIndent();
+		indent();
+		print("}");
+	}
+	
+	public void startOfCollection() {
+		print("[");
+		increaseIndent();
+		indent();
+	}
+	
+	public void endOfCollection() {
+		printNewLine();
+		decreaseIndent();
+		indent();
+		print("]");
+	}
+	
+	public void startOfMap() {
+		print("{");
+		increaseIndent();
+		indent();
+	}
+	
+	public void endOfMap() {
+		printNewLine();
+		decreaseIndent();
+		indent();
+		print("}");
 	}
 }

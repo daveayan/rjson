@@ -27,16 +27,13 @@ import java.util.Iterator;
 import java.util.Map;
 
 import rjson.transformer.BaseTransformer;
-import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
 public class MapTransformer extends BaseTransformer {
 	public String transform(Object from, Class< ? > to, Context context) {
 		if (cycleDetectedWith(from, context))
 			return null;
-		ToJsonTransformationUtils.printer(context).print("{");
-		ToJsonTransformationUtils.printer(context).increaseIndent();
-		ToJsonTransformationUtils.printer(context).indent();
+		printerIn(context).startOfMap();
 		if (from == null)
 			return null;
 
@@ -47,15 +44,12 @@ public class MapTransformer extends BaseTransformer {
 				break;
 			Object key = iter.next();
 			Object newObject = objectMap.get(key);
-			ToJsonTransformationUtils.printMapKeyName(key.toString(), ToJsonTransformationUtils.printer(context));
+			printMapKeyName(key.toString(), context);
 			context.transformer().delegateTransformation(newObject, to, context);
 			if (iter.hasNext())
-				ToJsonTransformationUtils.hasMoreElements(ToJsonTransformationUtils.printer(context));
+				hasMoreElements(context);
 		}
-		ToJsonTransformationUtils.printer(context).printNewLine();
-		ToJsonTransformationUtils.printer(context).decreaseIndent();
-		ToJsonTransformationUtils.printer(context).indent();
-		ToJsonTransformationUtils.printer(context).print("}");
+		printerIn(context).endOfMap();
 		return null;
 	}
 

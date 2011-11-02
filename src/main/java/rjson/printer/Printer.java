@@ -20,6 +20,18 @@
 package rjson.printer;
 
 public interface Printer {
+	public void startOfObject();
+	
+	public void endOfObject();
+	
+	public void startOfCollection();
+	
+	public void endOfCollection();
+	
+	public void startOfMap();
+	
+	public void endOfMap();
+	
 	public void print(String string);
 
 	public void printNewLine();
