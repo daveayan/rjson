@@ -39,6 +39,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import rjson.domain.Exclusion;
+import rjson.printer.StringBufferPrinter;
 import rjson.transformer.JsonToObjectTransformer;
 import rjson.transformer.ObjectToJsonTransformer;
 import rjson.transformer.tojson.ArrayTransformer;
@@ -98,7 +99,7 @@ public class Rjson {
 	
 	public String toJson(Object object) {
 		log.info("Converting to json " + object);
-		StringBuffer json_buffer = new StringBuffer();
+		StringBufferPrinter json_buffer = new StringBufferPrinter();
 		Context context = Context.newInstance().put("rjson", this).and("json_buffer", json_buffer).and("cycle_set", new SoftReference<Set<?>>(new HashSet<Object>()));
 		object_to_json_transformer.transform(object, String.class, context);
 		log.info("json before formatting is : " + json_buffer.toString());

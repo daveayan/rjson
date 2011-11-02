@@ -30,25 +30,33 @@ import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
 public class IterableTransformer extends BaseTransformer {
-	public String transform(Object from, Class<?> to, Context context) {
-		if(cycleDetectedWith(from, context)) return null;
-		((StringBuffer) context.get("json_buffer")).append("[");
+	public String transform(Object from, Class< ? > to, Context context) {
+		if (cycleDetectedWith(from, context))
+			return null;
+		ToJsonTransformationUtils.printer(context).print("[");
+		ToJsonTransformationUtils.printer(context).increaseIndent();
+		ToJsonTransformationUtils.printer(context).indent();
 		if (from == null)
 			return null;
-		Iterator<?> iter = ((Iterable<?>) from).iterator();
+		Iterator< ? > iter = ((Iterable< ? >) from).iterator();
 		while (true) {
 			if (!iter.hasNext())
 				break;
 			Object newObject = iter.next();
+			ToJsonTransformationUtils.printer(context).printNewLine();
+			ToJsonTransformationUtils.printer(context).indent();
 			context.transformer().delegateTransformation(newObject, to, context);
 			if (iter.hasNext())
-				ToJsonTransformationUtils.hasMoreElements((StringBuffer) context.get("json_buffer"));
+				ToJsonTransformationUtils.hasMoreElements(ToJsonTransformationUtils.printer(context));
 		}
-		((StringBuffer) context.get("json_buffer")).append("]");
+		ToJsonTransformationUtils.printer(context).printNewLine();
+		ToJsonTransformationUtils.printer(context).decreaseIndent();
+		ToJsonTransformationUtils.printer(context).indent();
+		ToJsonTransformationUtils.printer(context).print("]");
 		return null;
 	}
-	
-	public boolean canTransform(Object from, Class<?> to, Context context) {
-		return from != null && from instanceof java.lang.Iterable<?>;
+
+	public boolean canTransform(Object from, Class< ? > to, Context context) {
+		return from != null && from instanceof java.lang.Iterable< ? >;
 	}
 }

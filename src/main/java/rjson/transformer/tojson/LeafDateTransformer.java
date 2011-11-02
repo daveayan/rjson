@@ -32,7 +32,7 @@ import transformers.Context;
 public class LeafDateTransformer extends BaseTransformer {
 	public String transform(Object from, Class< ? > to, Context context) {
 		if(cycleDetectedWith(from, context)) return null;
-		ToJsonTransformationUtils.printData(((Date) from).getTime(), (StringBuffer) context.get("json_buffer"));
+		ToJsonTransformationUtils.printData(((Date) from).getTime(), ToJsonTransformationUtils.printer(context));
 		return null;
 	}
 

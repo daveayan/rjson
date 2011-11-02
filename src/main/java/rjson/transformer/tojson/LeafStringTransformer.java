@@ -30,7 +30,7 @@ import transformers.Context;
 public class LeafStringTransformer extends BaseTransformer {
 	public String transform(Object from, Class< ? > to, Context context) {
 		if(cycleDetectedWith(from, context)) return null;
-		ToJsonTransformationUtils.printData(from.toString(), (StringBuffer) context.get("json_buffer"));
+		ToJsonTransformationUtils.printData(from.toString(), ToJsonTransformationUtils.printer(context));
 		return null;
 	}
 

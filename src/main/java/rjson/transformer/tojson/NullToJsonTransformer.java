@@ -7,7 +7,7 @@ import transformers.Context;
 public class NullToJsonTransformer extends BaseTransformer {
 	public String transform(Object from, Class< ? > to, Context context) {
 		if(cycleDetectedWith(from, context)) return null;
-		ToJsonTransformationUtils.printData(null, (StringBuffer) context.get("json_buffer"));
+		ToJsonTransformationUtils.printData(null, ToJsonTransformationUtils.printer(context));
 		return null;
 	}
 

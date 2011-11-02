@@ -22,47 +22,57 @@
 package rjson.transformer;
 
 import rjson.Rjson;
+import rjson.printer.Printer;
 import rjson.utils.RjsonUtil;
 import transformers.Context;
 import transformers.Transformer;
 
 public class ToJsonTransformationUtils {
 	public static final String MESSAGE_ERROR = "ERROR - ";
-	
+
+	public static Printer printer(Context context) {
+		return (Printer) context.get("json_buffer");
+	}
 
 	public static Rjson rjson(Context context) {
 		return (Rjson) context.get("rjson");
 	}
+
 	public static Transformer transformer(Context context) {
 		return (transformers.Transformer) context.get("transformer");
 	}
 
-	public static void printErrorNotImplementedYet(Object object, StringBuffer json_buffer) {
-		json_buffer.append(MESSAGE_ERROR + "Serializing " + object.getClass().getName() + " is not implemented yet");
+	public static void printErrorNotImplementedYet(Object object, Printer printer) {
+		printer.print(MESSAGE_ERROR + "Serializing " + object.getClass().getName() + " is not implemented yet");
 	}
 
-	public static void printClassName(Object object, StringBuffer json_buffer) {
-		json_buffer.append("\"class\": ");
-		printData(object.getClass().getName(), json_buffer);
-		hasMoreElements(json_buffer);
+	public static void printClassName(Object object, Printer printer) {
+		printer.indent();
+		printer.print("\"class\": ");
+		printData(object.getClass().getName(), printer);
+		hasMoreElements(printer);
 	}
 
-	public static void printFieldName(String fieldName, StringBuffer json_buffer) {
-		json_buffer.append("\"" + fieldName + "\": ");
+	public static void printFieldName(String fieldName, Printer printer) {
+		printer.printNewLine();
+		printer.indent();
+		printer.print("\"" + fieldName + "\": ");
 	}
 
-	public static void printMapKeyName(String keyName, StringBuffer json_buffer) {
-		json_buffer.append("\"" + keyName + "\": ");
+	public static void printMapKeyName(String keyName, Printer printer) {
+		printer.printNewLine();
+		printer.indent();
+		printer.print("\"" + keyName + "\": ");
 	}
 
-	public static void printData(String data, StringBuffer json_buffer) {
-		json_buffer.append("\"" + RjsonUtil.escapeJsonCharactersIn(data) + "\"");
+	public static void printData(String data, Printer printer) {
+		printer.print("\"" + RjsonUtil.escapeJsonCharactersIn(data) + "\"");
 	}
 
-	public static void printData(Object object, StringBuffer json_buffer) {
-		json_buffer.append("" + object + "");
+	public static void printData(Object object, Printer printer) {
+		printer.print("" + object + "");
 	}
-	
+
 	public static String formatData(String data) {
 		return "\"" + RjsonUtil.escapeJsonCharactersIn(data) + "\"";
 	}
@@ -71,9 +81,10 @@ public class ToJsonTransformationUtils {
 		return "" + object + "";
 	}
 
-	public static void hasMoreElements(StringBuffer json_buffer) {
-		json_buffer.append(", ");
+	public static void hasMoreElements(Printer printer) {
+		printer.print(", ");
 	}
-	
-	private ToJsonTransformationUtils() {}
+
+	private ToJsonTransformationUtils() {
+	}
 }

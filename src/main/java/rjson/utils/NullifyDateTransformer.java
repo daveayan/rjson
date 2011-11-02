@@ -6,7 +6,7 @@ import transformers.Context;
 
 public class NullifyDateTransformer extends FieldBasedTransformer {
 	public void transformToJson(Object object, Class<?> to, Context context) {
-		ToJsonTransformationUtils.printData(null, (StringBuffer) context.get("json_buffer"));
+		ToJsonTransformationUtils.printData(null, ToJsonTransformationUtils.printer(context));
 	}
 
 	public boolean canTransform(Object from, Class<?> to, Context context) {

@@ -35,7 +35,7 @@ import rjson.transformer.ToJsonTransformationUtils;
 import transformers.Context;
 
 public class FieldBasedTransformer extends BaseTransformer {
-	public void reflectionBasedTransform(Object object, Class<?> to, Context context) {
+	public void reflectionBasedTransform(Object object, Class< ? > to, Context context) {
 		List<Field> fields = ReflectionUtils.getAllFieldsIn(object);
 		boolean pendingHasMoreElements = false;
 		if (fields != null) {
@@ -44,17 +44,17 @@ public class FieldBasedTransformer extends BaseTransformer {
 				if (!iter.hasNext())
 					break;
 				Field field = iter.next();
-				if(allowTransformation(field, context)) {
+				if (allowTransformation(field, context)) {
 					ReflectionUtils.makeAccessible(field);
 					try {
-						if(((Rjson)context.get("rjson")).exclude(field, object, to, context)) {
+						if (((Rjson) context.get("rjson")).exclude(field, object, to, context)) {
 							continue;
 						}
 						if (pendingHasMoreElements) {
-							ToJsonTransformationUtils.hasMoreElements((StringBuffer) context.get("json_buffer"));
+							ToJsonTransformationUtils.hasMoreElements(ToJsonTransformationUtils.printer(context));
 							pendingHasMoreElements = false;
 						}
-						ToJsonTransformationUtils.printFieldName(field.getName(), (StringBuffer) context.get("json_buffer"));
+						ToJsonTransformationUtils.printFieldName(field.getName(), ToJsonTransformationUtils.printer(context));
 						context.transformer().delegateTransformation(field.get(object), to, context);
 					} catch (IllegalArgumentException e) {
 						// TODO Auto-generated catch block
@@ -70,13 +70,13 @@ public class FieldBasedTransformer extends BaseTransformer {
 			}
 		}
 	}
-	
+
 	public boolean allowTransformation(Field field, Context context) {
 		if (field != null) {
 			if (Modifier.isTransient(field.getModifiers())) {
 				return false;
 			}
-			if(field.isEnumConstant()) {
+			if (field.isEnumConstant()) {
 				return false;
 			}
 			if (ToJsonTransformationUtils.rjson(context).doNotRecordFinal() && Modifier.isFinal(field.getModifiers())) {
@@ -91,25 +91,33 @@ public class FieldBasedTransformer extends BaseTransformer {
 		}
 		return true;
 	}
-	
-	public boolean canTransform(Object from, Class<?> to, Context context) {
+
+	public boolean canTransform(Object from, Class< ? > to, Context context) {
 		return true;
 	}
-	
-	public void transformToJson(Object object, Class<?> to, Context context) {
-		if(cycleDetectedWith(object, context)) return;
-		((StringBuffer) context.get("json_buffer")).append("{");
+
+	public void transformToJson(Object object, Class< ? > to, Context context) {
+		if (cycleDetectedWith(object, context))
+			return;
+		ToJsonTransformationUtils.printer(context).printNewLine();
+		ToJsonTransformationUtils.printer(context).indent();
+		ToJsonTransformationUtils.printer(context).print("{");
+		ToJsonTransformationUtils.printer(context).increaseIndent();
+		ToJsonTransformationUtils.printer(context).printNewLine();
 		if (object == null)
 			return;
 
-		ToJsonTransformationUtils.printClassName(object, (StringBuffer) context.get("json_buffer"));
+		ToJsonTransformationUtils.printClassName(object, ToJsonTransformationUtils.printer(context));
 
 		reflectionBasedTransform(object, to, context);
 
-		((StringBuffer) context.get("json_buffer")).append("}");
+		ToJsonTransformationUtils.printer(context).printNewLine();
+		ToJsonTransformationUtils.printer(context).decreaseIndent();
+		ToJsonTransformationUtils.printer(context).indent();
+		ToJsonTransformationUtils.printer(context).print("}");
 	}
 
-	public String transform(Object from, Class<?> to, Context context) {
+	public String transform(Object from, Class< ? > to, Context context) {
 		transformToJson(from, to, context);
 		return null;
 	}
