@@ -25,7 +25,8 @@ package rjson.printer;
 
 public class StringBufferPrinter implements Printer {
 	private static char SINGLE_SPACE = ' ';
-	private static String NEWLINE = "\n";
+	private static String NEWLINE = System.getProperty("line.separator");;
+	private static int INDENT_SIZE = 2;
 	private int indentspaces = 0;
 	StringBuffer buffer = new StringBuffer();
 
@@ -36,11 +37,11 @@ public class StringBufferPrinter implements Printer {
 	}
 
 	public void decreaseIndent() {
-		indentspaces -= 4;
+		indentspaces -= INDENT_SIZE;
 	}
 
 	public void increaseIndent() {
-		indentspaces += 4;
+		indentspaces += INDENT_SIZE;
 	}
 
 	public void printNewLine() {
@@ -66,8 +67,8 @@ public class StringBufferPrinter implements Printer {
 	}
 
 	public void startOfObject() {
-		printNewLine();
-		indent();
+//		printNewLine();
+//		indent();
 		print("{");
 		increaseIndent();
 		printNewLine();

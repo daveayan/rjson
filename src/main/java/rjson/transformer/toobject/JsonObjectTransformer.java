@@ -25,13 +25,13 @@ import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.List;
 
-import mirage.ReflectionUtils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import rjson.transformer.JsonToObjectTransformer;
 import transformers.Context;
+
+import com.daveayan.mirage.ReflectionUtils;
 
 public class JsonObjectTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
@@ -42,6 +42,9 @@ public class JsonObjectTransformer implements JsonToObjectTransformer {
 	public Object transform(Object from, Class<?> to, Context context) {
 		JSONObject jo = (JSONObject) from;
 		try {
+			if(jo == null || jo.getString("class") == null) {
+				System.out.println("HERE");
+			}
 			Object objectToBeReturned = ReflectionUtils.objectFor(jo.getString("class"));
 			List<Field> fields = ReflectionUtils.getAllFieldsIn(objectToBeReturned);
 			Iterator<Field> iter = fields.iterator();

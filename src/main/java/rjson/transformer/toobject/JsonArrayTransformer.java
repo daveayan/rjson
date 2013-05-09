@@ -24,12 +24,12 @@ package rjson.transformer.toobject;
 import java.util.ArrayList;
 import java.util.List;
 
-import mirage.ReflectionUtils;
-
 import org.json.JSONArray;
 
 import rjson.transformer.JsonToObjectTransformer;
 import transformers.Context;
+
+import com.daveayan.mirage.ReflectionUtils;
 
 public class JsonArrayTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {

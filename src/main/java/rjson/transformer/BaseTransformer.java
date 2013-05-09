@@ -73,6 +73,8 @@ public abstract class BaseTransformer implements ObjectToJsonTransformer {
 
 	public void hasMoreElements(Context context) {
 		printerIn(context).print(", ");
+//		printerIn(context).printNewLine();
+//		printerIn(context).indent();
 	}
 	
 	public Printer printerIn(Context context) {

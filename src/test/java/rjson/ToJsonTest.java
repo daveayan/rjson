@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,6 +40,7 @@ import rjson.domain.ObjectWithFinal;
 import rjson.domain.ObjectWithFinalAndStatic;
 import rjson.domain.ObjectWithStatic;
 import rjson.domain.ObjectWithTransient;
+import rjson.domain.ObjectWithUrlString;
 import rjson.domain.Person;
 import rjson.domain.RecursiveObject;
 import rjson.utils.RjsonUtil;
@@ -51,7 +54,7 @@ public class ToJsonTest {
 	private When when;
 
 	@Before
-	public void setup() {
+	public void setup() {		
 		given = Given.that().rjsonInstanceIs(RjsonUtil.completeSerializer());
 		given.objectUnderTestIs(RjsonUtil.completeSerializer());
 		when = given.when("toJson");
@@ -110,7 +113,8 @@ public class ToJsonTest {
 
 	@Test
 	public void toJsonStringWithSpecialJsonCharacters() throws IOException {
-		when.methodIsCalledWith("q[w]e{r}ty").assertThatReturnValueIsSameAs("\"q\\[w\\]e\\{r\\}ty\"");
+		Then then = when.methodIsCalledWith("q[w]e{r}ty");
+		Assert.assertEquals("q[w]e{r}ty", then.getReturnObject());
 	}
 
 	@Test
@@ -333,5 +337,9 @@ public class ToJsonTest {
 		When when = given.when("toJson");
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-rjson.domain.RecursiveObject/converted-with-custom-transformer.txt");
 		when.methodIsCalledWith(new RecursiveObject()).assertThatReturnValueIsExactlySameAs(expectedJson);
+	}
+	
+	@Test public void toJsonAnObjectWithUrlString() throws IOException {
+		RjsonUtil.completeSerializer().toJson(new ObjectWithUrlString());
 	}
 }

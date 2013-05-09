@@ -285,7 +285,7 @@ public class JSONTokener {
                 	sb.append(c);
                 	break;
                 default:
-                    throw syntaxError("Illegal escape.");
+                    throw syntaxError("Illegal escape, found '" + c + "'");
                 }
                 break;
             default:
@@ -383,7 +383,7 @@ public class JSONTokener {
 
         string = sb.toString().trim();
         if (string.equals("")) {
-            throw syntaxError("Missing value");
+            throw syntaxError("Missing value : " + c);
         }
         return JSONObject.stringToValue(string);
     }

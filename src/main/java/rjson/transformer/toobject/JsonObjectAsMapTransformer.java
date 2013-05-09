@@ -25,12 +25,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import mirage.ReflectionUtils;
-
 import org.json.JSONObject;
 
 import rjson.transformer.JsonToObjectTransformer;
 import transformers.Context;
+
+import com.daveayan.mirage.ReflectionUtils;
 
 public class JsonObjectAsMapTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {

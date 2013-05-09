@@ -90,6 +90,23 @@ public class RjsonUtil {
 	public static Rjson completeSerializer() {
 		return Rjson.newInstance().with(new NullifyDateTransformer()).andRecordAllModifiers();
 	}
+	
+	public static Rjson pointInTimeSerializer() {
+		return Rjson.newInstance().andRecordAllModifiers().andRecordFinal().andDoNotFormatJson();
+	}
+	
+	public static void recordJsonToFile(Object object, String absolutePath) {
+		recordJsonToFile(object, absolutePath, RjsonUtil.completeSerializer());
+	}
+	
+	public static void recordJsonToFile(Object object, String absolutePath, Rjson rjson) {
+		try {
+			FileUtils.writeStringToFile(new File(absolutePath), rjson.toJson(object));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public static String escapeJsonCharactersIn(String string) {
 		String newString = StringUtils.replace(string, "\"", "");
@@ -97,6 +114,8 @@ public class RjsonUtil {
 		newString = StringUtils.replace(newString, "]", "\\]");
 		newString = StringUtils.replace(newString, "{", "\\{");
 		newString = StringUtils.replace(newString, "}", "\\}");
+		newString = StringUtils.replace(newString, ":", "\\\\:");
+		newString = StringUtils.replace(newString, "#", "\\#");
 		return newString;
 	}
 	
@@ -106,6 +125,8 @@ public class RjsonUtil {
 		newString = StringUtils.replace(newString, "\\]", "]");
 		newString = StringUtils.replace(newString, "\\{", "{");
 		newString = StringUtils.replace(newString, "\\}", "}");
+		newString = StringUtils.replace(newString, "\\\\:", ":");
+		newString = StringUtils.replace(newString, "\\#", "#");
 		return newString;
 	}
 }

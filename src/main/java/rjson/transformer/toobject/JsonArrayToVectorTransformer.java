@@ -3,12 +3,12 @@ package rjson.transformer.toobject;
 import java.util.List;
 import java.util.Vector;
 
-import mirage.ReflectionUtils;
-
 import org.json.JSONArray;
 
 import rjson.transformer.JsonToObjectTransformer;
 import transformers.Context;
+
+import com.daveayan.mirage.ReflectionUtils;
 
 public class JsonArrayToVectorTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {

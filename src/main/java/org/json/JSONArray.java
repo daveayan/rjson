@@ -148,7 +148,8 @@ public class JSONArray {
 	                x.back();
 	                this.myArrayList.add(x.nextValue());
 	            }
-	            switch (x.nextClean()) {
+	            char next_clean_char = x.nextClean();
+	            switch (next_clean_char) {
 	            case ';':
 	            case ',':
 	                if (x.nextClean() == ']') {
@@ -159,7 +160,7 @@ public class JSONArray {
 	            case ']':
 	            	return;
 	            default:
-	                throw x.syntaxError("Expected a ',' or ']'");
+	                throw x.syntaxError("Expected a ',' or ']' after " + this + " found '" + next_clean_char + "'");
 	            }
 	        }
         }

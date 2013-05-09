@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import mirage.ReflectionUtils;
+import com.daveayan.mirage.ReflectionUtils;
 
 public class When {
 	public Then methodIsCalledWith(Object... parameters) {

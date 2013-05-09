@@ -231,13 +231,13 @@ public class JSONObject {
                     x.back();
                 }
             } else if (c != ':') {
-                throw x.syntaxError("Expected a ':' after a key");
+                throw x.syntaxError("Expected a ':' after a key, found '" + c + "'");
             }
             putOnce(key, x.nextValue());
 
 // Pairs are separated by ','. We will also tolerate ';'.
-
-            switch (x.nextClean()) {
+            char next_char = x.nextClean();
+            switch (next_char) {
             case ';':
             case ',':
                 if (x.nextClean() == '}') {
@@ -248,7 +248,7 @@ public class JSONObject {
             case '}':
                 return;
             default:
-                throw x.syntaxError("Expected a ',' or '}'");
+                throw x.syntaxError("Expected a ',' or '}', found '" + next_char + "'");
             }
         }
     }

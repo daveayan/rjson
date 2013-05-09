@@ -50,6 +50,7 @@ import rjson.transformer.tojson.IterableTransformer;
 import rjson.transformer.tojson.LeafBooleanTransformer;
 import rjson.transformer.tojson.LeafCharacterTransformer;
 import rjson.transformer.tojson.LeafDateTransformer;
+import rjson.transformer.tojson.LeafJodaLocalDateTransformer;
 import rjson.transformer.tojson.LeafNumberTransformer;
 import rjson.transformer.tojson.LeafPrimitiveTransformer;
 import rjson.transformer.tojson.LeafStringTransformer;
@@ -75,7 +76,7 @@ public class Rjson {
 	private transformers.Transformer object_to_json_transformer;
 	private transformers.Transformer json_to_object_transformer;
 	private List<Exclusion> exclusions = new ArrayList<Exclusion>();
-	private boolean recordAllModifiers = false, recordFinal = false, recordStatic = false;
+	private boolean recordAllModifiers = false, recordFinal = false, recordStatic = false, format = true;
 
 	public static Rjson newInstance() {
 		Rjson rjson = new Rjson();
@@ -103,7 +104,11 @@ public class Rjson {
 		Context context = Context.newInstance().put("rjson", this).and("json_buffer", json_buffer).and("cycle_set", new SoftReference<Set<?>>(new HashSet<Object>()));
 		object_to_json_transformer.transform(object, String.class, context);
 		log.info("json before formatting is : " + json_buffer.toString());
-		String json = RjsonUtil.reformat(json_buffer.toString());
+//		return json_buffer.toString();
+		String json = json_buffer.toString();
+		if(formatJson()) {
+			json = RjsonUtil.reformat(json_buffer.toString());
+		}
 		log.info("json is : " + json);
 		return json;
 	}
@@ -148,6 +153,7 @@ public class Rjson {
 			.and_b(new LeafBooleanTransformer())
 			.and_b(new LeafCharacterTransformer())
 			.and_b(new LeafDateTransformer())
+			.and_b(new LeafJodaLocalDateTransformer())
 			.and_b(new LeafNumberTransformer())
 			.and_b(new LeafPrimitiveTransformer())
 			.and_b(new LeafStringTransformer())
@@ -228,6 +234,11 @@ public class Rjson {
 		this.recordStatic = false;
 		return this;
 	}
+	
+	public Rjson andDoNotFormatJson() {
+		this.format = false;
+		return this;
+	}
 
 	public boolean recordAllModifiers() {
 		return recordAllModifiers;
@@ -247,6 +258,10 @@ public class Rjson {
 	
 	public boolean doNotRecordStatic() {
 		return ! recordStatic();
+	}
+	
+	public boolean formatJson() {
+		return format;
 	}
 	
 	public Rjson with(Exclusion exclusion) {

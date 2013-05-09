@@ -28,7 +28,7 @@ public class Then {
 	}
 
 	public Then assertThatReturnValueIsSameAs(Object expectedObject) {
-		assertThatThereAreNoSideEffects();
+//		assertThatThereAreNoSideEffects();
 		Assert.thatEquals(expectedObject, returnObject);
 		return this;
 	}

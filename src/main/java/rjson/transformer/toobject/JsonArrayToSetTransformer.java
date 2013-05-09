@@ -3,12 +3,12 @@ package rjson.transformer.toobject;
 import java.util.HashSet;
 import java.util.Set;
 
-import mirage.ReflectionUtils;
-
 import org.json.JSONArray;
 
 import rjson.transformer.JsonToObjectTransformer;
 import transformers.Context;
+
+import com.daveayan.mirage.ReflectionUtils;
 
 public class JsonArrayToSetTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
