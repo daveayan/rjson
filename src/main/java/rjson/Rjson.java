@@ -68,13 +68,14 @@ import rjson.transformer.toobject.JsonObjectTransformer;
 import rjson.transformer.toobject.JsonStringTransformer;
 import rjson.transformer.toobject.NullTransformation;
 import rjson.utils.RjsonUtil;
-import transformers.Context;
-import transformers.Transformer;
+
+import com.daveayan.transformers.Context;
+import com.daveayan.transformers.Transformer;
 
 public class Rjson {
 	private static Log log = LogFactory.getLog(Rjson.class);
-	private transformers.Transformer object_to_json_transformer;
-	private transformers.Transformer json_to_object_transformer;
+	private com.daveayan.transformers.Transformer object_to_json_transformer;
+	private com.daveayan.transformers.Transformer json_to_object_transformer;
 	private List<Exclusion> exclusions = new ArrayList<Exclusion>();
 	private boolean recordAllModifiers = false, recordFinal = false, recordStatic = false, format = true;
 

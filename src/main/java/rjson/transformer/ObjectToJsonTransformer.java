@@ -1,6 +1,6 @@
 package rjson.transformer;
 
-import transformers.CanTransform;
+import com.daveayan.transformers.CanTransform;
 
 public interface ObjectToJsonTransformer extends CanTransform {
 }

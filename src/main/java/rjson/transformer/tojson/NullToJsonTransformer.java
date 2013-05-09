@@ -1,7 +1,8 @@
 package rjson.transformer.tojson;
 
 import rjson.transformer.BaseTransformer;
-import transformers.Context;
+
+import com.daveayan.transformers.Context;
 
 public class NullToJsonTransformer extends BaseTransformer {
 	public String transform(Object from, Class< ? > to, Context context) {

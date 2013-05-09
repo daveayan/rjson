@@ -6,9 +6,9 @@ import java.util.Set;
 import org.json.JSONArray;
 
 import rjson.transformer.JsonToObjectTransformer;
-import transformers.Context;
 
 import com.daveayan.mirage.ReflectionUtils;
+import com.daveayan.transformers.Context;
 
 public class JsonArrayToSetTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {

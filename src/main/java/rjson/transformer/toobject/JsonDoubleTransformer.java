@@ -22,7 +22,7 @@
 package rjson.transformer.toobject;
 
 import rjson.transformer.JsonToObjectTransformer;
-import transformers.Context;
+import com.daveayan.transformers.Context;
 
 public class JsonDoubleTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {

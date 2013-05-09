@@ -1,7 +1,7 @@
 package rjson.transformer.tojson;
 
-import transformers.CanTransform;
-import transformers.Context;
+import com.daveayan.transformers.CanTransform;
+import com.daveayan.transformers.Context;
 
 public class IgnoreClassTransformation implements CanTransform {
 	public Object transform(Object from, Class<?> to, Context context) {

@@ -22,7 +22,8 @@
 package rjson.transformer.toobject;
 
 import rjson.transformer.JsonToObjectTransformer;
-import transformers.Context;
+
+import com.daveayan.transformers.Context;
 
 public class JsonIntegerTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {

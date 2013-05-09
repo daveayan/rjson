@@ -1,7 +1,8 @@
 package rjson.utils;
 
 import rjson.transformer.tojson.FieldBasedTransformer;
-import transformers.Context;
+
+import com.daveayan.transformers.Context;
 
 public class NullifyDateTransformer extends FieldBasedTransformer {
 	public void transformToJson(Object object, Class<?> to, Context context) {

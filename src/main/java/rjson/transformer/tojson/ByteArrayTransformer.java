@@ -1,6 +1,6 @@
 package rjson.transformer.tojson;
 
-import transformers.Context;
+import com.daveayan.transformers.Context;
 
 public class ByteArrayTransformer extends ArrayTransformer {
 	public void transformToJson(Object object, Class<?> to, Context context) {

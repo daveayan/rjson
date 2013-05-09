@@ -26,7 +26,8 @@ package rjson.transformer.tojson;
 import java.util.Iterator;
 
 import rjson.transformer.BaseTransformer;
-import transformers.Context;
+
+import com.daveayan.transformers.Context;
 
 public class IterableTransformer extends BaseTransformer {
 	public String transform(Object from, Class< ? > to, Context context) {

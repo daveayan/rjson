@@ -3,7 +3,8 @@ package rjson.transformer.toobject;
 import org.json.JSONObject;
 
 import rjson.transformer.JsonToObjectTransformer;
-import transformers.Context;
+
+import com.daveayan.transformers.Context;
 
 public class NullTransformation implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {

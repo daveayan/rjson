@@ -29,7 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import rjson.transformer.JsonToObjectTransformer;
-import transformers.Context;
+import com.daveayan.transformers.Context;
 
 import com.daveayan.mirage.ReflectionUtils;
 

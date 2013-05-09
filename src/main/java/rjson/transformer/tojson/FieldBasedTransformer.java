@@ -30,9 +30,9 @@ import java.util.List;
 
 import rjson.Rjson;
 import rjson.transformer.BaseTransformer;
-import transformers.Context;
 
 import com.daveayan.mirage.ReflectionUtils;
+import com.daveayan.transformers.Context;
 
 public class FieldBasedTransformer extends BaseTransformer {
 	public void reflectionBasedTransform(Object object, Class< ? > to, Context context) {

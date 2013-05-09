@@ -9,7 +9,8 @@ import org.apache.commons.logging.LogFactory;
 import rjson.Rjson;
 import rjson.printer.Printer;
 import rjson.utils.RjsonUtil;
-import transformers.Context;
+
+import com.daveayan.transformers.Context;
 
 public abstract class BaseTransformer implements ObjectToJsonTransformer {
 	private static Log log = LogFactory.getLog(BaseTransformer.class);

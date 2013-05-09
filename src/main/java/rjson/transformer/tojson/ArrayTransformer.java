@@ -24,7 +24,7 @@ package rjson.transformer.tojson;
 import java.util.Arrays;
 import java.util.List;
 
-import transformers.Context;
+import com.daveayan.transformers.Context;
 
 public class ArrayTransformer extends IterableTransformer {
 

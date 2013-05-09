@@ -22,7 +22,7 @@
 package rjson.transformer.toobject;
 
 import rjson.transformer.JsonToObjectTransformer;
-import transformers.Context;
+import com.daveayan.transformers.Context;
 
 import com.daveayan.mirage.ReflectionUtils;
 

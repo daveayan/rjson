@@ -1,7 +1,8 @@
 package rjson.domain;
 
 import rjson.transformer.BaseTransformer;
-import transformers.Context;
+
+import com.daveayan.transformers.Context;
 
 public class SampleObjectToJsonTransformer extends BaseTransformer {
 	public boolean canConvertToJson(Object object) {

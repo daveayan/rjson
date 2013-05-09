@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import rjson.transformer.BaseTransformer;
-import transformers.Context;
+import com.daveayan.transformers.Context;
 
 public class MapTransformer extends BaseTransformer {
 	public String transform(Object from, Class< ? > to, Context context) {
