@@ -2,8 +2,8 @@ package zen;
 
 import org.json.JSONException;
 
-import rjson.Rjson;
-import rjson.utils.RjsonUtil;
+import com.daveayan.rjson.Rjson;
+import com.daveayan.rjson.utils.RjsonUtil;
 
 public class Assert {
 	public static void thatEquals(Object expectedObject, Object actualObject) {

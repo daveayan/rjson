@@ -1,0 +1,48 @@
+
+{
+    "class":"com.daveayan.rjson.domain.Person",
+    "name":"QWERTY",
+    "phones":[        
+        
+        {
+            "class":"com.daveayan.rjson.domain.PhoneNumber",
+            "areaCode":"443",
+            "number":"3233323",
+            "id":1
+        },
+        
+        {
+            "class":"com.daveayan.rjson.domain.PhoneNumber",
+            "areaCode":"657",
+            "number":"9466354",
+            "id":1
+        }
+    ],
+    "accounts":[        
+        
+        {
+            "class":"com.daveayan.rjson.domain.Account",
+            "accountNumber":123,
+            "balance":100.0,
+            "lastUpdate":"null",
+            "someMap":{                
+                "A":"100",
+                "B":"200"
+            },
+            "id":1
+        }
+    ],
+    "drives":[        
+        
+        {
+            "class":"com.daveayan.rjson.domain.Car",
+            "numberOfWheels":4
+        },
+        
+        {
+            "class":"com.daveayan.rjson.domain.Scooter",
+            "numberOfWheels":2
+        }
+    ],
+    "id":1
+}

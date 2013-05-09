@@ -1,7 +1,7 @@
 package zen;
 
-import rjson.Rjson;
-import rjson.utils.RjsonUtil;
+import com.daveayan.rjson.Rjson;
+import com.daveayan.rjson.utils.RjsonUtil;
 
 public class Given {	
 	

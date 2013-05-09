@@ -1,4 +1,0 @@
-{
-  "class": "rjson.domain.ObjectWithStatic",
-  "nonStaticString": "This is not static"
-}

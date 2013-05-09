@@ -1,4 +1,0 @@
-{
-  "someString": "This is some string",
-  "class": "rjson.domain.ObjectWithEnum"
-}

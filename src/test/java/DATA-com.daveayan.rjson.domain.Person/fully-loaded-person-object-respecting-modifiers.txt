@@ -1,0 +1,6 @@
+
+{
+    "class":"com.daveayan.rjson.domain.Person",
+    "name":"QWERTY",
+    "id":1
+}

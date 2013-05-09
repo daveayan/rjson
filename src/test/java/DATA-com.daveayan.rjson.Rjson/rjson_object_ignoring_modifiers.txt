@@ -1,0 +1,39 @@
+{
+  "json_to_object_transformer": {
+    "transformers_b": [
+      {"class": "com.daveayan.rjson.transformer.toobject.NullTransformation"},
+      {"class": "com.daveayan.rjson.transformer.toobject.JsonBooleanTransformer"},
+      {"class": "com.daveayan.rjson.transformer.toobject.JsonIntegerTransformer"},
+      {"class": "com.daveayan.rjson.transformer.toobject.JsonStringTransformer"},
+      {"class": "com.daveayan.rjson.transformer.toobject.JsonDoubleTransformer"},
+      {"class": "com.daveayan.rjson.transformer.toobject.JsonDoubleToFloatTransformer"},
+      {"class": "com.daveayan.rjson.transformer.toobject.JsonObjectAsMapTransformer"},
+      {"class": "com.daveayan.rjson.transformer.toobject.JsonObjectTransformer"},
+      {"class": "com.daveayan.rjson.transformer.toobject.JsonArrayToSetTransformer"},
+      {"class": "com.daveayan.rjson.transformer.toobject.JsonArrayToVectorTransformer"},
+      {"class": "com.daveayan.rjson.transformer.toobject.JsonArrayTransformer"}
+    ],
+    "default_transformer": null,
+    "transformers_a": [],
+    "class": "transformers.Transformer"
+  },
+  "ignoreModifiers": true,
+  "class": "com.daveayan.rjson.Rjson",
+  "object_to_json_transformer": {
+    "transformers_b": [
+      {"class": "com.daveayan.rjson.transformer.tojson.IgnoreClassTransformation"},
+      {"class": "com.daveayan.rjson.transformer.tojson.LeafBooleanTransformer"},
+      {"class": "com.daveayan.rjson.transformer.tojson.LeafCharacterTransformer"},
+      {"class": "com.daveayan.rjson.transformer.tojson.LeafDateTransformer"},
+      {"class": "com.daveayan.rjson.transformer.tojson.LeafNumberTransformer"},
+      {"class": "com.daveayan.rjson.transformer.tojson.LeafPrimitiveTransformer"},
+      {"class": "com.daveayan.rjson.transformer.tojson.LeafStringTransformer"},
+      {"class": "com.daveayan.rjson.transformer.tojson.IterableTransformer"},
+      {"class": "com.daveayan.rjson.transformer.tojson.MapTransformer"},
+      {"class": "com.daveayan.rjson.transformer.tojson.ArrayTransformer"}
+    ],
+    "default_transformer": {"class": "com.daveayan.rjson.transformer.tojson.FieldBasedTransformer"},
+    "transformers_a": [],
+    "class": "transformers.Transformer"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "staticString": "This is static",
+  "class": "com.daveayan.rjson.domain.ObjectWithStatic",
+  "nonStaticString": "This is not static"
+}
