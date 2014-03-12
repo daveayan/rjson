@@ -36,16 +36,16 @@ import com.daveayan.mirage.ReflectionUtils;
 public class JsonObjectTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
 		if(from == null) { return false; }
-		return (from instanceof JSONObject) && (((JSONObject) from).has("class") || to.getName().trim().equals("java.lang.Object"));
+		return (from instanceof JSONObject) && (((JSONObject) from).has("class_name") || to.getName().trim().equals("java.lang.Object"));
 	}
 
 	public Object transform(Object from, Class<?> to, Context context) {
 		JSONObject jo = (JSONObject) from;
 		try {
-			if(jo == null || jo.getString("class") == null) {
+			if(jo == null || jo.getString("class_name") == null) {
 				System.out.println("HERE");
 			}
-			Object objectToBeReturned = ReflectionUtils.objectFor(jo.getString("class"));
+			Object objectToBeReturned = ReflectionUtils.objectFor(jo.getString("class_name"));
 			List<Field> fields = ReflectionUtils.getAllFieldsIn(objectToBeReturned);
 			Iterator<Field> iter = fields.iterator();
 			while (iter.hasNext()) {

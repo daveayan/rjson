@@ -1,5 +1,5 @@
 {
   "finalString": "This is final",
-  "class": "com.daveayan.rjson.domain.ObjectWithFinal",
+  "class_name": "com.daveayan.rjson.domain.ObjectWithFinal",
   "nonFinalString": "This is not final"
 }

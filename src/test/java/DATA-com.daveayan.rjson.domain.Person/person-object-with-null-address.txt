@@ -1,19 +1,19 @@
 
 {
-    "class": "com.daveayan.rjson.domain.Person", 
+    "class_name": "com.daveayan.rjson.domain.Person", 
     "name": "QWERTY", 
     "addresses": "null", 
     "phones": [        
         
         {
-            "class": "com.daveayan.rjson.domain.PhoneNumber", 
+            "class_name": "com.daveayan.rjson.domain.PhoneNumber", 
             "areaCode": "443", 
             "number": "3233323", 
             "id": 1
         }, 
         
         {
-            "class": "com.daveayan.rjson.domain.PhoneNumber", 
+            "class_name": "com.daveayan.rjson.domain.PhoneNumber", 
             "areaCode": "657", 
             "number": "9466354", 
             "id": 1
@@ -22,7 +22,7 @@
     "accounts": [        
         
         {
-            "class": "com.daveayan.rjson.domain.Account", 
+            "class_name": "com.daveayan.rjson.domain.Account", 
             "accountNumber": 123, 
             "balance": 100.0, 
             "someMap": {                
@@ -35,12 +35,12 @@
     "drives": [        
         
         {
-            "class": "com.daveayan.rjson.domain.Car", 
+            "class_name": "com.daveayan.rjson.domain.Car", 
             "numberOfWheels": 4
         }, 
         
         {
-            "class": "com.daveayan.rjson.domain.Scooter", 
+            "class_name": "com.daveayan.rjson.domain.Scooter", 
             "numberOfWheels": 2
         }
     ], 

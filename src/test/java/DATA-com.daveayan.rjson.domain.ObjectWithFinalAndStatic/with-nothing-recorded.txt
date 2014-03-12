@@ -1,3 +1,3 @@
 {
-	"class": "com.daveayan.rjson.domain.ObjectWithFinalAndStatic"
+	"class_name": "com.daveayan.rjson.domain.ObjectWithFinalAndStatic"
 }

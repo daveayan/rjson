@@ -39,7 +39,7 @@ public abstract class BaseTransformer implements ObjectToJsonTransformer {
 
 	public void printClassName(Object object, Context context) {
 		printerIn(context).indent();
-		printerIn(context).print("\"class\": ");
+		printerIn(context).print("\"class_name\": ");
 		printData(object.getClass().getName(), context);
 		hasMoreElements(context);
 	}

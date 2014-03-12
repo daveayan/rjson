@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import junit.framework.Assert;
 
@@ -45,6 +46,7 @@ import com.daveayan.rjson.domain.Person;
 import com.daveayan.rjson.domain.RecursiveObject;
 import com.daveayan.rjson.utils.RjsonUtil;
 import com.daveayan.transformers.Context;
+
 import zen.Given;
 import zen.Then;
 import zen.When;
@@ -104,6 +106,12 @@ public class ToJsonTest {
 	public void toJsonObjectBoolean() throws IOException {
 		when.methodIsCalledWith(new Boolean(true)).assertThatReturnValueIsSameAs("true");
 		when.methodIsCalledWith(new Boolean(false)).assertThatReturnValueIsSameAs("false");
+	}
+	
+	@Test
+	public void toJsonObjectUUID() throws IOException {
+		UUID uuid = UUID.randomUUID();
+		when.methodIsCalledWith(uuid).assertThatReturnValueIsSameAs(uuid.toString());
 	}
 
 	@Test

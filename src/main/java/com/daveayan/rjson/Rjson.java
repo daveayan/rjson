@@ -54,6 +54,7 @@ import com.daveayan.rjson.transformer.tojson.LeafJodaLocalDateTransformer;
 import com.daveayan.rjson.transformer.tojson.LeafNumberTransformer;
 import com.daveayan.rjson.transformer.tojson.LeafPrimitiveTransformer;
 import com.daveayan.rjson.transformer.tojson.LeafStringTransformer;
+import com.daveayan.rjson.transformer.tojson.LeafUUIDTransformer;
 import com.daveayan.rjson.transformer.tojson.MapTransformer;
 import com.daveayan.rjson.transformer.tojson.NullToJsonTransformer;
 import com.daveayan.rjson.transformer.toobject.JsonArrayToSetTransformer;
@@ -68,7 +69,6 @@ import com.daveayan.rjson.transformer.toobject.JsonObjectTransformer;
 import com.daveayan.rjson.transformer.toobject.JsonStringTransformer;
 import com.daveayan.rjson.transformer.toobject.NullTransformation;
 import com.daveayan.rjson.utils.RjsonUtil;
-
 import com.daveayan.transformers.Context;
 import com.daveayan.transformers.Transformer;
 
@@ -122,7 +122,7 @@ public class Rjson {
 		if (firstChar == '{') {
 			tokener.back();
 			JSONObject jsonObject = new JSONObject(tokener);
-			if(! jsonObject.has("class")) {
+			if(! jsonObject.has("class_name")) {
 				return json_to_object_transformer.transform(jsonObject, HashMap.class, null);
 			} else {
 				tokener = new JSONTokener(json);
@@ -156,6 +156,7 @@ public class Rjson {
 			.and_b(new LeafDateTransformer())
 			.and_b(new LeafJodaLocalDateTransformer())
 			.and_b(new LeafNumberTransformer())
+			.and_b(new LeafUUIDTransformer())
 			.and_b(new LeafPrimitiveTransformer())
 			.and_b(new LeafStringTransformer())
 			.and_b(new IterableTransformer())
