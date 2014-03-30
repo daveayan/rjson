@@ -57,6 +57,7 @@ import com.daveayan.rjson.transformer.tojson.LeafStringTransformer;
 import com.daveayan.rjson.transformer.tojson.LeafUUIDTransformer;
 import com.daveayan.rjson.transformer.tojson.MapTransformer;
 import com.daveayan.rjson.transformer.tojson.NullToJsonTransformer;
+import com.daveayan.rjson.transformer.toobject.DateMillisToDateTransformer;
 import com.daveayan.rjson.transformer.toobject.JsonArrayToSetTransformer;
 import com.daveayan.rjson.transformer.toobject.JsonArrayToVectorTransformer;
 import com.daveayan.rjson.transformer.toobject.JsonArrayTransformer;
@@ -67,6 +68,7 @@ import com.daveayan.rjson.transformer.toobject.JsonIntegerTransformer;
 import com.daveayan.rjson.transformer.toobject.JsonObjectAsMapTransformer;
 import com.daveayan.rjson.transformer.toobject.JsonObjectTransformer;
 import com.daveayan.rjson.transformer.toobject.JsonStringTransformer;
+import com.daveayan.rjson.transformer.toobject.JsonUUIDTransformer;
 import com.daveayan.rjson.transformer.toobject.NullTransformation;
 import com.daveayan.rjson.utils.RjsonUtil;
 import com.daveayan.transformers.Context;
@@ -168,6 +170,7 @@ public class Rjson {
 	private void setUpDefaultJsonToObjectTransformers() {
 		this.json_to_object_transformer = Transformer.newInstance().clear().setup_built_in_transformers()
 			.with_b(new NullTransformation())
+			.and_b(new DateMillisToDateTransformer())
 			.and_b(new JsonBooleanTransformer())
 			.and_b(new JsonIntegerTransformer())
 			.and_b(new JsonStringTransformer())
@@ -177,7 +180,8 @@ public class Rjson {
 			.and_b(new JsonObjectTransformer())
 			.and_b(new JsonArrayToSetTransformer())
 			.and_b(new JsonArrayToVectorTransformer())
-			.and_b(new JsonArrayTransformer());
+			.and_b(new JsonArrayTransformer())
+			.and_b(new JsonUUIDTransformer());
 	}
 	
 	public boolean exclude(Field field, Object from, Class<?> to, Context context) {
