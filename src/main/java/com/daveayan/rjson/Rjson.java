@@ -73,6 +73,11 @@ import com.daveayan.rjson.transformer.toobject.NullTransformation;
 import com.daveayan.rjson.utils.RjsonUtil;
 import com.daveayan.transformers.Context;
 import com.daveayan.transformers.Transformer;
+import com.daveayan.transformers.impl.StringMMDDYYYYDateToDate;
+import com.daveayan.transformers.impl.StringMillisToDate;
+import com.daveayan.transformers.impl.StringToDouble;
+import com.daveayan.transformers.impl.StringToFloat;
+import com.daveayan.transformers.impl.StringToInteger;
 
 public class Rjson {
 	private static Log log = LogFactory.getLog(Rjson.class);
@@ -181,7 +186,12 @@ public class Rjson {
 			.and_b(new JsonArrayToSetTransformer())
 			.and_b(new JsonArrayToVectorTransformer())
 			.and_b(new JsonArrayTransformer())
-			.and_b(new JsonUUIDTransformer());
+			.and_b(new JsonUUIDTransformer())
+			.and_b(new StringToInteger())
+			.and_b(new StringToDouble())
+			.and_b(new StringToFloat())
+			.and_b(new StringMillisToDate())
+			.and_b(new StringMMDDYYYYDateToDate());
 	}
 	
 	public boolean exclude(Field field, Object from, Class<?> to, Context context) {
