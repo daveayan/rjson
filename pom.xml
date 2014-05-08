@@ -10,7 +10,7 @@
 	<groupId>com.daveayan</groupId>
 	<artifactId>rjson</artifactId>
 	<name>rjson</name>
-	<version>1.4-SNAPSHOT</version>
+	<version>1.4</version>
 	<packaging>jar</packaging>
 	<description>
 		Recursive, reflection based json to / from object conversion
