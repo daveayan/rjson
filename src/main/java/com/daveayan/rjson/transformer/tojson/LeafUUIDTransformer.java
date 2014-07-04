@@ -6,7 +6,7 @@ import com.daveayan.transformers.Context;
 public class LeafUUIDTransformer extends BaseTransformer {
 	public String transform(Object from, Class<?> to, Context context) {
 		if(cycleDetectedWith(from, context)) return null;
-			printData(from, context);
+			printData(from.toString(), context);
 		return null;
 	}
 	
