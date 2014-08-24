@@ -1,4 +1,4 @@
 {
-  "class_name": "com.daveayan.rjson.domain.ObjectWithStatic",
+  "jvm_class_name": "com.daveayan.rjson.domain.ObjectWithStatic",
   "nonStaticString": "This is not static"
 }

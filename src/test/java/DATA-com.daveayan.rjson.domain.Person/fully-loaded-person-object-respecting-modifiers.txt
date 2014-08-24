@@ -1,6 +1,6 @@
 
 {
-    "class_name":"com.daveayan.rjson.domain.Person",
+    "jvm_class_name":"com.daveayan.rjson.domain.Person",
     "name":"QWERTY",
     "id":1
 }

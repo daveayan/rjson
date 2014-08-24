@@ -1,4 +1,4 @@
 {
   "someString": "This is some string",
-  "class_name": "com.daveayan.rjson.domain.ObjectWithEnum"
+  "jvm_class_name": "com.daveayan.rjson.domain.ObjectWithEnum"
 }

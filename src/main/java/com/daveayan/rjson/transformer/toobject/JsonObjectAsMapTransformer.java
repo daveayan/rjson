@@ -35,7 +35,7 @@ import com.daveayan.mirage.ReflectionUtils;
 public class JsonObjectAsMapTransformer implements JsonToObjectTransformer {
 	public boolean canTransform(Object from, Class<?> to, Context context) {
 		if(from == null) { return false; }
-		return (from instanceof JSONObject) && ! ((JSONObject) from).has("class_name") && ReflectionUtils.classImplements(to, Map.class);
+		return (from instanceof JSONObject) && ! ((JSONObject) from).has("jvm_class_name") && ReflectionUtils.classImplements(to, Map.class);
 	}
 
 	public Object transform(Object from, Class<?> to, Context context) {

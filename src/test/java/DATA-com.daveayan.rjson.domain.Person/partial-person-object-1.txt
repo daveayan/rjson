@@ -1,19 +1,19 @@
 
 {
-    "class_name":"com.daveayan.rjson.domain.Person",
+    "jvm_class_name":"com.daveayan.rjson.domain.Person",
     "name":"QWERTY",
     "addresses":"null",
     "phones":[        
         
         {
-            "class_name":"com.daveayan.rjson.domain.PhoneNumber",
+            "jvm_class_name":"com.daveayan.rjson.domain.PhoneNumber",
             "areaCode":"443",
             "number":"3233323",
             "id":1
         },
         
         {
-            "class_name":"com.daveayan.rjson.domain.PhoneNumber",
+            "jvm_class_name":"com.daveayan.rjson.domain.PhoneNumber",
             "areaCode":"657",
             "number":"9466354",
             "id":1

@@ -1,4 +1,4 @@
 {
-  "class_name": "com.daveayan.rjson.domain.ObjectWithFinal",
+  "jvm_class_name": "com.daveayan.rjson.domain.ObjectWithFinal",
   "nonFinalString": "This is not final"
 }

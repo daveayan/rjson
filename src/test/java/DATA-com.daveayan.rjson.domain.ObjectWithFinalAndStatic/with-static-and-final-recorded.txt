@@ -1,6 +1,6 @@
 {
   "finalstaticString": "This is static",
   "finalString": "This is final",
-  "class_name": "com.daveayan.rjson.domain.ObjectWithFinalAndStatic",
+  "jvm_class_name": "com.daveayan.rjson.domain.ObjectWithFinalAndStatic",
   "finalAndStaticString": "This is final and static"
 }

@@ -131,7 +131,7 @@ public class Rjson {
 		if (firstChar == '{') {
 			tokener.back();
 			JSONObject jsonObject = new JSONObject(tokener);
-			if(! jsonObject.has("class_name")) {
+			if(! jsonObject.has("jvm_class_name")) {
 				return json_to_object_transformer.transform(jsonObject, HashMap.class, null);
 			} else {
 				tokener = new JSONTokener(json);

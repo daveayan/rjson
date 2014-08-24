@@ -1,91 +1,91 @@
 
 {
-    "class_name": "com.daveayan.rjson.Rjson", 
+    "jvm_class_name": "com.daveayan.rjson.Rjson", 
     "default_json_to_object_transformers": [        
         
         {
-            "class_name": "com.daveayan.rjson.transformer.toobject.JsonBooleanTransformer", 
+            "jvm_class_name": "com.daveayan.rjson.transformer.toobject.JsonBooleanTransformer", 
         }, 
         
         {
-            "class_name": "com.daveayan.rjson.transformer.toobject.JsonIntegerTransformer", 
+            "jvm_class_name": "com.daveayan.rjson.transformer.toobject.JsonIntegerTransformer", 
         }, 
         
         {
-            "class_name": "com.daveayan.rjson.transformer.toobject.JsonStringTransformer", 
+            "jvm_class_name": "com.daveayan.rjson.transformer.toobject.JsonStringTransformer", 
         }, 
         
         {
-            "class_name": "com.daveayan.rjson.transformer.toobject.JsonDoubleTransformer", 
+            "jvm_class_name": "com.daveayan.rjson.transformer.toobject.JsonDoubleTransformer", 
         }, 
         
         {
-            "class_name": "com.daveayan.rjson.transformer.toobject.JsonArrayTransformer", 
+            "jvm_class_name": "com.daveayan.rjson.transformer.toobject.JsonArrayTransformer", 
         }, 
         
         {
-            "class_name": "com.daveayan.rjson.transformer.toobject.JsonObjectAsMapTransformer", 
+            "jvm_class_name": "com.daveayan.rjson.transformer.toobject.JsonObjectAsMapTransformer", 
         }, 
         
         {
-            "class_name": "com.daveayan.rjson.transformer.toobject.JsonObjectTransformer", 
+            "jvm_class_name": "com.daveayan.rjson.transformer.toobject.JsonObjectTransformer", 
         }
     ], 
     "custom_json_to_object_transformers": {        
         "rjson.domain.SampleBothTransformer": 
         {
-            "class_name": "com.daveayan.rjson.domain.SampleBothTransformer", 
+            "jvm_class_name": "com.daveayan.rjson.domain.SampleBothTransformer", 
         }
     }, 
     "object_to_json_transformer": 
     {
-        "class_name": "transformers.Transformer", 
+        "jvm_class_name": "transformers.Transformer", 
         "transformers_a": [            
         ], 
         "transformers_b": [            
             
             {
-                "class_name": "com.daveayan.rjson.transformer.tojson.LeafBooleanTransformer", 
+                "jvm_class_name": "com.daveayan.rjson.transformer.tojson.LeafBooleanTransformer", 
             }, 
             
             {
-                "class_name": "com.daveayan.rjson.transformer.tojson.LeafBooleanTransformer", 
+                "jvm_class_name": "com.daveayan.rjson.transformer.tojson.LeafBooleanTransformer", 
             }, 
             
             {
-                "class_name": "com.daveayan.rjson.transformer.tojson.LeafCharacterTransformer", 
+                "jvm_class_name": "com.daveayan.rjson.transformer.tojson.LeafCharacterTransformer", 
             }, 
             
             {
-                "class_name": "com.daveayan.rjson.transformer.tojson.LeafDateTransformer", 
+                "jvm_class_name": "com.daveayan.rjson.transformer.tojson.LeafDateTransformer", 
             }, 
             
             {
-                "class_name": "com.daveayan.rjson.transformer.tojson.LeafNumberTransformer", 
+                "jvm_class_name": "com.daveayan.rjson.transformer.tojson.LeafNumberTransformer", 
             }, 
             
             {
-                "class_name": "com.daveayan.rjson.transformer.tojson.LeafPrimitiveTransformer", 
+                "jvm_class_name": "com.daveayan.rjson.transformer.tojson.LeafPrimitiveTransformer", 
             }, 
             
             {
-                "class_name": "com.daveayan.rjson.transformer.tojson.LeafStringTransformer", 
+                "jvm_class_name": "com.daveayan.rjson.transformer.tojson.LeafStringTransformer", 
             }, 
             
             {
-                "class_name": "com.daveayan.rjson.transformer.tojson.IterableTransformer", 
+                "jvm_class_name": "com.daveayan.rjson.transformer.tojson.IterableTransformer", 
             }, 
             
             {
-                "class_name": "com.daveayan.rjson.transformer.tojson.MapTransformer", 
+                "jvm_class_name": "com.daveayan.rjson.transformer.tojson.MapTransformer", 
             }, 
             
             {
-                "class_name": "com.daveayan.rjson.transformer.tojson.ArrayTransformer", 
+                "jvm_class_name": "com.daveayan.rjson.transformer.tojson.ArrayTransformer", 
             }, 
             
             {
-                "class_name": "com.daveayan.rjson.transformer.tojson.FieldBasedTransformer", 
+                "jvm_class_name": "com.daveayan.rjson.transformer.tojson.FieldBasedTransformer", 
             }
         ]
     }, 
