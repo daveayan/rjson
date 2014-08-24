@@ -19,7 +19,7 @@ public abstract class BaseTransformer implements ObjectToJsonTransformer {
 	public boolean cycleDetectedWith(Object object, Context context) {
 		return false;
 //		if (detectCycle(object, context)) {
-//			log.info("cycle is detected in object : " + object);
+//			log.debug("cycle is detected in object : " + object);
 //			ToJsonTransformationUtils.printData("ohoh", (StringBuffer) context.get("json_buffer"));
 //			return true;
 //		}
@@ -32,7 +32,7 @@ public abstract class BaseTransformer implements ObjectToJsonTransformer {
 		Set<Object> cycle_set = (Set<Object>) soft_reference.get();
 		return ! cycle_set.add(from);
 	}
-	
+
 	public void printErrorNotImplementedYet(Object object, Context context) {
 		printerIn(context).print(MESSAGE_ERROR + "Serializing " + object.getClass().getName() + " is not implemented yet");
 	}
@@ -77,11 +77,11 @@ public abstract class BaseTransformer implements ObjectToJsonTransformer {
 //		printerIn(context).printNewLine();
 //		printerIn(context).indent();
 	}
-	
+
 	public Printer printerIn(Context context) {
 		return (Printer) context.get("json_buffer");
 	}
-	
+
 	public Rjson rjson(Context context) {
 		return (Rjson) context.get("rjson");
 	}

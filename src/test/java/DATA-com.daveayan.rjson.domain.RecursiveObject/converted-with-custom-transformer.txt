@@ -1,61 +1,63 @@
 {
-  "person": {
-    "id": 1,
-    "accounts": [{
-      "id": 1,
-      "balance": 100,
-      "accountNumber": 123,
-      "lastUpdate": null,
-      "class_name": "com.daveayan.rjson.domain.Account",
-      "someMap": {
-        "A": 100,
-        "B": 200
-      }
-    }],
-    "name": "QWERTY",
-    "class_name": "com.daveayan.rjson.domain.Person",
-    "drives": [
-      {
-        "class_name": "com.daveayan.rjson.domain.Car",
-        "numberOfWheels": 4
-      },
-      {
-        "class_name": "com.daveayan.rjson.domain.Scooter",
-        "numberOfWheels": 2
-      }
-    ],
-    "addresses": {
-      "Home": {
+    "person": {
         "id": 1,
-        "zip": 43016,
-        "address": "tuttles creek",
-        "state": "OH",
-        "class_name": "com.daveayan.rjson.domain.Address",
-        "city": "Dublin"
-      },
-      "Office": {
-        "id": 1,
-        "zip": 43235,
-        "address": "sawmill village dr",
-        "state": "OH",
-        "class_name": "com.daveayan.rjson.domain.Address",
-        "city": "Columbus"
-      }
+        "accounts": [
+            {
+                "id": 1,
+                "balance": 100,
+                "accountNumber": 123,
+                "lastUpdate": "null",
+                "someMap": {
+                    "A": "100",
+                    "B": "200"
+                },
+                "class_name": "com.daveayan.rjson.domain.Account"
+            }
+        ],
+        "name": "QWERTY",
+        "drives": [
+            {
+                "numberOfWheels": 4,
+                "class_name": "com.daveayan.rjson.domain.Car"
+            },
+            {
+                "numberOfWheels": 2,
+                "class_name": "com.daveayan.rjson.domain.Scooter"
+            }
+        ],
+        "class_name": "com.daveayan.rjson.domain.Person",
+        "addresses": {
+            "Home": {
+                "id": 1,
+                "zip": "43016",
+                "address": "tuttles creek",
+                "state": "OH",
+                "class_name": "com.daveayan.rjson.domain.Address",
+                "city": "Dublin"
+            },
+            "Office": {
+                "id": 1,
+                "zip": "43235",
+                "address": "sawmill village dr",
+                "state": "OH",
+                "class_name": "com.daveayan.rjson.domain.Address",
+                "city": "Columbus"
+            }
+        },
+        "phones": [
+            {
+                "id": 1,
+                "areaCode": "443",
+                "number": "3233323",
+                "class_name": "com.daveayan.rjson.domain.PhoneNumber"
+            },
+            {
+                "id": 1,
+                "areaCode": "657",
+                "number": "9466354",
+                "class_name": "com.daveayan.rjson.domain.PhoneNumber"
+            }
+        ]
     },
-    "phones": [
-      {
-        "id": 1,
-        "areaCode": 443,
-        "class_name": "com.daveayan.rjson.domain.PhoneNumber",
-        "number": 3233323
-      },
-      {
-        "id": 1,
-        "areaCode": 657,
-        "class_name": "com.daveayan.rjson.domain.PhoneNumber",
-        "number": 9466354
-      }
-    ]
-  },
-  "class_name": "com.daveayan.rjson.domain.RecursiveObject"
+    "class_name": "com.daveayan.rjson.domain.RecursiveObject"
 }

@@ -24,7 +24,6 @@
             "class_name": "com.daveayan.rjson.domain.Scooter"
         }
     ],
-    "class_name": "com.daveayan.rjson.domain.Person",
     "addresses": {
         "Home": {
             "id": 1,
@@ -43,6 +42,7 @@
             "city": "Columbus"
         }
     },
+    "class_name": "com.daveayan.rjson.domain.Person",
     "phones": [
         {
             "id": 1,

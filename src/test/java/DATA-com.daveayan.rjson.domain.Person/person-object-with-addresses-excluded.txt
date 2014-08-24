@@ -1,48 +1,58 @@
-
 {
-    "class_name":"com.daveayan.rjson.domain.Person",
-    "name":"QWERTY",
-    "phones":[        
-        
+    "id": 1,
+    "accounts": [
         {
-            "class_name":"com.daveayan.rjson.domain.PhoneNumber",
-            "areaCode":"443",
-            "number":"3233323",
-            "id":1
-        },
-        
-        {
-            "class_name":"com.daveayan.rjson.domain.PhoneNumber",
-            "areaCode":"657",
-            "number":"9466354",
-            "id":1
-        }
-    ],
-    "accounts":[        
-        
-        {
-            "class_name":"com.daveayan.rjson.domain.Account",
-            "accountNumber":123,
-            "balance":100.0,
-            "lastUpdate":"null",
-            "someMap":{                
-                "A":"100",
-                "B":"200"
+            "id": 1,
+            "balance": 100,
+            "accountNumber": 123,
+            "lastUpdate": "null",
+            "someMap": {
+                "A": "100",
+                "B": "200"
             },
-            "id":1
+            "class_name": "com.daveayan.rjson.domain.Account"
         }
     ],
-    "drives":[        
-        
+    "name": "QWERTY",
+    "drives": [
         {
-            "class_name":"com.daveayan.rjson.domain.Car",
-            "numberOfWheels":4
+            "numberOfWheels": 4,
+            "class_name": "com.daveayan.rjson.domain.Car"
         },
-        
         {
-            "class_name":"com.daveayan.rjson.domain.Scooter",
-            "numberOfWheels":2
+            "numberOfWheels": 2,
+            "class_name": "com.daveayan.rjson.domain.Scooter"
         }
     ],
-    "id":1
+    "class_name": "com.daveayan.rjson.domain.Person",
+    "addresses": {
+        "Home": {
+            "id": 1,
+            "zip": "43016",
+            "state": "OH",
+            "class_name": "com.daveayan.rjson.domain.Address",
+            "city": "Dublin"
+        },
+        "Office": {
+            "id": 1,
+            "zip": "43235",
+            "state": "OH",
+            "class_name": "com.daveayan.rjson.domain.Address",
+            "city": "Columbus"
+        }
+    },
+    "phones": [
+        {
+            "id": 1,
+            "areaCode": "443",
+            "number": "3233323",
+            "class_name": "com.daveayan.rjson.domain.PhoneNumber"
+        },
+        {
+            "id": 1,
+            "areaCode": "657",
+            "number": "9466354",
+            "class_name": "com.daveayan.rjson.domain.PhoneNumber"
+        }
+    ]
 }
