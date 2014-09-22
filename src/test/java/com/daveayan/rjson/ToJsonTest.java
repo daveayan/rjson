@@ -1,19 +1,19 @@
 /*
  * Copyright (c) 2011 Ayan Dave http://daveayan.com
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and 
- * associated documentation files (the "Software"), to deal in the Software without restriction, including 
- * without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
- * copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the
  * following conditions:
- * 
- * 1) The above copyright notice and this permission notice shall be included without any changes or alterations 
+ *
+ * 1) The above copyright notice and this permission notice shall be included without any changes or alterations
  * in all copies or substantial portions of the Software.
  * 2) This software shall be used for Good, not Evil.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING 
- * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package com.daveayan.rjson;
@@ -56,7 +56,7 @@ public class ToJsonTest {
 	private When when;
 
 	@Before
-	public void setup() {		
+	public void setup() {
 		given = Given.that().rjsonInstanceIs(RjsonUtil.completeSerializer());
 		given.objectUnderTestIs(RjsonUtil.completeSerializer());
 		when = given.when("toJson");
@@ -66,7 +66,7 @@ public class ToJsonTest {
 	public void toJsonNullObject() throws IOException {
 		when.methodIsCalledWith((Object) null).assertThatReturnValueIsSameAs("\"null\"");
 	}
-	
+
 	@Test public void toJsonEmptyObject() {
 		when.methodIsCalledWith("").assertThatReturnValueIsSameAs("");
 	}
@@ -107,7 +107,7 @@ public class ToJsonTest {
 		when.methodIsCalledWith(new Boolean(true)).assertThatReturnValueIsSameAs("true");
 		when.methodIsCalledWith(new Boolean(false)).assertThatReturnValueIsSameAs("false");
 	}
-	
+
 	@Test
 	public void toJsonObjectUUID() throws IOException {
 		UUID uuid = UUID.randomUUID();
@@ -125,6 +125,20 @@ public class ToJsonTest {
 		Assert.assertEquals("q[w]e{r}ty", then.getReturnObject());
 	}
 
+	@Test
+	public void toJsonAUrl() throws IOException {
+		Then then = when.methodIsCalledWith("http://www.github.com");
+		Assert.assertEquals("http://www.github.com", then.getReturnObject());
+	}
+
+	@Test
+	public void toJsonAMapWithUrl() throws IOException {
+		Map<String, String> a_map_with_url = new HashMap<String, String>();
+		a_map_with_url.put("key", "http://www.github.com");
+
+		Then then = when.methodIsCalledWith(a_map_with_url);
+		Assert.assertEquals("{\"key\": \"http://www.github.com\"}", then.getReturnObject());
+	}
 	@Test
 	public void toJsonDate() {
 		Date date = new Date(Long.parseLong("1309814968887"));
@@ -266,7 +280,7 @@ public class ToJsonTest {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-com.daveayan.rjson.domain.ObjectWithFinal/with-final-not-recorded.txt");
 		when.methodIsCalledWith(new ObjectWithFinal()).assertThatReturnValueIsSameAs(expectedJson);
 	}
-	
+
 	@Test
 	public void toJsonWhenFinalIsRecorded() throws IOException {
 		Given given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer().andRecordFinal());
@@ -274,13 +288,13 @@ public class ToJsonTest {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-com.daveayan.rjson.domain.ObjectWithFinal/with-final-recorded.txt");
 		when.methodIsCalledWith(new ObjectWithFinal()).assertThatReturnValueIsExactlySameAs(expectedJson);
 	}
-	
+
 	@Test
 	public void toJsonWhenStaticIsNotRecorded() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-com.daveayan.rjson.domain.ObjectWithStatic/with-static-not-recorded.txt");
 		when.methodIsCalledWith(new ObjectWithStatic()).assertThatReturnValueIsSameAs(expectedJson);
 	}
-	
+
 	@Test
 	public void toJsonWhenStaticIsRecorded() throws IOException {
 		Given given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer().andRecordStatic());
@@ -288,7 +302,7 @@ public class ToJsonTest {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-com.daveayan.rjson.domain.ObjectWithStatic/with-static-recorded.txt");
 		when.methodIsCalledWith(new ObjectWithStatic()).assertThatReturnValueIsExactlySameAs(expectedJson);
 	}
-	
+
 	@Test
 	public void toJsonWhenStaticAndFinalIsRecorded() throws IOException {
 		Given given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer().andRecordStatic().andRecordFinal());
@@ -296,7 +310,7 @@ public class ToJsonTest {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-com.daveayan.rjson.domain.ObjectWithFinalAndStatic/with-static-and-final-recorded.txt");
 		when.methodIsCalledWith(new ObjectWithFinalAndStatic()).assertThatReturnValueIsExactlySameAs(expectedJson);
 	}
-	
+
 	@Test
 	public void toJsonWhenStaticOrFinalNothingIsRecorded() throws IOException {
 		Given given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer());
@@ -304,7 +318,7 @@ public class ToJsonTest {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-com.daveayan.rjson.domain.ObjectWithFinalAndStatic/with-nothing-recorded.txt");
 		when.methodIsCalledWith(new ObjectWithFinalAndStatic()).assertThatReturnValueIsExactlySameAs(expectedJson);
 	}
-	
+
 	@Test
 	public void toJsonAnObjectWithEnum() throws IOException {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-com.daveayan.rjson.domain.ObjectWithEnum/object-with-enum.txt");
@@ -337,7 +351,7 @@ public class ToJsonTest {
 		given = Given.that().objectUnderTestIs(RjsonUtil.completeSerializer().with(excludeAddressTransformer));
 		given.when("toJson").isCalledWith(Person.getFullyLoadedInstance()).assertThatReturnValueIsSameAs(expectedJson);
 	}
-	
+
 	@Test
 	public void toJsonARecursiveObject() throws IOException {
 		Given given = Given.that().rjsonInstanceIs(RjsonUtil.completeSerializer().with(new RjsonTestDomainExclusions()));
@@ -346,7 +360,7 @@ public class ToJsonTest {
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-com.daveayan.rjson.domain.RecursiveObject/converted-with-custom-transformer.txt");
 		when.methodIsCalledWith(new RecursiveObject()).assertThatReturnValueIsExactlySameAs(expectedJson);
 	}
-	
+
 	@Test public void toJsonAnObjectWithUrlString() throws IOException {
 		RjsonUtil.completeSerializer().toJson(new ObjectWithUrlString());
 	}
