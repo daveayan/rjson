@@ -1,0 +1,63 @@
+{
+  "key4": {
+    "id": 1,
+    "accounts": [{
+      "id": 1,
+      "balance": 100,
+      "accountNumber": 123,
+      "jvm_class_name": "com.daveayan.rjson.domain.Account",
+      "lastUpdate": "null",
+      "someMap": {
+        "A": "100",
+        "B": "200"
+      }
+    }],
+    "jvm_class_name": "com.daveayan.rjson.domain.Person",
+    "name": "QWERTY",
+    "drives": [
+      {
+        "jvm_class_name": "com.daveayan.rjson.domain.Car",
+        "numberOfWheels": 4
+      },
+      {
+        "jvm_class_name": "com.daveayan.rjson.domain.Scooter",
+        "numberOfWheels": 2
+      }
+    ],
+    "addresses": {
+      "Home": {
+        "id": 1,
+        "zip": "43016",
+        "jvm_class_name": "com.daveayan.rjson.domain.Address",
+        "address": "tuttles creek",
+        "state": "OH",
+        "city": "Dublin"
+      },
+      "Office": {
+        "id": 1,
+        "zip": "43235",
+        "jvm_class_name": "com.daveayan.rjson.domain.Address",
+        "address": "sawmill village dr",
+        "state": "OH",
+        "city": "Columbus"
+      }
+    },
+    "phones": [
+      {
+        "id": 1,
+        "jvm_class_name": "com.daveayan.rjson.domain.PhoneNumber",
+        "areaCode": "443",
+        "number": "3233323"
+      },
+      {
+        "id": 1,
+        "jvm_class_name": "com.daveayan.rjson.domain.PhoneNumber",
+        "areaCode": "657",
+        "number": "9466354"
+      }
+    ]
+  },
+  "key3": ["L1"],
+  "key2": "asdfgh",
+  "key1": "qwerty"
+}

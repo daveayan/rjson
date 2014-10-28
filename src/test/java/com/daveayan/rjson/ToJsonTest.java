@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +35,10 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import zen.Given;
+import zen.Then;
+import zen.When;
 
 import com.daveayan.rjson.domain.Exclusion;
 import com.daveayan.rjson.domain.ObjectWithEnum;
@@ -46,10 +51,6 @@ import com.daveayan.rjson.domain.Person;
 import com.daveayan.rjson.domain.RecursiveObject;
 import com.daveayan.rjson.utils.RjsonUtil;
 import com.daveayan.transformers.Context;
-
-import zen.Given;
-import zen.Then;
-import zen.When;
 
 public class ToJsonTest {
 	private Given given;
@@ -248,6 +249,22 @@ public class ToJsonTest {
 
 		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.Map/string-string-map.txt");
 		when.methodIsCalledWith(map).assertThatReturnValueIsSameAs(expectedJson);
+	}
+
+	@Test public void toJsonMapWithListWithin() throws IOException {
+		List<String> listToAdd = new ArrayList<String>();
+		listToAdd.add("L1");
+
+		Person p = Person.getFullyLoadedInstance();
+
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		map.put("key1", "qwerty");
+		map.put("key2", "asdfgh");
+		map.put("key3", listToAdd);
+		map.put("key4", p);
+
+		String expectedJson = RjsonUtil.fileAsString("./src/test/java/DATA-java.util.Map/map-and-list-within-map.txt");
+		given.when("toJson").isCalledWith(map).assertThatReturnValueIsSameAs(expectedJson);
 	}
 
 	@Test

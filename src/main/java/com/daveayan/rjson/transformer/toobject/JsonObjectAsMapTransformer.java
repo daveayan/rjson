@@ -21,6 +21,7 @@
  */
 package com.daveayan.rjson.transformer.toobject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -50,7 +51,11 @@ public class JsonObjectAsMapTransformer implements JsonToObjectTransformer {
 		while (iter.hasNext()) {
 			Object key = iter.next();
 			Object value = jo.getMap().get(key);
-			newMap.put(key, context.transformer().delegateTransformation(value, to, context));
+			Class convertTo = to;
+			if(StringUtils.equalsIgnoreCase(value.getClass().getName(), "org.json.JSONArray")) {
+				convertTo = ArrayList.class;
+			}
+			newMap.put(key, context.transformer().delegateTransformation(value, convertTo, context));
 		}
 		return newMap;
 	}
