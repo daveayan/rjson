@@ -111,7 +111,6 @@ public class RjsonUtil {
 		newString = StringUtils.replace(newString, "]", "\\]");
 		newString = StringUtils.replace(newString, "{", "\\{");
 		newString = StringUtils.replace(newString, "}", "\\}");
-		newString = StringUtils.replace(newString, "#", "\\#");
 		return newString;
 	}
 
@@ -121,7 +120,6 @@ public class RjsonUtil {
 		newString = StringUtils.replace(newString, "\\]", "]");
 		newString = StringUtils.replace(newString, "\\{", "{");
 		newString = StringUtils.replace(newString, "\\}", "}");
-		newString = StringUtils.replace(newString, "\\#", "#");
 		return newString;
 	}
 }
