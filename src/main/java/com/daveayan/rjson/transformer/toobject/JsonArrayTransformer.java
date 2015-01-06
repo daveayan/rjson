@@ -24,11 +24,9 @@ package com.daveayan.rjson.transformer.toobject;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-
 import com.daveayan.rjson.transformer.JsonToObjectTransformer;
 import com.daveayan.transformers.Context;
-
+import com.daveayan.json.JSONArray;
 import com.daveayan.mirage.ReflectionUtils;
 
 public class JsonArrayTransformer implements JsonToObjectTransformer {

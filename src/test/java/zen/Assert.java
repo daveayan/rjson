@@ -1,7 +1,6 @@
 package zen;
 
-import org.json.JSONException;
-
+import com.daveayan.json.JSONException;
 import com.daveayan.rjson.Rjson;
 import com.daveayan.rjson.utils.RjsonUtil;
 

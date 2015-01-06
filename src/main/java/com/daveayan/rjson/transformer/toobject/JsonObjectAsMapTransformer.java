@@ -27,8 +27,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.json.JSONObject;
 
+import com.daveayan.json.JSONObject;
 import com.daveayan.mirage.ReflectionUtils;
 import com.daveayan.rjson.transformer.JsonToObjectTransformer;
 import com.daveayan.transformers.Context;

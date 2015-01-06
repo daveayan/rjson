@@ -25,12 +25,10 @@ import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.daveayan.rjson.transformer.JsonToObjectTransformer;
 import com.daveayan.transformers.Context;
-
+import com.daveayan.json.JSONException;
+import com.daveayan.json.JSONObject;
 import com.daveayan.mirage.ReflectionUtils;
 
 public class JsonObjectTransformer implements JsonToObjectTransformer {

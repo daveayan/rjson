@@ -1,4 +1,4 @@
-package org.json;
+package com.daveayan.json;
 
 /*
 Copyright (c) 2008 JSON.org

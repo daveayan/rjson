@@ -3,8 +3,11 @@ package org.json;
 
 import org.junit.Test;
 
+import com.daveayan.json.JSONException;
+import com.daveayan.json.JSONObject;
 import com.daveayan.rjson.domain.Person;
 import com.daveayan.rjson.utils.RjsonUtil;
+
 import zen.Assert;
 
 public class JSONObject_equals_Test {

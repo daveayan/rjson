@@ -1,9 +1,7 @@
 package com.daveayan.rjson.transformer.toobject;
 
-import org.json.JSONObject;
-
+import com.daveayan.json.JSONObject;
 import com.daveayan.rjson.transformer.JsonToObjectTransformer;
-
 import com.daveayan.transformers.Context;
 
 public class NullTransformation implements JsonToObjectTransformer {

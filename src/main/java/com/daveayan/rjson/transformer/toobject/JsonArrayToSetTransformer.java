@@ -3,10 +3,8 @@ package com.daveayan.rjson.transformer.toobject;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.json.JSONArray;
-
 import com.daveayan.rjson.transformer.JsonToObjectTransformer;
-
+import com.daveayan.json.JSONArray;
 import com.daveayan.mirage.ReflectionUtils;
 import com.daveayan.transformers.Context;
 

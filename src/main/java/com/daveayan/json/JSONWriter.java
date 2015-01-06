@@ -1,4 +1,4 @@
-package org.json;
+package com.daveayan.json;
 
 import java.io.IOException;
 import java.io.Writer;

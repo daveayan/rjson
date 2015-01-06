@@ -1,4 +1,4 @@
-package org.json;
+package com.daveayan.json;
 
 import java.util.HashMap;
 import java.util.Map;
