@@ -27,13 +27,13 @@ import com.daveayan.rjson.transformer.BaseTransformer;
 import com.daveayan.transformers.Context;
 
 public class LeafNumberTransformer extends BaseTransformer {
-	public String transform(Object from, Class<?> to, Context context) {
+	public String transform(Object from, Class<?> to, String fieldName, Context context) {
 		if(cycleDetectedWith(from, context)) return null;
 			printData(from, context);
 		return null;
 	}
 	
-	public boolean canTransform(Object from, Class<?> to, Context context) {
+	public boolean canTransform(Object from, Class<?> to, String fieldName, Context context) {
 		return from != null && from instanceof java.lang.Number;
 	}
 }

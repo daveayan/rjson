@@ -34,12 +34,12 @@ import com.daveayan.rjson.transformer.JsonToObjectTransformer;
 import com.daveayan.transformers.Context;
 
 public class JsonObjectAsMapTransformer implements JsonToObjectTransformer {
-	public boolean canTransform(Object from, Class<?> to, Context context) {
+	public boolean canTransform(Object from, Class<?> to, String fieldName, Context context) {
 		if(from == null) { return false; }
 		return (from instanceof JSONObject) && ! ((JSONObject) from).has("jvm_class_name") && ReflectionUtils.classImplements(to, Map.class);
 	}
 
-	public Object transform(Object from, Class<?> to, Context context) {
+	public Object transform(Object from, Class<?> to, String fieldName, Context context) {
 		JSONObject jo = (JSONObject) from;
 		Map<Object, Object> newMap = null;
 		if(StringUtils.equalsIgnoreCase(to.getName(), "java.util.Map")) {
@@ -52,10 +52,10 @@ public class JsonObjectAsMapTransformer implements JsonToObjectTransformer {
 			Object key = iter.next();
 			Object value = jo.getMap().get(key);
 			Class convertTo = to;
-			if(StringUtils.equalsIgnoreCase(value.getClass().getName(), "org.json.JSONArray")) {
+			if(StringUtils.equalsIgnoreCase(value.getClass().getName(), "com.daveayan.json.JSONArray")) {
 				convertTo = ArrayList.class;
 			}
-			newMap.put(key, context.transformer().delegateTransformation(value, convertTo, context));
+			newMap.put(key, context.transformer().delegateTransformation(value, convertTo, fieldName, context));
 		}
 		return newMap;
 	}

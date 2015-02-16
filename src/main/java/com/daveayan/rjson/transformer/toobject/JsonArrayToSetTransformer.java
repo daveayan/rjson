@@ -9,7 +9,7 @@ import com.daveayan.mirage.ReflectionUtils;
 import com.daveayan.transformers.Context;
 
 public class JsonArrayToSetTransformer implements JsonToObjectTransformer {
-	public boolean canTransform(Object from, Class<?> to, Context context) {
+	public boolean canTransform(Object from, Class<?> to, String fieldName, Context context) {
 		if(from == null) { return false; }
 		if (from instanceof JSONArray) {
 			if (ReflectionUtils.classImplements(to, Set.class)) {
@@ -19,11 +19,11 @@ public class JsonArrayToSetTransformer implements JsonToObjectTransformer {
 		return false;
 	}
 
-	public Object transform(Object from, Class<?> to, Context context) {
+	public Object transform(Object from, Class<?> to, String fieldName, Context context) {
 		JSONArray ja = (JSONArray) from;
 		Set<Object> set = new HashSet<Object>();
 		for (Object item : ja.getList()) {
-			set.add(context.transformer().delegateTransformation(item, to, context));
+			set.add(context.transformer().delegateTransformation(item, to, fieldName, context));
 		}
 		return set;
 	}

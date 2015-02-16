@@ -27,12 +27,12 @@ import com.daveayan.transformers.Context;
 import com.daveayan.mirage.ReflectionUtils;
 
 public class JsonStringTransformer implements JsonToObjectTransformer {
-	public boolean canTransform(Object from, Class<?> to, Context context) {
+	public boolean canTransform(Object from, Class<?> to, String fieldName, Context context) {
 		if(from == null) { return false; }
 		return from instanceof String && ReflectionUtils.classIsOfEitherType(to, String.class);
 	}
 
-	public Object transform(Object from, Class<?> to, Context context) {
+	public Object transform(Object from, Class<?> to, String fieldName, Context context) {
 		return from;
 	}
 }

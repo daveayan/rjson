@@ -5,7 +5,7 @@ import com.daveayan.rjson.transformer.JsonToObjectTransformer;
 import com.daveayan.transformers.Context;
 
 public class NullTransformation implements JsonToObjectTransformer {
-	public boolean canTransform(Object from, Class<?> to, Context context) {
+	public boolean canTransform(Object from, Class<?> to, String fieldName, Context context) {
 		if(from == null) {
 			return true;
 		}
@@ -15,7 +15,7 @@ public class NullTransformation implements JsonToObjectTransformer {
 		return false;
 	}
 
-	public Object transform(Object from, Class<?> to, Context context) {
+	public Object transform(Object from, Class<?> to, String fieldName, Context context) {
 		return null;
 	}
 }

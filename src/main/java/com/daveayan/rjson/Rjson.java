@@ -113,7 +113,7 @@ public class Rjson {
 		}
 		StringBufferPrinter json_buffer = new StringBufferPrinter();
 		Context context = Context.newInstance().put("rjson", this).and("json_buffer", json_buffer).and("cycle_set", new SoftReference<Set<?>>(new HashSet<Object>()));
-		object_to_json_transformer.transform(object, String.class, context);
+		object_to_json_transformer.transform(object, String.class, "", context);
 		log.debug("json before formatting is : " + json_buffer.toString());
 		String json = json_buffer.toString();
 		if(formatJson()) {
@@ -126,13 +126,13 @@ public class Rjson {
 	private Object convertToObject(String json, JSONTokener tokener, Class<?> to) throws JSONException {
 		char firstChar = tokener.nextClean();
 		if (firstChar == '\"') {
-			return json_to_object_transformer.transform(tokener.nextString('\"'), String.class, null);
+			return json_to_object_transformer.transform(tokener.nextString('\"'), String.class, "", null);
 		}
 		if (firstChar == '{') {
 			tokener.back();
 			JSONObject jsonObject = new JSONObject(tokener);
 			if(! jsonObject.has("jvm_class_name")) {
-				return json_to_object_transformer.transform(jsonObject, HashMap.class, null);
+				return json_to_object_transformer.transform(jsonObject, HashMap.class, "", null);
 			} else {
 				tokener = new JSONTokener(json);
 				tokener.nextClean();
@@ -140,14 +140,14 @@ public class Rjson {
 		}
 		if (firstChar == '[') {
 			tokener.back();
-			return json_to_object_transformer.transform(new JSONArray(tokener), ArrayList.class, null);
+			return json_to_object_transformer.transform(new JSONArray(tokener), ArrayList.class, "", null);
 		}
 		if (Character.isDigit(firstChar)) {
 			tokener.back();
-			return json_to_object_transformer.transform(tokener.nextValue(), Double.class, null);
+			return json_to_object_transformer.transform(tokener.nextValue(), Double.class, "", null);
 		}
 		tokener.back();
-		return json_to_object_transformer.transform(tokener.nextValue(), Object.class, null);
+		return json_to_object_transformer.transform(tokener.nextValue(), Object.class, "", null);
 	}
 
 	private void initialize() {

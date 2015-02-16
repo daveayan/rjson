@@ -28,10 +28,10 @@ import com.daveayan.transformers.Context;
 
 public class ArrayTransformer extends IterableTransformer {
 
-	public void transformToJson(Object object, Class<?> to, Context context) {
+	public void transformToJson(Object object, Class<?> to, String fieldName, Context context) {
 		if(cycleDetectedWith(object, context)) return;
 		List<?> arrayAsList = Arrays.asList((Object[]) object);
-		super.transform(arrayAsList, to, context);
+		super.transform(arrayAsList, to, fieldName, context);
 	}
 
 	public boolean canConvertToJson(Object object) {
@@ -43,12 +43,12 @@ public class ArrayTransformer extends IterableTransformer {
 		return false;
 	}
 
-	public String transform(Object from, Class<?> to, Context context) {
-		transformToJson(from, to, context);
+	public String transform(Object from, Class<?> to, String fieldName, Context context) {
+		transformToJson(from, to, fieldName, context);
 		return null;
 	}
 
-	public boolean canTransform(Object from, Class<?> to, Context context) {
+	public boolean canTransform(Object from, Class<?> to, String fieldName, Context context) {
 		return canConvertToJson(from);
 	}
 }

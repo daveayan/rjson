@@ -17,12 +17,12 @@ public class SampleObjectToJsonTransformer extends BaseTransformer {
 		// TODO Auto-generated method stub
 	}
 
-	public boolean canTransform(Object from, Class<?> to, Context context) {
+	public boolean canTransform(Object from, Class<?> to, String fieldName, Context context) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public Object transform(Object from, Class<?> to, Context context) {
+	public Object transform(Object from, Class<?> to, String fieldName, Context context) {
 		// TODO Auto-generated method stub
 		return null;
 	}

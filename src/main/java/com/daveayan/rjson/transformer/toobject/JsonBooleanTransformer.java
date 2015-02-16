@@ -25,11 +25,11 @@ import com.daveayan.rjson.transformer.JsonToObjectTransformer;
 import com.daveayan.transformers.Context;
 
 public class JsonBooleanTransformer implements JsonToObjectTransformer {
-	public boolean canTransform(Object from, Class<?> to, Context context) {
+	public boolean canTransform(Object from, Class<?> to, String fieldName, Context context) {
 		if(from == null) { return false; }
 		return from instanceof Boolean && to.getName().trim().equals("java.lang.Object");
 	}
-	public Object transform(Object from, Class<?> to, Context context) {
+	public Object transform(Object from, Class<?> to, String fieldName, Context context) {
 		return from;
 	}
 }

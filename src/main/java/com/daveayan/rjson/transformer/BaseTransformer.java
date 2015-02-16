@@ -9,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import com.daveayan.rjson.Rjson;
 import com.daveayan.rjson.printer.Printer;
 import com.daveayan.rjson.utils.RjsonUtil;
-
 import com.daveayan.transformers.Context;
 
 public abstract class BaseTransformer implements ObjectToJsonTransformer {
